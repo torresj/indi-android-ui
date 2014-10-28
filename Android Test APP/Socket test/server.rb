@@ -1,4 +1,3 @@
-#!/Users/jaime/.rvm/rubies/ruby-2.1.2/bin/ruby
 require 'socket'
 
 server = TCPServer.new(9090)
