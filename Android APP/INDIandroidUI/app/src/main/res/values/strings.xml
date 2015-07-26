@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">INDIandroidUI</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_connect">Nueva conexión</string>
+    <string name="button_connect">Conectar</string>
+    <string name="hint_host">Servidor</string>
+    <string name="hint_port">Puerto</string>
+</resources>

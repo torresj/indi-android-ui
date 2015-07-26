@@ -30,7 +30,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/conbutton"
-            android:layout_toStartOf="@+id/conbutton" />
+            android:layout_toStartOf="@+id/conbutton"
+            android:text="indiserver.no-ip.org" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +51,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignRight="@+id/textView2"
-            android:layout_alignEnd="@+id/textView2" />
+            android:layout_alignEnd="@+id/textView2"
+            android:text="7624" />
 
         <Button
             android:layout_width="wrap_content"
