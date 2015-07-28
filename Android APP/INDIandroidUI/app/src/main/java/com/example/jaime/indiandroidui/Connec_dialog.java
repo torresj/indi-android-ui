@@ -2,7 +2,6 @@ package com.example.jaime.indiandroidui;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -34,7 +33,6 @@ public class Connec_dialog extends DialogFragment {
      */
     public AlertDialog createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View v = inflater.inflate(R.layout.new_connection_dialog, null);

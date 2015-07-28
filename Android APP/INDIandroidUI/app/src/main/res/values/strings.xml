@@ -7,4 +7,11 @@
     <string name="button_connect">Conectar</string>
     <string name="hint_host">Servidor</string>
     <string name="hint_port">Puerto</string>
+    <string name="action_disconnect">Desconectar</string>
+    <string name="action_log">Ver log</string>
+    <string name="action_exit">Salir</string>
+    <string name="disconnect">Eliminar conexiones</string>
+    <string name="ok_button">Ok</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="drawe_menu_title">Conexiones y dispositivos</string>
 </resources>
