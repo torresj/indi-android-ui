@@ -8,12 +8,42 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
+
+import laazotea.indi.client.INDIElement;
+import laazotea.indi.client.INDILightProperty;
+import laazotea.indi.client.INDINumberElement;
+import laazotea.indi.client.INDINumberProperty;
+import laazotea.indi.client.INDIProperty;
+import laazotea.indi.client.INDISwitchElement;
+import laazotea.indi.client.INDISwitchProperty;
+import laazotea.indi.client.INDITextElement;
+import laazotea.indi.client.INDITextProperty;
 
 public class PropertyArrayAdapter<T> extends ArrayAdapter<T> {
 
+    private TreeSet<UIPropertyManager> uiProperties;
+
     public PropertyArrayAdapter(Context context, List<T> objects) {
         super(context, 0, objects);
+        setUiProperties();
+    }
+
+    private void setUiProperties() {
+        //Create order set
+        uiProperties = new TreeSet<>(new UIPropertyManagerOrder());
+
+        //add UI object
+        uiProperties.add(new UIBlobPropertyManager());
+        uiProperties.add(new UITextPropertyManager());
+        uiProperties.add(new UISwitchPropertyManager());
+        uiProperties.add(new UINumberPropertyManager());
+        uiProperties.add(new UILightPropertyManager());
+
     }
 
     @Override
@@ -26,33 +56,26 @@ public class PropertyArrayAdapter<T> extends ArrayAdapter<T> {
         //Salvando la referencia del View de la fila
         View listItemView = convertView;
 
-        //Comprobando si el View no existe
-        if (null == convertView) {
-            //Si no existe, entonces inflarlo con two_line_list_item.xml
-            listItemView = inflater.inflate(
-                    R.layout.view_property_item,
-                    parent,
-                    false);
+        //Obteniendo instancia de la ViewProperty en la posición actual
+        INDIProperty p = (INDIProperty)getItem(position);
+
+        UIPropertyManager ui=null;
+
+        boolean end = false;
+        for( Iterator it = uiProperties.iterator(); it.hasNext() && !end;){
+            UIPropertyManager aux=(UIPropertyManager)it.next();
+            if(aux.handlesProperty(p)){
+                end=true;
+                ui=aux;
+            }
         }
 
-        //Obteniendo instancias de los text views
-        TextView name = (TextView)listItemView.findViewById(R.id.name);
-        TextView element = (TextView)listItemView.findViewById(R.id.element);
-        ImageView idle = (ImageView)listItemView.findViewById(R.id.idle);
-        ImageView perm = (ImageView)listItemView.findViewById(R.id.perm);
-        ImageView visibility = (ImageView)listItemView.findViewById(R.id.visibility);
+        if(convertView == null){
+            listItemView = ui.getPropertyView(p,inflater,parent);
+        }
 
-        //Obteniendo instancia de la ViewProperty en la posición actual
-        ViewProperty item = (ViewProperty)getItem(position);
-
-
-        name.setText(item.getName());
-        element.setText("");
-        idle.setImageResource(item.getIdle());
-        perm.setImageResource(item.getPermission());
-        visibility.setImageResource(item.getVisibility());
-
-        //Devolver al ListView la fila creada
+        ui.updateView(p,listItemView);
+        
         return listItemView;
 
     }

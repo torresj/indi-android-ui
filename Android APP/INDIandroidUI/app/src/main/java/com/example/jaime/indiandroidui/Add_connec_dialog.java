@@ -14,11 +14,11 @@ import android.widget.EditText;
 /**
  * Fragmento con diálogo básico
  */
-public class Connec_dialog extends DialogFragment {
+public class Add_connec_dialog extends DialogFragment {
 
-    private Connec_dialogListener listener;
+    private Add_connec_dialogListener listener;
 
-    public Connec_dialog() {
+    public Add_connec_dialog() {
     }
 
     @NonNull
@@ -40,14 +40,16 @@ public class Connec_dialog extends DialogFragment {
         final Button connect = (Button) v.findViewById(R.id.connec_button);
         final EditText host_edit=(EditText) v.findViewById(R.id.host);
         final EditText port_edit=(EditText) v.findViewById(R.id.port);
+        final EditText name_edit=(EditText) v.findViewById(R.id.name);
 
         connect.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String host=host_edit.getText().toString();
+                        String name=name_edit.getText().toString();
                         int port=Integer.parseInt(port_edit.getText().toString());
-                        listener.onConnectButtonClick(host,port);
+                        listener.onConnectButtonClick(name,host,port);
                         dismiss();
                     }
                 }
@@ -64,7 +66,7 @@ public class Connec_dialog extends DialogFragment {
         super.onAttach(activity);
 
         try {
-            listener = (Connec_dialogListener) activity;
+            listener = (Add_connec_dialogListener) activity;
 
         } catch (ClassCastException e) {
             throw new ClassCastException(
@@ -74,7 +76,7 @@ public class Connec_dialog extends DialogFragment {
         }
     }
 
-    public interface Connec_dialogListener {
-        void onConnectButtonClick(String host,int port);
+    public interface Add_connec_dialogListener {
+        void onConnectButtonClick(String name,String host,int port);
     }
 }

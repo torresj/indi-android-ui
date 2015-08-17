@@ -1,14 +1,12 @@
 package com.example.jaime.indiandroidui;
 
-import android.content.DialogInterface;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,50 +14,60 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-import laazotea.indi.client.INDIProperty;
 
 
-public class MainActivity extends AppCompatActivity implements Connec_dialog.Connec_dialogListener, Disconnec_dialog.Disconnec_dialogListener {
+public class MainActivity extends AppCompatActivity implements Add_connec_dialog.Add_connec_dialogListener, Remove_connec_dialog.Remove_connec_dialogListener {
 
-    private ArrayList<IndiClient> clients;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ListView list;
-    private ArrayList<ArrayList<ArrayAdapter>> adapters;
-    private ArrayList<IndiConnect> threads;
-    private int index_device;
-    private int index_conect;
-
+    private ArrayList<Connection> connections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setToolbar();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation);
         setupDrawerContent(navigationView);
 
-        clients = new ArrayList<IndiClient>();
-        threads = new ArrayList<IndiConnect>();
+        connections = new ArrayList<>();
+
+        readConnections();
 
         //Instancia del ListView
         list = (ListView)findViewById(R.id.list);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(list);
-        adapters = new ArrayList<ArrayList<ArrayAdapter>>();
 
-        index_device=0;
-        index_conect=0;
+        setToolbar();
 
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        saveConnections();
+        for (Connection conn:connections){
+            conn.disconnect();
+        }
+        connections.clear();
     }
 
     private void setToolbar() {
@@ -90,21 +98,17 @@ public class MainActivity extends AppCompatActivity implements Connec_dialog.Con
                 setDrawerMenu();
                 return true;
             case R.id.action_connect:
-                new Connec_dialog().show(getSupportFragmentManager(), "New Connection");
+                new Add_connec_dialog().show(getSupportFragmentManager(), "New Connection");
                 return true;
             case R.id.action_disconnect:
-                CharSequence[] items = new CharSequence[clients.size()];
+                CharSequence[] items = new CharSequence[connections.size()];
                 for(int i=0;i<items.length;i++){
-                    items[i]=clients.get(i).getNameConecction();
+                    items[i]=connections.get(i).getName();
                 }
-                Disconnec_dialog dialog=Disconnec_dialog.newInstance(items);
+                Remove_connec_dialog dialog= Remove_connec_dialog.newInstance(items);
                 dialog.show(getSupportFragmentManager(), "Remove connections");
                 return true;
             case R.id.action_exit:
-                for (IndiConnect t:threads){
-                    t.finishThread();
-                }
-                threads=null;
                 finish();
         }
         return super.onOptionsItemSelected(item);
@@ -113,9 +117,9 @@ public class MainActivity extends AppCompatActivity implements Connec_dialog.Con
     private void setDrawerMenu(){
         Menu menu=navigationView.getMenu();
         menu.clear();
-        for(int i=0;i<clients.size();i++){
-            IndiClient client=clients.get(i);
-            SubMenu sub= menu.addSubMenu(client.getNameConecction());
+        for(int i=0;i<connections.size();i++){
+            IndiClient client=connections.get(i).getClient();
+            SubMenu sub= menu.addSubMenu(connections.get(i).getName());
             for(int j=0;j<client.getDevicesNames().size();j++){
                 String device=client.getDevicesNames().get(j);
                 sub.add(i,i+j,j,device).setCheckable(true);
@@ -126,15 +130,10 @@ public class MainActivity extends AppCompatActivity implements Connec_dialog.Con
     }
 
     @Override
-    public void onConnectButtonClick(String host, int port) {
-        adapters.add(new ArrayList<ArrayAdapter>());
-        index_conect=adapters.size()-1;
-        index_device=0;
-        ArrayList<ViewProperty> l=new ArrayList<ViewProperty>();
-        adapters.get(index_conect).add(new PropertyArrayAdapter<ViewProperty>(this, l));
-        list.setAdapter(adapters.get(index_conect).get(index_device));
-        threads.add(new IndiConnect(index_conect, host, port));
-        threads.get(threads.size()-1).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    public void onConnectButtonClick(String name,String host, int port) {
+        Connection conn=new Connection(name,host,port,this);
+        conn.connect();
+        connections.add(conn);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -144,8 +143,11 @@ public class MainActivity extends AppCompatActivity implements Connec_dialog.Con
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
-                        list.setAdapter(adapters.get(menuItem.getGroupId()).get(menuItem.getOrder()));
+                        Connection conn = connections.get(menuItem.getGroupId());
+                        ArrayList<ArrayAdapter> adapters = conn.getAdapters();
+                        list.setAdapter(adapters.get(menuItem.getOrder()));
                         drawerLayout.closeDrawers();
+                        setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
                         return true;
                     }
                 }
@@ -156,104 +158,67 @@ public class MainActivity extends AppCompatActivity implements Connec_dialog.Con
     public void onDisconnectButtonClick(ArrayList<String> itemsSeleccionados) {
         for(int i=0;i<itemsSeleccionados.size();i++){
             String item=itemsSeleccionados.get(i);
-            for(int j=0;j<clients.size();j++){
-                IndiClient client=clients.get(j);
-                if(client.getNameConecction().equals(item)){
-                    threads.get(j).finishThread();
-                    threads.remove(j);
+            for(int j=0;j<connections.size();j++){
+                Connection conn=connections.get(i);
+                if(conn.getName().equals(item)){
+                    connections.get(i).disconnect();
+                    connections.remove(i);
                 }
             }
         }
     }
 
-    class IndiConnect extends AsyncTask<Void, IndiClient, Void> {
+    private void readConnections(){
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            File sd = this.getExternalFilesDir(null);
+            File f = new File(sd.getAbsolutePath(), "connections.txt");
 
-        private int client_index;
-        private int port;
-        private String host;
-        private boolean fin;
-
-        public IndiConnect(int client_index, String host, int port){
-            this.client_index=client_index;
-            this.host=host;
-            this.port=port;
-            fin=false;
-        }
-
-        @Override protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(), "Connecting...", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override protected Void doInBackground(Void... par) {
-            clients.add(new IndiClient(host, port));
-            while(!fin){
-                SystemClock.sleep(1000);
-                publishProgress(clients.get(client_index));
-            }
-            return null;
-        }
-
-        @Override protected void onProgressUpdate(IndiClient... prog) {
-            IndiClient c=prog[0];
-            int size=c.getDevicesNames().size();
-            if(size!=adapters.get(client_index).size()){
-                adapters.get(client_index).clear();
-                for(int i=0;i<size;i++){
-                    ArrayList<ViewProperty> l=new ArrayList();
-                    ArrayAdapter adapter = new PropertyArrayAdapter<ViewProperty>(MainActivity.this, l);
-                    adapters.get(client_index).add(adapter);
+            try {
+                BufferedReader fin =
+                        new BufferedReader(
+                                new InputStreamReader(
+                                        new FileInputStream(f)));
+                String text=fin.readLine();
+                while(text!=null){
+                    String[] data=text.split(",");
+                    String name=data[0];
+                    String host=data[1];
+                    int port=Integer.parseInt(data[2]);
+                    Connection conn=new Connection(name,host,port,this);
+                    conn.connect();
+                    connections.add(conn);
+                    text=fin.readLine();
                 }
-                list.setAdapter(adapters.get(index_conect).get(0));
+                fin.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if(size>0) {
-                for(int index=0;index<size;index++){
-                    ArrayList<INDIProperty> properties = c.getProperties(c.getDevicesNames().get(index));
-                    ArrayAdapter adapter = adapters.get(client_index).get(index);
-                    if (adapter.getCount() != properties.size() || c.has_change()) {
-                        adapter.clear();
-                        for (int i = 0; i < properties.size(); i++) {
-                            INDIProperty p=properties.get(i);
-                            int light=0;
-                            int perm=0;
-                            int visibility=0;
 
-                            //State
-                            if(p.getState().name().equals("IDLE")){
-                                light=R.drawable.grey_light_48;
-                            }else if(p.getState().name().equals("OK")){
-                                light=R.drawable.green_light_48;
-                            }else if(p.getState().name().equals("BUSY")){
-                                light=R.drawable.yellow_light_48;
-                            }else{
-                                light=R.drawable.red_light_48;
-                            }
+        }
+    }
 
-                            //Permission
-                            if(p.getPermission().name().equals("RO")){
-                                perm=R.drawable.read;
-                            }else if(p.getPermission().name().equals("WO")){
-                                perm=R.drawable.write;
-                            }else{
-                                perm=R.drawable.rw;
-                            }
+    private void saveConnections(){
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            File sd = this.getExternalFilesDir(null);
+            File f = new File(sd.getAbsolutePath(), "connections.txt");
+            try {
+                OutputStreamWriter fout =
+                        new OutputStreamWriter(
+                                new FileOutputStream(f));
 
-                            //Visibility
-
-                            adapter.add(new ViewProperty(p.getLabel(),light,perm,R.drawable.ic_visibility_black_24dp));
-                        }
-                    }
+                for (Connection conn:connections){
+                    fout.write(conn.getName()+','+conn.getHost()+','+conn.getPort());
+                    fout.write('\n');
                 }
+                fout.flush();
+                fout.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        @Override protected void onPostExecute(Void result) {
-            clients.remove(client_index);
-            adapters.remove(client_index);
-        }
-
-        public void finishThread(){
-            fin=true;
-        }
-
     }
 }

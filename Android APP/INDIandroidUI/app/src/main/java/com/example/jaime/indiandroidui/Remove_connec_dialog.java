@@ -13,13 +13,13 @@ import java.util.ArrayList;
 /**
  * Created by Jaime on 27/7/15.
  */
-public class Disconnec_dialog extends DialogFragment{
+public class Remove_connec_dialog extends DialogFragment{
 
     private CharSequence[] items;
-    private Disconnec_dialogListener listener;
+    private Remove_connec_dialogListener listener;
 
-    static Disconnec_dialog newInstance(CharSequence[] items){
-        Disconnec_dialog fragment = new Disconnec_dialog();
+    static Remove_connec_dialog newInstance(CharSequence[] items){
+        Remove_connec_dialog fragment = new Remove_connec_dialog();
         Bundle args = new Bundle();
         args.putCharSequenceArray("items",items);
         fragment.setArguments(args);
@@ -81,7 +81,7 @@ public class Disconnec_dialog extends DialogFragment{
         super.onAttach(activity);
 
         try {
-            listener = (Disconnec_dialogListener) activity;
+            listener = (Remove_connec_dialogListener) activity;
 
         } catch (ClassCastException e) {
             throw new ClassCastException(
@@ -91,7 +91,7 @@ public class Disconnec_dialog extends DialogFragment{
         }
     }
 
-    public interface Disconnec_dialogListener {
+    public interface Remove_connec_dialogListener {
         void onDisconnectButtonClick(ArrayList<String> items);
     }
 }

@@ -29,10 +29,27 @@
         android:background="#C8C9CB" />
 
     <EditText
-        android:id="@+id/host"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/text_border"
+        android:ems="10"
+        android:hint="@string/hint_name"
+        android:inputType="textUri"
+        android:padding="12dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="18dp"
+        android:textColor="#346D7D"
+        android:text="indiserver" />
+
+    <EditText
+        android:id="@+id/host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/text_border"
