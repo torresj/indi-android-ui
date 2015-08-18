@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -28,9 +30,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+import laazotea.indi.client.INDIProperty;
 
 
-public class MainActivity extends AppCompatActivity implements Add_connec_dialog.Add_connec_dialogListener, Remove_connec_dialog.Remove_connec_dialogListener {
+public class MainActivity extends AppCompatActivity implements Add_connec_dialog.Add_connec_dialogListener, Remove_connec_dialog.Remove_connec_dialogListener, AdapterView.OnItemClickListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -53,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
 
         //Instancia del ListView
         list = (ListView)findViewById(R.id.list);
+
+        list.setOnItemClickListener(this);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(list);
 
@@ -61,13 +67,14 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
     }
 
     @Override
-    protected void onStop(){
-        super.onStop();
+    protected void onDestroy(){
+        super.onDestroy();
         saveConnections();
         for (Connection conn:connections){
             conn.disconnect();
         }
         connections.clear();
+
     }
 
     private void setToolbar() {
@@ -115,15 +122,36 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
     }
 
     private void setDrawerMenu(){
+        int i=0,j=0;
         Menu menu=navigationView.getMenu();
         menu.clear();
-        for(int i=0;i<connections.size();i++){
-            IndiClient client=connections.get(i).getClient();
-            SubMenu sub= menu.addSubMenu(connections.get(i).getName());
-            for(int j=0;j<client.getDevicesNames().size();j++){
-                String device=client.getDevicesNames().get(j);
-                sub.add(i,i+j,j,device).setCheckable(true);
+        for(i=0;i<connections.size();i++){
+            Connection conn=connections.get(i);
+            IndiClient client=conn.getClient();
+            SubMenu sub= menu.addSubMenu(conn.getName());
+            if(client!=null) {
+                for (j = 0; j < client.getDevicesNames().size(); j++) {
+                    String device = client.getDevicesNames().get(j);
+                    MenuItem item=sub.add(i, i + j, j, device);
+                    item.setTitle(device);
+                    item.setIcon(R.drawable.ic_developer_board_black_24dp);
+                    item.setEnabled(true);
+                    item.setVisible(true);
+                    item.setCheckable(true);
+                }
             }
+
+            MenuItem item=null;
+            if(conn.isConnected()) {
+                item = sub.add(i, i + j, j,R.string.menu_disconnect);
+                item.setTitle(R.string.menu_disconnect);
+            }else{
+                item = sub.add(i, i + j, j,R.string.menu_connect);
+                item.setTitle(R.string.menu_connect);
+            }
+            item.setIcon(android.R.drawable.ic_lock_power_off);
+            item.setEnabled(true);
+            item.setVisible(true);
         }
         menu.add("").setVisible(false);
         drawerLayout.openDrawer(GravityCompat.START);
@@ -132,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
     @Override
     public void onConnectButtonClick(String name,String host, int port) {
         Connection conn=new Connection(name,host,port,this);
-        conn.connect();
+        //conn.connect();
         connections.add(conn);
     }
 
@@ -144,10 +172,33 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         Connection conn = connections.get(menuItem.getGroupId());
-                        ArrayList<ArrayAdapter> adapters = conn.getAdapters();
-                        list.setAdapter(adapters.get(menuItem.getOrder()));
-                        drawerLayout.closeDrawers();
-                        setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
+                        IndiClient client = conn.getClient();
+                        int order = 0;
+                        if (client != null) {
+                            order = client.getDevicesNames().size();
+                        }
+
+                        if (menuItem.getOrder() >= order) {
+                            if (conn.isConnected()) {
+                                conn.disconnect();
+                                ArrayList<INDIProperty> l = new ArrayList();
+                                ArrayAdapter adapter = new PropertyArrayAdapter<INDIProperty>(getApplicationContext(), l);
+                                list.setAdapter(adapter);
+                                adapter.clear();
+                                setTitle("INDIandroidUI");
+                                drawerLayout.closeDrawers();
+                            } else {
+                                conn.connect();
+                                drawerLayout.closeDrawers();
+                            }
+
+
+                        } else {
+                            ArrayList<ArrayAdapter> adapters = conn.getAdapters();
+                            list.setAdapter(adapters.get(menuItem.getOrder()));
+                            drawerLayout.closeDrawers();
+                            setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
+                        }
                         return true;
                     }
                 }
@@ -156,15 +207,18 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
 
     @Override
     public void onDisconnectButtonClick(ArrayList<String> itemsSeleccionados) {
+        boolean end=false;
         for(int i=0;i<itemsSeleccionados.size();i++){
             String item=itemsSeleccionados.get(i);
-            for(int j=0;j<connections.size();j++){
+            for(int j=0;j<connections.size()&&!end;j++){
                 Connection conn=connections.get(i);
                 if(conn.getName().equals(item)){
                     connections.get(i).disconnect();
                     connections.remove(i);
+                    end=true;
                 }
             }
+            end=false;
         }
     }
 
@@ -185,7 +239,6 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
                     String host=data[1];
                     int port=Integer.parseInt(data[2]);
                     Connection conn=new Connection(name,host,port,this);
-                    conn.connect();
                     connections.add(conn);
                     text=fin.readLine();
                 }
@@ -220,5 +273,12 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        EditViewPropery editView=EditViewPropery.newInstance();
+        editView.setProperty((INDIProperty)list.getAdapter().getItem(position));
+        editView.show(getSupportFragmentManager(),"Property view");
     }
 }

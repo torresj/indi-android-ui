@@ -45,10 +45,9 @@ public interface UIPropertyManager {
      *
      * @param p Indi property
      * @param inflater Layout inflater to inflate view
-     * @param parent ViewGroup to inflate view
      * @return View
      */
-    View getUpdateView(INDIProperty p, LayoutInflater inflater, ViewGroup parent);
+    View getUpdateView(INDIProperty p, LayoutInflater inflater);
 
     /**
      *  Update property with change saved at view v

@@ -15,4 +15,7 @@
     <string name="cancel_button">Cancelar</string>
     <string name="drawe_menu_title">Conexiones y dispositivos</string>
     <string name="hint_name">Nombre</string>
+    <string name="menu_connect">Conectar</string>
+    <string name="menu_disconnect">Desconectar</string>
+    <string name="button_update">Actualizar</string>>
 </resources>

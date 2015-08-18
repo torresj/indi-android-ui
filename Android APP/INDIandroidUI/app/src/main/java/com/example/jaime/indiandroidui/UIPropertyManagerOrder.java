@@ -10,10 +10,10 @@ public class UIPropertyManagerOrder implements Comparator<UIPropertyManager> {
     @Override
     public int compare(UIPropertyManager o1, UIPropertyManager o2) {
         if (o1.getPriority()<o2.getPriority())
-            return -1;
+            return 1;
         else if(o1.getPriority()==o2.getPriority())
             return 0;
         else
-            return 1;
+            return -1;
     }
 }

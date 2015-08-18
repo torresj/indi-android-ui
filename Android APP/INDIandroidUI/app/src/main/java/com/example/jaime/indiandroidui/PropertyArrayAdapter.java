@@ -43,6 +43,7 @@ public class PropertyArrayAdapter<T> extends ArrayAdapter<T> {
         uiProperties.add(new UISwitchPropertyManager());
         uiProperties.add(new UINumberPropertyManager());
         uiProperties.add(new UILightPropertyManager());
+        uiProperties.add(new UIConnecPropertyManager());
 
     }
 

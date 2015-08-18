@@ -23,6 +23,7 @@ public class Connection {
     private Context context;
     private IndiConnect thread;
     private boolean connected;
+    private boolean error;
 
     public Connection(String name,String host, int port,Context context){
         this.name=name;
@@ -33,6 +34,7 @@ public class Connection {
         client=null;
         adapters = new ArrayList<>();
         connected = false;
+        error = false;
     }
 
     public ArrayList<ArrayAdapter> getAdapters() {
@@ -49,6 +51,9 @@ public class Connection {
 
     public int getPort(){
         return port;
+    }
+    public boolean hasError(){
+        return error;
     }
 
     public IndiClient getClient(){
@@ -84,13 +89,18 @@ public class Connection {
 
         @Override protected void onPreExecute() {
             Toast.makeText(context, "Connecting...", Toast.LENGTH_SHORT).show();
+            error=false;
         }
 
         @Override protected Void doInBackground(Void... par) {
-            client=new IndiClient(host, port);
-            while(!end){
-                SystemClock.sleep(1000);
-                publishProgress(client);
+            try {
+                client = new IndiClient(host, port);
+                while(!end){
+                    SystemClock.sleep(1000);
+                    publishProgress(client);
+                }
+            }catch(Exception e){
+                error=true;
             }
             return null;
         }

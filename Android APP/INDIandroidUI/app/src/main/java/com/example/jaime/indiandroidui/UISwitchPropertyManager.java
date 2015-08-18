@@ -24,7 +24,7 @@ public class UISwitchPropertyManager implements UIPropertyManager {
 
     public UISwitchPropertyManager(){
         layout=R.layout.switch_property_view_list_item;
-        layout_dialog=0;
+        layout_dialog=R.layout.switch_property_edit_view;
     }
 
     @Override
@@ -50,8 +50,11 @@ public class UISwitchPropertyManager implements UIPropertyManager {
     }
 
     @Override
-    public View getUpdateView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
-        return null;
+    public View getUpdateView(INDIProperty p, LayoutInflater inflater) {
+        View v = inflater.inflate(layout_dialog,null);
+        TextView name=(TextView)v.findViewById(R.id.property_name);
+        name.setText(p.getLabel());
+        return v;
     }
 
     @Override

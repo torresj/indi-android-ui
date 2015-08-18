@@ -8,44 +8,43 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import laazotea.indi.client.INDIBLOBProperty;
+import laazotea.indi.Constants;
 import laazotea.indi.client.INDIElement;
 import laazotea.indi.client.INDIProperty;
+import laazotea.indi.client.INDISwitchElement;
 
 /**
- * Created by Jaime on 5/8/15.
+ * Created by Jaime on 18/8/15.
  */
-public class UIBlobPropertyManager implements UIPropertyManager {
-
+public class UIConnecPropertyManager implements UIPropertyManager {
     //Atributes
     int layout;
     int layout_dialog;
 
-    public UIBlobPropertyManager(){
-        layout=R.layout.blob_property_view_list_item;
-        layout_dialog=R.layout.blob_property_edit_view;
+    public UIConnecPropertyManager(){
+        layout=R.layout.connec_property_view_list_item;
+        layout_dialog=R.layout.connec_property_edit_view;
     }
 
     @Override
     public boolean handlesProperty(INDIProperty p) {
-        return p instanceof INDIBLOBProperty;
+
+        if(p.getName().equals("CONNECTION"))
+            return true;
+        else
+            return false;
     }
 
     @Override
     public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
-        if (p instanceof INDIBLOBProperty){
-            View v=inflater.inflate(layout, parent, false);
-            return v;
-        }else{
-            return null;
-        }
+        View v=inflater.inflate(layout, parent, false);
+        return v;
     }
+
 
     @Override
     public void updateView(INDIProperty p, View v) {
-        if (p instanceof INDIBLOBProperty){
-            setView(v,(INDIBLOBProperty)p);
-        }
+        setView(v,p);
     }
 
     @Override
@@ -56,6 +55,7 @@ public class UIBlobPropertyManager implements UIPropertyManager {
         return v;
     }
 
+
     @Override
     public void updateProperty(INDIProperty p, View v) {
 
@@ -63,10 +63,10 @@ public class UIBlobPropertyManager implements UIPropertyManager {
 
     @Override
     public int getPriority() {
-        return 0;
+        return 5;
     }
 
-    void setView(View v, INDIBLOBProperty p){
+    void setView(View v, INDIProperty p){
         //Views
         TextView name = (TextView)v.findViewById(R.id.name);
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
@@ -81,7 +81,16 @@ public class UIBlobPropertyManager implements UIPropertyManager {
 
         ArrayList<INDIElement> list = p.getElementsAsList();
 
-        element.setText("");
+        String text="";
+
+        INDISwitchElement elem=(INDISwitchElement)list.get(0);
+
+        if (elem.getValue().equals(Constants.SwitchStatus.ON))
+            text="Connected";
+        else
+            text="Disconnected";
+
+        element.setText(text);
 
 
         //State
