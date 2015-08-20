@@ -96,7 +96,7 @@ public class Connection {
             try {
                 client = new IndiClient(host, port);
                 while(!end){
-                    SystemClock.sleep(1000);
+                    SystemClock.sleep(100);
                     publishProgress(client);
                 }
             }catch(Exception e){

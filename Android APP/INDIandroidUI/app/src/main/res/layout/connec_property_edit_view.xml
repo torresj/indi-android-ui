@@ -27,6 +27,20 @@
         android:layout_marginTop="10dp"
         android:background="#C8C9CB" />
 
+    <Switch
+        android:id="@+id/conn_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="18dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#346D7D"
+        android:text="@string/conn_switch"
+        android:layout_below="@+id/divider"
+        android:layout_centerHorizontal="true" />
+
 
     <Button
         android:id="@+id/update_button"
@@ -38,10 +52,11 @@
         android:text="@string/button_update"
         android:textColor="@android:color/white"
         android:background="#346D7D"
-        android:layout_below="@+id/divider"
+        android:layout_below="@+id/conn_switch"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textSize="18dp" />
+
 
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.jaime.indiandroidui;
 
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public interface UIPropertyManager {
      * @param inflater Layout inflater to inflate view
      * @return View
      */
-    View getUpdateView(INDIProperty p, LayoutInflater inflater);
+    View getUpdateView(INDIProperty p, LayoutInflater inflater, DialogFragment fragment);
 
     /**
      *  Update property with change saved at view v

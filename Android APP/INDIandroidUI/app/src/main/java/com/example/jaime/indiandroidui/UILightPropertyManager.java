@@ -1,5 +1,6 @@
 package com.example.jaime.indiandroidui;
 
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class UILightPropertyManager implements UIPropertyManager {
     }
 
     @Override
-    public View getUpdateView(INDIProperty p, LayoutInflater inflater) {
+    public View getUpdateView(INDIProperty p, LayoutInflater inflater, DialogFragment fragment) {
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
         name.setText(p.getLabel());

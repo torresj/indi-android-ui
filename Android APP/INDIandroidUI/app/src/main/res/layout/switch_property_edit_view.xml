@@ -27,6 +27,18 @@
         android:layout_marginTop="10dp"
         android:background="#C8C9CB" />
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="2"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/divider"
+        android:id="@+id/table">
+
+
+    </TableLayout>
+
 
     <Button
         android:id="@+id/update_button"
@@ -38,10 +50,11 @@
         android:text="@string/button_update"
         android:textColor="@android:color/white"
         android:background="#346D7D"
-        android:layout_below="@+id/divider"
+        android:layout_below="@+id/table"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textSize="18dp" />
+
 
 
 </RelativeLayout>

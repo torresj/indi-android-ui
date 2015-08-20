@@ -17,5 +17,6 @@
     <string name="hint_name">Nombre</string>
     <string name="menu_connect">Conectar</string>
     <string name="menu_disconnect">Desconectar</string>
-    <string name="button_update">Actualizar</string>>
+    <string name="button_update">Actualizar</string>
+    <string name="conn_switch">Conectar</string>>
 </resources>

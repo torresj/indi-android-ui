@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -16,9 +17,11 @@ import laazotea.indi.client.INDIProperty;
 /**
  * Created by Jaime on 18/8/15.
  */
-public class EditViewPropery extends DialogFragment {
+public class EditViewPropery extends DialogFragment implements View.OnClickListener{
 
     private INDIProperty p;
+    UIPropertyManager ui;
+    private View v;
     private TreeSet<UIPropertyManager> uiProperties;
 
     static EditViewPropery newInstance(){
@@ -42,7 +45,7 @@ public class EditViewPropery extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        UIPropertyManager ui=null;
+        ui=null;
         setUiProperties();
 
         boolean end = false;
@@ -54,7 +57,11 @@ public class EditViewPropery extends DialogFragment {
             }
         }
 
-        View v = ui.getUpdateView(p,inflater);
+        v = ui.getUpdateView(p,inflater,this);
+
+        Button button=(Button)v.findViewById(R.id.update_button);
+
+        button.setOnClickListener(this);
 
         builder.setView(v);
 
@@ -78,5 +85,11 @@ public class EditViewPropery extends DialogFragment {
 
     public void setProperty(INDIProperty p){
         this.p=p;
+    }
+
+    @Override
+    public void onClick(View v) {
+        ui.updateProperty(p,this.v);
+        dismiss();
     }
 }
