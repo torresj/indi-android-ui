@@ -1,47 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="24dp">
-
-
-    <TextView
-        android:id="@+id/property_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:textSize="20dp" />
-
-
-    <View
-        android:id="@+id/divider"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/property_name"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
-        android:background="#C8C9CB" />
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:padding="24dp">
 
 
-    <Button
-        android:id="@+id/update_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/button_update"
-        android:textColor="@android:color/white"
-        android:background="#346D7D"
-        android:layout_below="@+id/divider"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="18dp" />
+        <TextView
+            android:id="@+id/property_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:textSize="20dp" />
 
 
-</RelativeLayout>
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/property_name"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:background="#C8C9CB" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/divider"
+            android:id="@+id/table">
+
+
+        </TableLayout>
+
+
+        <Button
+            android:id="@+id/update_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/button_update"
+            android:textColor="@android:color/white"
+            android:background="#346D7D"
+            android:layout_below="@+id/table"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="18dp" />
+
+
+    </RelativeLayout>
+   </ScrollView>

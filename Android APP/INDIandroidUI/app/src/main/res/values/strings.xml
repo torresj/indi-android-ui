@@ -18,5 +18,7 @@
     <string name="menu_connect">Conectar</string>
     <string name="menu_disconnect">Desconectar</string>
     <string name="button_update">Actualizar</string>
-    <string name="conn_switch">Conectar</string>>
+    <string name="conn_switch">Conectar</string>
+    <string name="alert">Aviso</string>
+    <string name="alert_msg">Propiedad de solo lectura. Nada que editar</string>>
 </resources>

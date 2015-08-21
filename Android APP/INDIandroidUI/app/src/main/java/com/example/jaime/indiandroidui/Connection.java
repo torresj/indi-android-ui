@@ -120,14 +120,19 @@ public class Connection {
                 for(int index=0;index<size;index++){
                     ArrayList<INDIProperty> properties = c.getProperties(c.getDevicesNames().get(index));
                     ArrayAdapter adapter = adapters.get(index);
-                    if (adapter.getCount() != properties.size() || c.has_change()) {
+                    if (adapter.getCount() != properties.size()) {
                         adapter.clear();
                         for (int i = 0; i < properties.size(); i++) {
                             INDIProperty p=properties.get(i);
                             adapter.add(p);
                         }
                     }
+                    if(c.has_change()) {
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }
+                c.changeRead();
             }
         }
 

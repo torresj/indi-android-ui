@@ -141,9 +141,9 @@ public class UIConnecPropertyManager implements UIPropertyManager {
         }
 
         //Permission
-        if(p.getPermission().name().equals("RO")){
+        if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
             perm_res=R.drawable.read;
-        }else if(p.getPermission().name().equals("WO")){
+        }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
             perm_res=R.drawable.write;
         }else{
             perm_res=R.drawable.rw;

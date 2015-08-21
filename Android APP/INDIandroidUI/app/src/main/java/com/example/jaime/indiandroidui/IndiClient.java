@@ -71,6 +71,8 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     @Override
     public void connectionLost(INDIServerConnection connection) {
         log+="Connection lost. Bye"+"\n";
+        devices=new HashMap<String, ArrayList<INDIProperty>>();
+        name_devices=new ArrayList();
 
     }
 
@@ -103,6 +105,7 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     @Override
     public void propertyChanged(INDIProperty property) {
         log+="Property Changed: " + property.getNameStateAndValuesAsString()+"\n";
+        System.out.println("Property Changed: " + property.getNameStateAndValuesAsString()+"\n");
         boolean fin=false;
         for(int i=0;i<devices.get(property.getDevice().getName()).size() && !fin;i++){
             INDIProperty p=devices.get(property.getDevice().getName()).get(i);
@@ -111,6 +114,7 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
                 fin=true;
             }
         }
+        change=true;
     }
 
     public String getLog(){
@@ -126,12 +130,11 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     }
 
     public boolean has_change(){
-        if(change){
-            change=false;
-            return true;
-        }else{
-            return false;
-        }
+        return change;
+    }
+
+    public void changeRead(){
+        change=false;
     }
 
     public String getNameConecction(){

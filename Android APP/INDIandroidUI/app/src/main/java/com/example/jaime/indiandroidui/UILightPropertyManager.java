@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import laazotea.indi.Constants;
+import laazotea.indi.client.INDIElement;
 import laazotea.indi.client.INDILightProperty;
 import laazotea.indi.client.INDIProperty;
 
@@ -50,7 +52,8 @@ public class UILightPropertyManager implements UIPropertyManager {
     public View getUpdateView(INDIProperty p, LayoutInflater inflater, DialogFragment fragment) {
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
-        name.setText(p.getLabel());
+        INDILightProperty p_l= (INDILightProperty) p;
+        name.setText(p_l.getLabel());
         return v;
     }
 
@@ -92,9 +95,9 @@ public class UILightPropertyManager implements UIPropertyManager {
         }
 
         //Permission
-        if(p.getPermission().name().equals("RO")){
+        if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
             perm_res=R.drawable.read;
-        }else if(p.getPermission().name().equals("WO")){
+        }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
             perm_res=R.drawable.write;
         }else{
             perm_res=R.drawable.rw;

@@ -168,9 +168,9 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         }
 
         //Permission
-        if(p.getPermission().name().equals("RO")){
+        if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
             perm_res=R.drawable.read;
-        }else if(p.getPermission().name().equals("WO")){
+        }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
             perm_res=R.drawable.write;
         }else{
             perm_res=R.drawable.rw;
@@ -188,8 +188,6 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
     @Override
     public void onClick(View v) {
         ToggleButton b=(ToggleButton)v;
-
-        System.out.println(b.isChecked());
 
         for(ToggleButton value:values){
             if(!b.equals(value))

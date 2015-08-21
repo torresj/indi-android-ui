@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,6 +31,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+import laazotea.indi.Constants;
+import laazotea.indi.client.INDILightProperty;
 import laazotea.indi.client.INDIProperty;
 
 
@@ -277,8 +280,13 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        EditViewPropery editView=EditViewPropery.newInstance();
-        editView.setProperty((INDIProperty)list.getAdapter().getItem(position));
-        editView.show(getSupportFragmentManager(),"Property view");
+        INDIProperty p = (INDIProperty)list.getAdapter().getItem(position);
+        if(!(p instanceof INDILightProperty || p.getPermission().equals(Constants.PropertyPermissions.RO))) {
+            EditViewPropery editView = EditViewPropery.newInstance();
+            editView.setProperty(p);
+            editView.show(getSupportFragmentManager(), "Property view");
+        }else{
+            new Alert_dialog().show(getSupportFragmentManager(), "AlertDialog");
+        }
     }
 }

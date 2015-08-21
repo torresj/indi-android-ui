@@ -4,15 +4,21 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import laazotea.indi.Constants;
 import laazotea.indi.client.INDIElement;
 import laazotea.indi.client.INDIProperty;
 import laazotea.indi.client.INDITextElement;
 import laazotea.indi.client.INDITextProperty;
+import laazotea.indi.client.INDIValueException;
 
 /**
  * Created by Jaime on 5/8/15.
@@ -53,15 +59,62 @@ public class UITextPropertyManager implements UIPropertyManager {
 
     @Override
     public View getUpdateView(INDIProperty p, LayoutInflater inflater,DialogFragment fragment) {
+        System.out.println("Text property");
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
+        TableLayout table = (TableLayout)v.findViewById(R.id.table);
+        INDITextProperty p_t = (INDITextProperty)p;
+
         name.setText(p.getLabel());
+
+        ArrayList<INDIElement> list = p_t.getElementsAsList();
+
+        for(int i=0;i<list.size();i++) {
+            TableRow row = (TableRow) LayoutInflater.from(fragment.getActivity()).inflate(R.layout.text_row, null);
+            TextView label = (TextView) row.findViewById(R.id.label);
+            EditText edit = (EditText) row.findViewById(R.id.edit_text);
+
+            INDITextElement elem = (INDITextElement)list.get(i);
+
+            label.setText(elem.getLabel());
+            edit.setText(elem.getValue());
+
+            table.addView(row);
+        }
+
+
         return v;
     }
 
 
     @Override
     public void updateProperty(INDIProperty p, View v) {
+        TableLayout table = (TableLayout)v.findViewById(R.id.table);
+
+        ArrayList<INDIElement> list = p.getElementsAsList();
+
+        int rows=table.getChildCount();
+
+        for(int i=0;i<rows;i++){
+            TableRow row=(TableRow)table.getChildAt(i);
+            EditText value = (EditText)row.findViewById(R.id.edit_text);
+            INDITextElement elem=(INDITextElement)list.get(i);
+            String text=value.getText().toString();
+
+            try {
+                elem.setDesiredValue(text);
+            } catch (INDIValueException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            p.sendChangesToDriver();
+        } catch (INDIValueException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -105,9 +158,9 @@ public class UITextPropertyManager implements UIPropertyManager {
         }
 
         //Permission
-        if(p.getPermission().name().equals("RO")){
+        if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
             perm_res=R.drawable.read;
-        }else if(p.getPermission().name().equals("WO")){
+        }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
             perm_res=R.drawable.write;
         }else{
             perm_res=R.drawable.rw;
