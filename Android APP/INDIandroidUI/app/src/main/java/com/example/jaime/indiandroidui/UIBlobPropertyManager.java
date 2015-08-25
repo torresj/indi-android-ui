@@ -1,15 +1,31 @@
 package com.example.jaime.indiandroidui;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import laazotea.indi.Constants;
+import laazotea.indi.INDIBLOBValue;
+import laazotea.indi.client.INDIBLOBElement;
 import laazotea.indi.client.INDIBLOBProperty;
 import laazotea.indi.client.INDIElement;
 import laazotea.indi.client.INDIProperty;
@@ -20,12 +36,15 @@ import laazotea.indi.client.INDIProperty;
 public class UIBlobPropertyManager implements UIPropertyManager {
 
     //Atributes
-    int layout;
-    int layout_dialog;
+    private int layout;
+    private int layout_dialog;
+    private Map<String, INDIBLOBValue> blobs;
+    private Context context;
 
     public UIBlobPropertyManager(){
         layout=R.layout.blob_property_view_list_item;
         layout_dialog=R.layout.blob_property_edit_view;
+        blobs=new HashMap<String, INDIBLOBValue>();
     }
 
     @Override
@@ -34,7 +53,8 @@ public class UIBlobPropertyManager implements UIPropertyManager {
     }
 
     @Override
-    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
+    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent , Context context) {
+        this.context=context;
         if (p instanceof INDIBLOBProperty){
             View v=inflater.inflate(layout, parent, false);
             return v;
@@ -74,7 +94,13 @@ public class UIBlobPropertyManager implements UIPropertyManager {
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
         ImageView perm = (ImageView)v.findViewById(R.id.perm);
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
-        TextView element = (TextView)v.findViewById(R.id.element);
+        TextView label = (TextView)v.findViewById(R.id.label);
+        TextView type = (TextView)v.findViewById(R.id.type);
+        final ImageButton save =(ImageButton)v.findViewById(R.id.save_button);
+        ImageButton view =(ImageButton)v.findViewById(R.id.view_button);
+
+        save.setTag(label.getText().toString());
+        view.setTag(label.getText().toString());
 
         //others
         int light_res=0;
@@ -82,8 +108,29 @@ public class UIBlobPropertyManager implements UIPropertyManager {
         int visibility_res=0;
 
         ArrayList<INDIElement> list = p.getElementsAsList();
+        if(list.size()>0) {
+            INDIBLOBElement elem = (INDIBLOBElement) list.get(0);
+            INDIBLOBValue blob = elem.getValue();
+            label.setText(elem.getLabel()+": "+blob.getSize()+" Bytes");
+            type.setText("Type: " + blob.getFormat());
+            blobs.put(elem.getLabel(), blob);
+            save.setTag(elem.getLabel());
+            view.setTag(elem.getLabel());
+        }
 
-        element.setText("");
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveBlob(v);
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewBlob(v);
+            }
+        });
 
 
         //State
@@ -113,5 +160,57 @@ public class UIBlobPropertyManager implements UIPropertyManager {
         idle.setImageResource(light_res);
         perm.setImageResource(perm_res);
         visibility.setImageResource(visibility_res);
+    }
+
+    private void saveBlob(View v){
+        INDIBLOBValue blob=blobs.get((String) v.getTag());
+        if(blob.getSize()>0) {
+            File path = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+            File file = new File(path, "/" + (String) v.getTag() + blob.getFormat());
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(blob.getBLOBData());
+                fos.close();
+                Toast.makeText(context,context.getResources().getString(R.string.save_text)+": "+file.getName(), Toast.LENGTH_SHORT).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            AppCompatActivity act=(AppCompatActivity)context;
+            Alert_dialog alert = Alert_dialog.newInstance(R.string.not_data_save);
+            alert.show(act.getSupportFragmentManager(),"Alert No Data");
+
+        }
+    }
+
+    private void viewBlob(View v) {
+        INDIBLOBValue blob=blobs.get((String) v.getTag());
+        if(blob.getSize()>0) {
+            File path = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+            File file = new File(path, "/" + (String) v.getTag() + blob.getFormat());
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(blob.getBLOBData());
+                fos.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file), "image/" + blob.getFormat().substring(1));
+            context.startActivity(intent);
+        }else{
+            AppCompatActivity act=(AppCompatActivity)context;
+            Alert_dialog alert = Alert_dialog.newInstance(R.string.not_data);
+            alert.show(act.getSupportFragmentManager(),"Alert No Data");
+
+        }
     }
 }

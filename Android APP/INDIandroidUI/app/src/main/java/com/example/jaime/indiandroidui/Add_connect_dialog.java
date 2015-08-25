@@ -14,11 +14,11 @@ import android.widget.EditText;
 /**
  * Fragmento con diálogo básico
  */
-public class Add_connec_dialog extends DialogFragment {
+public class Add_connect_dialog extends DialogFragment {
 
     private Add_connec_dialogListener listener;
 
-    public Add_connec_dialog() {
+    public Add_connect_dialog() {
     }
 
     @NonNull

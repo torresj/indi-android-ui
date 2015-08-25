@@ -1,10 +1,10 @@
 package com.example.jaime.indiandroidui;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -41,7 +41,7 @@ public class UIConnecPropertyManager implements UIPropertyManager {
     }
 
     @Override
-    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
+    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
         View v=inflater.inflate(layout, parent, false);
         return v;
     }

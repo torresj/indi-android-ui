@@ -13,13 +13,13 @@ import java.util.ArrayList;
 /**
  * Created by Jaime on 27/7/15.
  */
-public class Remove_connec_dialog extends DialogFragment{
+public class Remove_connect_dialog extends DialogFragment{
 
     private CharSequence[] items;
     private Remove_connec_dialogListener listener;
 
-    static Remove_connec_dialog newInstance(CharSequence[] items){
-        Remove_connec_dialog fragment = new Remove_connec_dialog();
+    static Remove_connect_dialog newInstance(CharSequence[] items){
+        Remove_connect_dialog fragment = new Remove_connect_dialog();
         Bundle args = new Bundle();
         args.putCharSequenceArray("items",items);
         fragment.setArguments(args);

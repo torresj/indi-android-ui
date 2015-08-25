@@ -7,7 +7,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,13 +29,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import laazotea.indi.Constants;
 import laazotea.indi.client.INDILightProperty;
 import laazotea.indi.client.INDIProperty;
 
 
-public class MainActivity extends AppCompatActivity implements Add_connec_dialog.Add_connec_dialogListener, Remove_connec_dialog.Remove_connec_dialogListener, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener, AdapterView.OnItemClickListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setUiProperties();
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
 
         setToolbar();
 
+
     }
 
     @Override
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
             // Poner ícono del drawer toggle
-            ab.setHomeAsUpIndicator(R.drawable.ic_list_black_24dp);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -108,14 +111,14 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
                 setDrawerMenu();
                 return true;
             case R.id.action_connect:
-                new Add_connec_dialog().show(getSupportFragmentManager(), "New Connection");
+                new Add_connect_dialog().show(getSupportFragmentManager(), "New Connection");
                 return true;
             case R.id.action_disconnect:
                 CharSequence[] items = new CharSequence[connections.size()];
                 for(int i=0;i<items.length;i++){
                     items[i]=connections.get(i).getName();
                 }
-                Remove_connec_dialog dialog= Remove_connec_dialog.newInstance(items);
+                Remove_connect_dialog dialog= Remove_connect_dialog.newInstance(items);
                 dialog.show(getSupportFragmentManager(), "Remove connections");
                 return true;
             case R.id.action_exit:
@@ -144,17 +147,24 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
                 }
             }
 
-            MenuItem item=null;
             if(conn.isConnected()) {
-                item = sub.add(i, i + j, j,R.string.menu_disconnect);
+                MenuItem item = sub.add(i, i + j, j,R.string.menu_disconnect);
                 item.setTitle(R.string.menu_disconnect);
+                item.setIcon(android.R.drawable.ic_lock_power_off);
+                item.setEnabled(true);
+                item.setVisible(true);
             }else{
-                item = sub.add(i, i + j, j,R.string.menu_connect);
+                MenuItem item = sub.add(i, i + j, j,R.string.menu_connect);
                 item.setTitle(R.string.menu_connect);
+                item.setIcon(android.R.drawable.ic_lock_power_off);
+                item.setEnabled(true);
+                item.setVisible(true);
+                MenuItem item2 = sub.add(i, i + j+1, j+1,R.string.menu_disconnect);
+                item2.setTitle(R.string.menu_edit);
+                item2.setIcon(R.drawable.ic_mode_edit_black_24dp);
+                item2.setEnabled(true);
+                item2.setVisible(true);
             }
-            item.setIcon(android.R.drawable.ic_lock_power_off);
-            item.setEnabled(true);
-            item.setVisible(true);
         }
         menu.add("").setVisible(false);
         drawerLayout.openDrawer(GravityCompat.START);
@@ -181,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
                             order = client.getDevicesNames().size();
                         }
 
-                        if (menuItem.getOrder() >= order) {
+                        if (menuItem.getOrder() == order) {
                             if (conn.isConnected()) {
                                 conn.disconnect();
                                 ArrayList<INDIProperty> l = new ArrayList();
@@ -196,11 +206,14 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
                             }
 
 
-                        } else {
+                        } else if (menuItem.getOrder() < order) {
                             ArrayList<ArrayAdapter> adapters = conn.getAdapters();
                             list.setAdapter(adapters.get(menuItem.getOrder()));
                             drawerLayout.closeDrawers();
                             setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
+                        } else {
+                            Edit_connect_dialg dialog = Edit_connect_dialg.newInstance(connections.get(menuItem.getGroupId()), menuItem.getGroupId());
+                            dialog.show(getSupportFragmentManager(), "Edit connections");
                         }
                         return true;
                     }
@@ -286,7 +299,27 @@ public class MainActivity extends AppCompatActivity implements Add_connec_dialog
             editView.setProperty(p);
             editView.show(getSupportFragmentManager(), "Property view");
         }else{
-            new Alert_dialog().show(getSupportFragmentManager(), "AlertDialog");
+            Alert_dialog alert=Alert_dialog.newInstance(R.string.alert_msg);
+            alert.show(getSupportFragmentManager(), "AlertDialog");
         }
+    }
+
+    @Override
+    public void onEditButtonClick(String name, String host, int port,int position) {
+        Connection conn=new Connection(name,host,port,this);
+        connections.set(position,conn);
+        setDrawerMenu();
+    }
+
+    private void setUiProperties() {
+        //add UI object
+        Config.init();
+        Config.addUiPropertyManager(new UIBlobPropertyManager());
+        Config.addUiPropertyManager(new UITextPropertyManager());
+        Config.addUiPropertyManager(new UISwitchPropertyManager());
+        Config.addUiPropertyManager(new UINumberPropertyManager());
+        Config.addUiPropertyManager(new UILightPropertyManager());
+        Config.addUiPropertyManager(new UIConnecPropertyManager());
+
     }
 }

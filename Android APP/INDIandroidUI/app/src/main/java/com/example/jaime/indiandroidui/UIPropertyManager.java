@@ -1,5 +1,6 @@
 package com.example.jaime.indiandroidui;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +30,10 @@ public interface UIPropertyManager {
      * @param p Indi property
      * @param inflater Layout inflater to inflate view
      * @param parent ViewGroup to inflate view
+     * @param context Context to allow use Activity methods
      * @return View
      */
-    View getPropertyView (INDIProperty p, LayoutInflater inflater, ViewGroup parent);
+    View getPropertyView (INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context);
 
     /**
      *  update view v with Indi property p elements

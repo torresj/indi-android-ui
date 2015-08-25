@@ -1,5 +1,6 @@
 package com.example.jaime.indiandroidui;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import laazotea.indi.Constants;
-import laazotea.indi.client.INDIElement;
 import laazotea.indi.client.INDILightProperty;
 import laazotea.indi.client.INDIProperty;
 
@@ -32,7 +32,7 @@ public class UILightPropertyManager implements UIPropertyManager {
     }
 
     @Override
-    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
+    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
         if (p instanceof INDILightProperty){
             View v=inflater.inflate(layout, parent, false);
             return v;

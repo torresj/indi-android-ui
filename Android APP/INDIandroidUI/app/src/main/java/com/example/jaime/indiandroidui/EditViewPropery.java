@@ -22,7 +22,6 @@ public class EditViewPropery extends DialogFragment implements View.OnClickListe
     private INDIProperty p;
     UIPropertyManager ui;
     private View v;
-    private TreeSet<UIPropertyManager> uiProperties;
 
     static EditViewPropery newInstance(){
         EditViewPropery fragment = new EditViewPropery();
@@ -46,9 +45,9 @@ public class EditViewPropery extends DialogFragment implements View.OnClickListe
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         ui=null;
-        setUiProperties();
 
         boolean end = false;
+        TreeSet<UIPropertyManager> uiProperties = Config.getUIProperties();
         for( Iterator it = uiProperties.iterator(); it.hasNext() && !end;){
             UIPropertyManager aux=(UIPropertyManager)it.next();
             if(aux.handlesProperty(p)){
@@ -69,19 +68,6 @@ public class EditViewPropery extends DialogFragment implements View.OnClickListe
         return builder.create();
     }
 
-    private void setUiProperties() {
-        //Create order set
-        uiProperties = new TreeSet<>(new UIPropertyManagerOrder());
-
-        //add UI object
-        uiProperties.add(new UIBlobPropertyManager());
-        uiProperties.add(new UITextPropertyManager());
-        uiProperties.add(new UISwitchPropertyManager());
-        uiProperties.add(new UINumberPropertyManager());
-        uiProperties.add(new UILightPropertyManager());
-        uiProperties.add(new UIConnecPropertyManager());
-
-    }
 
     public void setProperty(INDIProperty p){
         this.p=p;

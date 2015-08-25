@@ -1,5 +1,6 @@
 package com.example.jaime.indiandroidui;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class UITextPropertyManager implements UIPropertyManager {
     }
 
     @Override
-    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
+    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
         if (p instanceof INDITextProperty){
             View v=inflater.inflate(layout, parent, false);
             return v;
@@ -141,7 +142,7 @@ public class UITextPropertyManager implements UIPropertyManager {
         String text="";
         for(int i=0;i<list.size();i++){
             INDITextElement elem=(INDITextElement)list.get(i);
-            text=text+elem.getLabel()+" : "+elem.getValue()+"\n";
+            text=text+elem.getLabel()+":"+elem.getValue()+"\n";
         }
         element.setText(text);
 

@@ -1,5 +1,6 @@
 package com.example.jaime.indiandroidui;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
     }
 
     @Override
-    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
+    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
         if (p instanceof INDISwitchProperty){
             View v=inflater.inflate(layout, parent, false);
             return v;

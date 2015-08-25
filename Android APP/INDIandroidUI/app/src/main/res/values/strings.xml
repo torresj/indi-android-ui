@@ -20,5 +20,11 @@
     <string name="button_update">Actualizar</string>
     <string name="conn_switch">Conectar</string>
     <string name="alert">Aviso</string>
-    <string name="alert_msg">Propiedad de solo lectura. Nada que editar</string>>
+    <string name="alert_msg">Propiedad de solo lectura. Nada que editar</string>
+    <string name="menu_edit">Editar</string>
+    <string name="edit_connect">Editar</string>
+    <string name="action_edit">Editar conexión</string>
+    <string name="not_data">No hay datos que mostrar.</string>
+    <string name="save_text">Archivo salvado</string>
+    <string name="not_data_save">No hay datos que salvar.</string>>
 </resources>

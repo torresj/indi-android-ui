@@ -25,12 +25,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:id="@+id/element"
+        android:id="@+id/label"
         android:layout_below="@+id/name"
         android:layout_toRightOf="@+id/idle"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/type"
+        android:layout_below="@+id/label"
+        android:layout_toRightOf="@+id/idle"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:src="@drawable/ic_save_black_24dp"
+        android:id="@+id/save_button"
+        android:layout_below="@+id/type"
+        android:layout_toRightOf="@+id/idle"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pageview_black_24dp"
+        android:id="@+id/view_button"
+        android:layout_alignTop="@+id/save_button"
+        android:layout_toRightOf="@+id/save_button"
+        android:layout_toEndOf="@+id/save_button" />
 
     <ImageView
         android:layout_width="wrap_content"

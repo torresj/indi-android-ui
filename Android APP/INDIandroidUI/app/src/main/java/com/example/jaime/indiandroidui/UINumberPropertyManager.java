@@ -1,5 +1,6 @@
 package com.example.jaime.indiandroidui;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
     }
 
     @Override
-    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent) {
+    public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
         if (p instanceof INDINumberProperty){
             View v=inflater.inflate(layout, parent, false);
             return v;
@@ -75,7 +76,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
             INDINumberElement elem = (INDINumberElement)list.get(i);
 
             label.setText(elem.getLabel());
-            edit.setText(elem.getValue().toString());
+            edit.setText(elem.getValueAsString());
 
             table.addView(row);
         }
@@ -139,7 +140,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
         String text="";
         for(int i=0;i<list.size();i++){
             INDINumberElement elem=(INDINumberElement)list.get(i);
-            text=text+elem.getLabel()+" : "+elem.getValue()+"\n";
+            text=text+elem.getLabel()+":"+elem.getValueAsString()+"\n";
         }
         element.setText(text);
 
