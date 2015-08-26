@@ -29,5 +29,7 @@
     <string name="not_data_save">No hay datos que salvar.</string>
     <string name="alert_connection_lost">Conexión perdida</string>
     <string name="alert_device_add">Nuevo dispositivo añadido</string>
-    <string name="alert_device_remove">Dispositivo desconectado</string>>
+    <string name="alert_device_remove">Dispositivo desconectado</string>
+    <string name="alert_invalid_number">Formato erroneo o fuera de rango</string>
+    <string name="help">Ayuda</string>>
 </resources>

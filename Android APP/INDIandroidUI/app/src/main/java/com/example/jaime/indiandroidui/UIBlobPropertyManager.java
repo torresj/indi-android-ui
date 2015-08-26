@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +93,7 @@ public class UIBlobPropertyManager implements UIPropertyManager {
         //Views
         TextView name = (TextView)v.findViewById(R.id.name);
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
-        ImageView perm = (ImageView)v.findViewById(R.id.perm);
+        TextView perm = (TextView)v.findViewById(R.id.perm);
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
         TextView label = (TextView)v.findViewById(R.id.label);
         TextView type = (TextView)v.findViewById(R.id.type);
@@ -104,15 +105,18 @@ public class UIBlobPropertyManager implements UIPropertyManager {
 
         //others
         int light_res=0;
-        int perm_res=0;
+        String perm_res="";
         int visibility_res=0;
 
         ArrayList<INDIElement> list = p.getElementsAsList();
         if(list.size()>0) {
             INDIBLOBElement elem = (INDIBLOBElement) list.get(0);
             INDIBLOBValue blob = elem.getValue();
-            label.setText(elem.getLabel()+": "+blob.getSize()+" Bytes");
-            type.setText("Type: " + blob.getFormat());
+            label.setText(Html.fromHtml("<b>" + elem.getLabel() + ":</b> " + blob.getSize() + " Bytes"));
+            if(blob.getFormat().equals(""))
+                type.setText(Html.fromHtml("<b>Type:</b> None"));
+            else
+                type.setText(Html.fromHtml("<b>Type:</b> " + blob.getFormat()));
             blobs.put(elem.getLabel(), blob);
             save.setTag(elem.getLabel());
             view.setTag(elem.getLabel());
@@ -146,11 +150,11 @@ public class UIBlobPropertyManager implements UIPropertyManager {
 
         //Permission
         if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
-            perm_res=R.drawable.read;
+            perm_res="RO";
         }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
-            perm_res=R.drawable.write;
+            perm_res="WO";
         }else{
-            perm_res=R.drawable.rw;
+            perm_res="RW";
         }
 
         visibility_res=R.drawable.ic_visibility_black_24dp;
@@ -158,7 +162,7 @@ public class UIBlobPropertyManager implements UIPropertyManager {
 
         name.setText(p.getLabel());
         idle.setImageResource(light_res);
-        perm.setImageResource(perm_res);
+        perm.setText(perm_res);
         visibility.setImageResource(visibility_res);
     }
 

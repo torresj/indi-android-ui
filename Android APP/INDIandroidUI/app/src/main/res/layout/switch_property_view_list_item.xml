@@ -32,14 +32,18 @@
         android:layout_marginLeft="10dp"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/perm"
+        android:textStyle="bold"
+        android:text=""
         android:layout_margin="8dp"
         android:paddingTop="10dp"
+        android:paddingLeft="4dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/idle"/>
+        android:layout_below="@+id/idle"
+        android:textColor="#ff000000" />
 
     <ImageView
         android:layout_width="wrap_content"

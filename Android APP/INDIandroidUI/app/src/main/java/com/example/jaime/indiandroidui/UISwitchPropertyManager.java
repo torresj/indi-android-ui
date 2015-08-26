@@ -2,6 +2,7 @@ package com.example.jaime.indiandroidui;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,13 +139,13 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         //Views
         TextView name = (TextView)v.findViewById(R.id.name);
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
-        ImageView perm = (ImageView)v.findViewById(R.id.perm);
+        TextView perm = (TextView)v.findViewById(R.id.perm);
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
         TextView element = (TextView)v.findViewById(R.id.element);
 
         //others
         int light_res=0;
-        int perm_res=0;
+        String perm_res="";
         int visibility_res=0;
 
         ArrayList<INDIElement> list = p.getElementsAsList();
@@ -152,9 +153,13 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         String text="";
         for(int i=0;i<list.size();i++){
             INDISwitchElement elem=(INDISwitchElement)list.get(i);
-            text=text+elem.getLabel()+":"+elem.getValue()+"\n";
+            if(elem.getValue().equals(Constants.SwitchStatus.ON)) {
+                text = text + "<b>" +elem.getLabel() + ":</b>" + elem.getValue() + "<br />";
+            }else{
+                text = text + "<font color=\"grey\"><b>" +elem.getLabel() + ":</b>" + elem.getValue() + "</font><br />";
+            }
         }
-        element.setText(text);
+        element.setText(Html.fromHtml(text));
 
 
         //State
@@ -170,11 +175,11 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
 
         //Permission
         if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
-            perm_res=R.drawable.read;
+            perm_res="RO";
         }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
-            perm_res=R.drawable.write;
+            perm_res="WO";
         }else{
-            perm_res=R.drawable.rw;
+            perm_res="RW";
         }
 
         visibility_res=R.drawable.ic_visibility_black_24dp;
@@ -182,7 +187,7 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
 
         name.setText(p.getLabel());
         idle.setImageResource(light_res);
-        perm.setImageResource(perm_res);
+        perm.setText(perm_res);
         visibility.setImageResource(visibility_res);
     }
 

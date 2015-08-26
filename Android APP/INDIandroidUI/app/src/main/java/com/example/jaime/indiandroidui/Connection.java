@@ -101,6 +101,7 @@ public class Connection implements INDIServerConnectionListener {
         Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost)+": "+connection.getHost());
         alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
         disconnect();
+        ((MainActivity)context).set_uichange(true);
     }
 
     @Override

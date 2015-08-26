@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -106,13 +108,13 @@ public class UIConnecPropertyManager implements UIPropertyManager {
         //Views
         TextView name = (TextView)v.findViewById(R.id.name);
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
-        ImageView perm = (ImageView)v.findViewById(R.id.perm);
+        TextView perm = (TextView)v.findViewById(R.id.perm);
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
         TextView element = (TextView)v.findViewById(R.id.element);
 
         //others
         int light_res=0;
-        int perm_res=0;
+        String perm_res="";
         int visibility_res=0;
 
         ArrayList<INDIElement> list = p.getElementsAsList();
@@ -142,11 +144,11 @@ public class UIConnecPropertyManager implements UIPropertyManager {
 
         //Permission
         if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
-            perm_res=R.drawable.read;
+            perm_res="RO";
         }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
-            perm_res=R.drawable.write;
+            perm_res="WO";
         }else{
-            perm_res=R.drawable.rw;
+            perm_res="RW";
         }
 
         visibility_res=R.drawable.ic_visibility_black_24dp;
@@ -154,7 +156,7 @@ public class UIConnecPropertyManager implements UIPropertyManager {
 
         name.setText(p.getLabel());
         idle.setImageResource(light_res);
-        perm.setImageResource(perm_res);
+        perm.setText(perm_res);
         visibility.setImageResource(visibility_res);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.jaime.indiandroidui;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -39,11 +41,14 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     private ViewPagerAdapter adapter;
     ViewPager viewPager;
     TabLayout tabLayout;
+    boolean uichange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        uichange=false;
 
         setUiProperties();
 
@@ -58,11 +63,22 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new HelpView(),getResources().getString(R.string.help));
         viewPager.setAdapter(adapter);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
         readConnections();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
     }
 
     @Override
@@ -189,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                                 conn.disconnect();
                                 adapter = new ViewPagerAdapter(getSupportFragmentManager());
                                 viewPager.setAdapter(adapter);
+                                adapter.addFrag(new HelpView(), getResources().getString(R.string.help));
                                 tabLayout.setupWithViewPager(viewPager);
                                 setTitle("INDIandroidUI");
                                 drawerLayout.closeDrawers();
@@ -201,11 +218,13 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                         } else if (menuItem.getOrder() < order) {
                             ArrayList<ArrayAdapter> adapters = conn.getAdapters();
                             //list.setAdapter(adapters.get(menuItem.getOrder()));
-                            DefaultDeviceView.adapter= (PropertyArrayAdapter) adapters.get(menuItem.getOrder());
+                            DefaultDeviceView.adapter = (PropertyArrayAdapter) adapters.get(menuItem.getOrder());
                             adapter = new ViewPagerAdapter(getSupportFragmentManager());
-                            adapter.addFrag(new DefaultDeviceView(),"Default View");
+                            adapter.addFrag(new HelpView(), getResources().getString(R.string.help));
+                            adapter.addFrag(new DefaultDeviceView(), "Default View");
                             viewPager.setAdapter(adapter);
                             tabLayout.setupWithViewPager(viewPager);
+                            viewPager.setCurrentItem(1);
                             drawerLayout.closeDrawers();
                             setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
                         } else {
@@ -306,4 +325,9 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
         Config.addUiPropertyManager(new UIConnecPropertyManager());
 
     }
+
+    public void set_uichange(boolean change){
+        uichange=change;
+    }
+
 }

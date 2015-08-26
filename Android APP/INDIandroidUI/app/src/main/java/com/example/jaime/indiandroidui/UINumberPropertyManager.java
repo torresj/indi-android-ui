@@ -2,6 +2,8 @@ package com.example.jaime.indiandroidui;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
     //Atributes
     int layout;
     int layout_dialog;
+    Context context;
 
     public UINumberPropertyManager(){
         layout=R.layout.number_property_view_list_item;
@@ -43,6 +46,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
 
     @Override
     public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
+        this.context=context;
         if (p instanceof INDINumberProperty){
             View v=inflater.inflate(layout, parent, false);
             return v;
@@ -101,17 +105,18 @@ public class UINumberPropertyManager implements UIPropertyManager {
                 EditText value = (EditText)row.findViewById(R.id.edit_text);
                 INDINumberElement elem=(INDINumberElement)list.get(i);
                 System.out.println(elem.getNumberFormat());
-                double n=Double.parseDouble(value.getText().toString());
+                String n=value.getText().toString();
 
                 elem.setDesiredValue(n);
             }
 
             p.sendChangesToDriver();
 
-        } catch (INDIValueException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            AppCompatActivity act=(AppCompatActivity)context;
+            Alert_dialog alert = Alert_dialog.newInstance(act.getResources().getString(R.string.alert_invalid_number));
+            alert.show(act.getSupportFragmentManager(), "Alert number error");
         }
 
 
@@ -126,13 +131,13 @@ public class UINumberPropertyManager implements UIPropertyManager {
         //Views
         TextView name = (TextView)v.findViewById(R.id.name);
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
-        ImageView perm = (ImageView)v.findViewById(R.id.perm);
+        TextView perm = (TextView)v.findViewById(R.id.perm);
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
         TextView element = (TextView)v.findViewById(R.id.element);
 
         //others
         int light_res=0;
-        int perm_res=0;
+        String perm_res="";
         int visibility_res=0;
 
         ArrayList<INDIElement> list = p.getElementsAsList();
@@ -140,9 +145,9 @@ public class UINumberPropertyManager implements UIPropertyManager {
         String text="";
         for(int i=0;i<list.size();i++){
             INDINumberElement elem=(INDINumberElement)list.get(i);
-            text=text+elem.getLabel()+":"+elem.getValueAsString()+"\n";
+            text=text+"<b>"+elem.getLabel()+":</b>"+elem.getValueAsString()+"<br />";
         }
-        element.setText(text);
+        element.setText(Html.fromHtml(text));
 
 
         //State
@@ -158,11 +163,11 @@ public class UINumberPropertyManager implements UIPropertyManager {
 
         //Permission
         if(p.getPermission().equals(Constants.PropertyPermissions.RO)){
-            perm_res=R.drawable.read;
+            perm_res="RO";
         }else if(p.getPermission().equals(Constants.PropertyPermissions.WO)){
-            perm_res=R.drawable.write;
+            perm_res="WO";
         }else{
-            perm_res=R.drawable.rw;
+            perm_res="RW";
         }
 
         visibility_res=R.drawable.ic_visibility_black_24dp;
@@ -170,7 +175,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
 
         name.setText(p.getLabel());
         idle.setImageResource(light_res);
-        perm.setImageResource(perm_res);
+        perm.setText(perm_res);
         visibility.setImageResource(visibility_res);
     }
 }
