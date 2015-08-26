@@ -25,7 +25,7 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     private ArrayList<String> name_devices;
     private boolean change;
 
-    public IndiClient(String host, int port){
+    public IndiClient(String host, int port, INDIServerConnectionListener l) throws IOException {
         log="";
         connection = new INDIServerConnection(host, port);
 
@@ -34,14 +34,16 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
 
         change=false;
 
+        connection.addINDIServerConnectionListener(l);
         connection.addINDIServerConnectionListener(this);  // We listen to all server events
+
 
         try {
             connection.connect();
             connection.askForDevices();  // Ask for all the devices.
         } catch (IOException e) {
             log+="Problem with connection: " + host + ":" + port+"\n";
-            e.printStackTrace();
+            throw e;
         }
 
     }

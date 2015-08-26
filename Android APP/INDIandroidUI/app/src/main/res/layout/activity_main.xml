@@ -10,6 +10,7 @@
     <!-- Contenido Principal -->
     <include layout="@layout/main_content" />
 
+
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"
         android:layout_width="wrap_content"

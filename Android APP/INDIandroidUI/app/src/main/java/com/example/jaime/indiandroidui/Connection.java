@@ -3,17 +3,22 @@ package com.example.jaime.indiandroidui;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import laazotea.indi.client.INDIDevice;
 import laazotea.indi.client.INDIProperty;
+import laazotea.indi.client.INDIServerConnection;
+import laazotea.indi.client.INDIServerConnectionListener;
 
 /**
  * Created by Jaime on 17/8/15.
  */
-public class Connection {
+public class Connection implements INDIServerConnectionListener {
 
     private IndiClient client;
     private String host;
@@ -79,6 +84,30 @@ public class Connection {
         connected=true;
     }
 
+    @Override
+    public void newDevice(INDIServerConnection connection, INDIDevice device) {
+        Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_add)+": "+device.getName());
+        alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
+    }
+
+    @Override
+    public void removeDevice(INDIServerConnection connection, INDIDevice device) {
+        Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_remove)+": "+device.getName());
+        alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
+    }
+
+    @Override
+    public void connectionLost(INDIServerConnection connection) {
+        Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost)+": "+connection.getHost());
+        alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
+        disconnect();
+    }
+
+    @Override
+    public void newMessage(INDIServerConnection connection, Date timestamp, String message) {
+
+    }
+
     class IndiConnect extends AsyncTask<Void, IndiClient, Void> {
 
         private boolean end;
@@ -94,12 +123,15 @@ public class Connection {
 
         @Override protected Void doInBackground(Void... par) {
             try {
-                client = new IndiClient(host, port);
+                client = new IndiClient(host, port,Connection.this);
                 while(!end){
                     SystemClock.sleep(100);
                     publishProgress(client);
                 }
             }catch(Exception e){
+                Alert_dialog alert=Alert_dialog.newInstance("Failed to connect to "+host+" (port "+port+")");
+                alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
+                disconnect();
                 error=true;
             }
             return null;

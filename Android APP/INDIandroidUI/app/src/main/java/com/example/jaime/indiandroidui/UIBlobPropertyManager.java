@@ -181,7 +181,7 @@ public class UIBlobPropertyManager implements UIPropertyManager {
 
         }else{
             AppCompatActivity act=(AppCompatActivity)context;
-            Alert_dialog alert = Alert_dialog.newInstance(R.string.not_data_save);
+            Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.not_data_save));
             alert.show(act.getSupportFragmentManager(),"Alert No Data");
 
         }
@@ -208,7 +208,7 @@ public class UIBlobPropertyManager implements UIPropertyManager {
             context.startActivity(intent);
         }else{
             AppCompatActivity act=(AppCompatActivity)context;
-            Alert_dialog alert = Alert_dialog.newInstance(R.string.not_data);
+            Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.not_data));
             alert.show(act.getSupportFragmentManager(),"Alert No Data");
 
         }

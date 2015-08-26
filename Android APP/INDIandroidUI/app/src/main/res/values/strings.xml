@@ -26,5 +26,8 @@
     <string name="action_edit">Editar conexión</string>
     <string name="not_data">No hay datos que mostrar.</string>
     <string name="save_text">Archivo salvado</string>
-    <string name="not_data_save">No hay datos que salvar.</string>>
+    <string name="not_data_save">No hay datos que salvar.</string>
+    <string name="alert_connection_lost">Conexión perdida</string>
+    <string name="alert_device_add">Nuevo dispositivo añadido</string>
+    <string name="alert_device_remove">Dispositivo desconectado</string>>
 </resources>

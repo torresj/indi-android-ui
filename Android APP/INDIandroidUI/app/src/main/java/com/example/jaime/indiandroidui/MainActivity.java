@@ -4,7 +4,9 @@ package com.example.jaime.indiandroidui;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -29,19 +29,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.TreeSet;
-
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDILightProperty;
-import laazotea.indi.client.INDIProperty;
 
 
-public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private ListView list;
     private ArrayList<Connection> connections;
+    private ViewPagerAdapter adapter;
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +54,15 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
         connections = new ArrayList<>();
 
-        readConnections();
-
-        //Instancia del ListView
-        list = (ListView)findViewById(R.id.list);
-
-        list.setOnItemClickListener(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToListView(list);
-
         setToolbar();
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
 
+        readConnections();
     }
 
     @Override
@@ -194,10 +187,9 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                         if (menuItem.getOrder() == order) {
                             if (conn.isConnected()) {
                                 conn.disconnect();
-                                ArrayList<INDIProperty> l = new ArrayList();
-                                ArrayAdapter adapter = new PropertyArrayAdapter<INDIProperty>(getApplicationContext(), l);
-                                list.setAdapter(adapter);
-                                adapter.clear();
+                                adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                                viewPager.setAdapter(adapter);
+                                tabLayout.setupWithViewPager(viewPager);
                                 setTitle("INDIandroidUI");
                                 drawerLayout.closeDrawers();
                             } else {
@@ -208,7 +200,12 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
                         } else if (menuItem.getOrder() < order) {
                             ArrayList<ArrayAdapter> adapters = conn.getAdapters();
-                            list.setAdapter(adapters.get(menuItem.getOrder()));
+                            //list.setAdapter(adapters.get(menuItem.getOrder()));
+                            DefaultDeviceView.adapter= (PropertyArrayAdapter) adapters.get(menuItem.getOrder());
+                            adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                            adapter.addFrag(new DefaultDeviceView(),"Default View");
+                            viewPager.setAdapter(adapter);
+                            tabLayout.setupWithViewPager(viewPager);
                             drawerLayout.closeDrawers();
                             setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
                         } else {
@@ -292,22 +289,9 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        INDIProperty p = (INDIProperty)list.getAdapter().getItem(position);
-        if(!(p instanceof INDILightProperty || p.getPermission().equals(Constants.PropertyPermissions.RO))) {
-            EditViewPropery editView = EditViewPropery.newInstance();
-            editView.setProperty(p);
-            editView.show(getSupportFragmentManager(), "Property view");
-        }else{
-            Alert_dialog alert=Alert_dialog.newInstance(R.string.alert_msg);
-            alert.show(getSupportFragmentManager(), "AlertDialog");
-        }
-    }
-
-    @Override
     public void onEditButtonClick(String name, String host, int port,int position) {
         Connection conn=new Connection(name,host,port,this);
-        connections.set(position,conn);
+        connections.set(position, conn);
         setDrawerMenu();
     }
 

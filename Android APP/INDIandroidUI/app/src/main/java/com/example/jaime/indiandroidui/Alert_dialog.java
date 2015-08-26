@@ -12,12 +12,12 @@ import android.support.v7.app.AlertDialog;
  */
 public class Alert_dialog extends DialogFragment {
 
-    private int text_resource;
+    private String text;
 
-    static Alert_dialog newInstance(int text_resource){
+    static Alert_dialog newInstance(String text_resource){
         Alert_dialog fragment = new Alert_dialog();
         Bundle args = new Bundle();
-        args.putInt("text",text_resource);
+        args.putString("text",text_resource);
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,7 +28,7 @@ public class Alert_dialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        text_resource=getArguments().getInt("text");
+        text=getArguments().getString("text");
 
         return createAlertDialog();
     }
@@ -41,7 +41,7 @@ public class Alert_dialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.alert)
-                .setMessage(text_resource)
+                .setMessage(text)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
