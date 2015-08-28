@@ -122,6 +122,9 @@ public class UIBlobPropertyManager implements UIPropertyManager {
             view.setTag(elem.getLabel());
         }
 
+        save.setFocusable(false);
+        view.setFocusable(false);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

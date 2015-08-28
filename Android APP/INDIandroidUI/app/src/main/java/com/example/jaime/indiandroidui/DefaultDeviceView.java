@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import laazotea.indi.Constants;
@@ -15,9 +16,9 @@ import laazotea.indi.client.INDIProperty;
 /**
  * Created by Jaime on 26/8/15.
  */
-public class DefaultDeviceView extends Fragment implements AdapterView.OnItemClickListener{
+public class DefaultDeviceView extends Fragment implements ExpandableListView.OnChildClickListener{
 
-    private ListView list;
+    private ExpandableListView list;
     static PropertyArrayAdapter adapter;
     private String title;
 
@@ -26,15 +27,15 @@ public class DefaultDeviceView extends Fragment implements AdapterView.OnItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.default_device_view, container, false);
 
-        list=(ListView)view.findViewById(R.id.list);
+        list=(ExpandableListView)view.findViewById(R.id.list);
         list.setAdapter(adapter);
-        list.setOnItemClickListener(this);
+        list.setOnChildClickListener(this);
         return view;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        INDIProperty p = (INDIProperty)list.getAdapter().getItem(position);
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        INDIProperty p = (INDIProperty)adapter.getChild(groupPosition,childPosition);
         if(!(p instanceof INDILightProperty || p.getPermission().equals(Constants.PropertyPermissions.RO))) {
             EditViewPropery editView = EditViewPropery.newInstance();
             editView.setProperty(p);
@@ -43,5 +44,6 @@ public class DefaultDeviceView extends Fragment implements AdapterView.OnItemCli
             Alert_dialog alert=Alert_dialog.newInstance(getResources().getString(R.string.alert_msg));
             alert.show(this.getFragmentManager(), "AlertDialog");
         }
+        return false;
     }
 }

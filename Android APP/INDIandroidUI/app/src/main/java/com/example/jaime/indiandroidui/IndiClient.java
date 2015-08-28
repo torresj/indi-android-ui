@@ -21,16 +21,16 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
 
     private INDIServerConnection connection;
     private String log;
-    private Map<String, ArrayList<INDIProperty>> devices;
-    private ArrayList<String> name_devices;
+    HashMap<String,Device> devices;
     private boolean change;
+    private boolean blobs_enable;
 
-    public IndiClient(String host, int port, INDIServerConnectionListener l) throws IOException {
+    public IndiClient(String host, int port,boolean blobs_enable, INDIServerConnectionListener l) throws IOException {
         log="";
+        this.blobs_enable=blobs_enable;
         connection = new INDIServerConnection(host, port);
 
-        devices=new HashMap<String, ArrayList<INDIProperty>>();
-        name_devices=new ArrayList();
+        devices=new HashMap<String,Device>();
 
         change=false;
 
@@ -52,12 +52,16 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     public void newDevice(INDIServerConnection connection, INDIDevice device) {
         // We just simply listen to this Device
         log+="New device: " + device.getName()+"\n";
-        name_devices.add(device.getName());
-        devices.put(device.getName(), new ArrayList<INDIProperty>());
+        devices.put(device.getName(),new Device(device.getName()));
         try {
-            device.BLOBsEnable(Constants.BLOBEnables.ALSO); // Enable receiving BLOBs from this Device
+            if(blobs_enable) {
+                device.BLOBsEnable(Constants.BLOBEnables.ALSO); // Enable receiving BLOBs from this Device
+            }else{
+                device.BLOBsEnable(Constants.BLOBEnables.NEVER);
+            }
         } catch (IOException e) {
         }
+        change=true;
         device.addINDIDeviceListener(this);
     }
 
@@ -65,17 +69,19 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     public void removeDevice(INDIServerConnection connection, INDIDevice device) {
         // We just remove ourselves as a listener of the removed device
         log+="Device Removed: " + device.getName()+"\n";
-        name_devices.remove(device.getName());
+
         devices.remove(device.getName());
+
+        change=true;
+        
         device.removeINDIDeviceListener(this);
     }
 
     @Override
     public void connectionLost(INDIServerConnection connection) {
         log+="Connection lost. Bye"+"\n";
-        devices=new HashMap<String, ArrayList<INDIProperty>>();
-        name_devices=new ArrayList();
-
+        devices.clear();
+        change=true;
     }
 
     @Override
@@ -87,7 +93,8 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     public void newProperty(INDIDevice device, INDIProperty property) {
         // We just simply listen to this Property
         log+="New Property (" + property.getName() + ") added to device " + device.getName()+"\n";
-        devices.get(device.getName()).add(property);
+        devices.get(device.getName()).addProperty(property);
+        change=true;
         property.addINDIPropertyListener(this);
     }
 
@@ -95,7 +102,8 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     public void removeProperty(INDIDevice device, INDIProperty property) {
         // We just remove ourselves as a listener of the removed property
         log+="Property (" + property.getName() + ") removed from device " + device.getName()+"\n";
-        devices.get(device.getName()).remove(property);
+        devices.get(device.getName()).removeProperty(property);
+        change=true;
         property.removeINDIPropertyListener(this);
     }
 
@@ -108,14 +116,8 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     public void propertyChanged(INDIProperty property) {
         log+="Property Changed: " + property.getNameStateAndValuesAsString()+"\n";
         System.out.println("Property Changed: " + property.getNameStateAndValuesAsString()+"\n");
-        boolean fin=false;
-        for(int i=0;i<devices.get(property.getDevice().getName()).size() && !fin;i++){
-            INDIProperty p=devices.get(property.getDevice().getName()).get(i);
-            if(property.getName().equals(p.getName())){
-                devices.get(property.getDevice().getName()).set(i,property);
-                fin=true;
-            }
-        }
+        String device_name=property.getDevice().getName();
+        devices.get(device_name).updateProperty(property);
         change=true;
     }
 
@@ -123,12 +125,21 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
         return log;
     }
 
-    public ArrayList<INDIProperty> getProperties(String device){
-        return devices.get(device);
+    public HashMap<String,Device> getDevices(){
+        return devices;
+    }
+
+    public Device getDevice(String device_name){
+        return devices.get(device_name);
     }
 
     public ArrayList<String> getDevicesNames(){
-        return name_devices;
+        ArrayList<String> names=new ArrayList<>();
+
+        for (String name : devices.keySet()) {
+            names.add(name);
+        }
+        return names;
     }
 
     public boolean has_change(){

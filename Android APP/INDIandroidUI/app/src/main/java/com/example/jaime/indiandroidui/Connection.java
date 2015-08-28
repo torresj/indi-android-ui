@@ -1,9 +1,15 @@
 package com.example.jaime.indiandroidui;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
+import android.util.SparseArray;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -23,17 +29,22 @@ public class Connection implements INDIServerConnectionListener {
     private IndiClient client;
     private String host;
     private String name;
+    private boolean autoconnect;
+    private boolean blobs_enable;
     private int port;
-    private ArrayList<ArrayAdapter> adapters;
+    private ArrayList<PropertyArrayAdapter> adapters;
     private Context context;
     private IndiConnect thread;
     private boolean connected;
     private boolean error;
+    private String log;
 
-    public Connection(String name,String host, int port,Context context){
+    public Connection(String name,String host, int port,boolean autoconnect,boolean blobs_enable,Context context){
         this.name=name;
         this.host=host;
         this.port=port;
+        this.autoconnect=autoconnect;
+        this.blobs_enable=blobs_enable;
         this.context=context;
         thread = new IndiConnect();
         client=null;
@@ -42,7 +53,7 @@ public class Connection implements INDIServerConnectionListener {
         error = false;
     }
 
-    public ArrayList<ArrayAdapter> getAdapters() {
+    public ArrayList<PropertyArrayAdapter> getAdapters() {
         return adapters;
     }
 
@@ -52,6 +63,14 @@ public class Connection implements INDIServerConnectionListener {
 
     public String getHost(){
         return host;
+    }
+
+    public boolean getAutoconnect(){
+        return autoconnect;
+    }
+
+    public boolean getBlobsEnable(){
+        return blobs_enable;
     }
 
     public int getPort(){
@@ -93,20 +112,43 @@ public class Connection implements INDIServerConnectionListener {
     @Override
     public void removeDevice(INDIServerConnection connection, INDIDevice device) {
         Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_remove)+": "+device.getName());
-        alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
+        alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
     }
 
     @Override
     public void connectionLost(INDIServerConnection connection) {
-        Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost)+": "+connection.getHost());
-        alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
-        disconnect();
-        ((MainActivity)context).set_uichange(true);
+        if(!MainActivity.pause) {
+            Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost());
+            alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
+            disconnect();
+            ((MainActivity) context).set_uichange(true);
+        }else {
+
+            Intent intent = new Intent(context, MainActivity.class);
+            PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
+
+            Notification notification = new NotificationCompat.Builder(context)
+                    .setCategory(Notification.CATEGORY_MESSAGE)
+                    .setContentTitle("Aviso")
+                    .setContentText(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost())
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentIntent(pIntent).build();
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            notificationManager.notify(0, notification);
+        }
+
     }
 
     @Override
     public void newMessage(INDIServerConnection connection, Date timestamp, String message) {
 
+    }
+
+    public String getLog(){
+        return log;
     }
 
     class IndiConnect extends AsyncTask<Void, IndiClient, Void> {
@@ -118,13 +160,12 @@ public class Connection implements INDIServerConnectionListener {
         }
 
         @Override protected void onPreExecute() {
-            Toast.makeText(context, "Connecting...", Toast.LENGTH_SHORT).show();
             error=false;
         }
 
         @Override protected Void doInBackground(Void... par) {
             try {
-                client = new IndiClient(host, port,Connection.this);
+                client = new IndiClient(host, port,blobs_enable,Connection.this);
                 while(!end){
                     SystemClock.sleep(100);
                     publishProgress(client);
@@ -140,32 +181,40 @@ public class Connection implements INDIServerConnectionListener {
 
         @Override protected void onProgressUpdate(IndiClient... prog) {
             IndiClient c=prog[0];
-            int size=c.getDevicesNames().size();
-            if(size!=adapters.size()){
+            log=c.getLog();
+            boolean change=c.has_change();
+            c.changeRead();
+            ArrayList<String> device_names=c.getDevicesNames();
+            if(device_names.size()!=adapters.size()){
                 adapters.clear();
-                for(int i=0;i<size;i++){
-                    ArrayList<INDIProperty > l=new ArrayList();
-                    ArrayAdapter adapter = new PropertyArrayAdapter<INDIProperty>(context, l);
+                for(int i=0;i<device_names.size();i++){
+                    SparseArray<Groups_properties> groups=new SparseArray<>();
+                    PropertyArrayAdapter adapter = new PropertyArrayAdapter((AppCompatActivity) context,groups);
                     adapters.add(adapter);
                 }
             }
-            if(size>0) {
-                for(int index=0;index<size;index++){
-                    ArrayList<INDIProperty> properties = c.getProperties(c.getDevicesNames().get(index));
-                    ArrayAdapter adapter = adapters.get(index);
-                    if (adapter.getCount() != properties.size()) {
+            if(device_names.size()>0) {
+                if(change){
+                    for(int index=0;index<device_names.size();index++){
+                        String device_name=device_names.get(index);
+                        PropertyArrayAdapter adapter = adapters.get(index);
+                        Device device=c.getDevice(device_name);
+                        ArrayList<String> groups=device.getGroupsNames();
                         adapter.clear();
-                        for (int i = 0; i < properties.size(); i++) {
-                            INDIProperty p=properties.get(i);
-                            adapter.add(p);
+
+                        for(int i=0;i<groups.size();i++){
+                            Groups_properties group=new Groups_properties(groups.get(i));
+                            ArrayList<INDIProperty> list=device.getGroupProperties(groups.get(i));
+                            for(int j=0;j<list.size();j++){
+                                group.properties.add(list.get(j));
+                            }
+                            adapter.add(group);
                         }
-                    }
-                    if(c.has_change()) {
+                        Groups_properties group=new Groups_properties("");
+                        adapter.add(group);
                         adapter.notifyDataSetChanged();
                     }
-
                 }
-                c.changeRead();
             }
         }
 

@@ -37,10 +37,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public void addFrag(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
+        notifyDataSetChanged();
     }
 
     public void clear(){
         mFragmentList.clear();
         mFragmentTitleList.clear();
+        notifyDataSetChanged();
     }
 }

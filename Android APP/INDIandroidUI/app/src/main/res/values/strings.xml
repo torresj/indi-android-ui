@@ -31,5 +31,7 @@
     <string name="alert_device_add">Nuevo dispositivo añadido</string>
     <string name="alert_device_remove">Dispositivo desconectado</string>
     <string name="alert_invalid_number">Formato erroneo o fuera de rango</string>
-    <string name="help">Ayuda</string>>
+    <string name="help">Ayuda</string>
+    <string name="autoconnect">Autoconectar</string>
+    <string name="blob_enable">Activar recepción de BLOBs</string>>
 </resources>

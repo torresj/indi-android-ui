@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 /**
  * Fragmento con diálogo básico
@@ -41,6 +42,8 @@ public class Add_connect_dialog extends DialogFragment {
         final EditText host_edit=(EditText) v.findViewById(R.id.host);
         final EditText port_edit=(EditText) v.findViewById(R.id.port);
         final EditText name_edit=(EditText) v.findViewById(R.id.name);
+        final Switch autoconnect_switch=(Switch) v.findViewById(R.id.autconnect);
+        final Switch blobs_enable_switch=(Switch) v.findViewById(R.id.blob_recive);
 
         connect.setOnClickListener(
                 new View.OnClickListener() {
@@ -49,7 +52,9 @@ public class Add_connect_dialog extends DialogFragment {
                         String host=host_edit.getText().toString();
                         String name=name_edit.getText().toString();
                         int port=Integer.parseInt(port_edit.getText().toString());
-                        listener.onConnectButtonClick(name,host,port);
+                        boolean autoconnect = autoconnect_switch.isChecked();
+                        boolean blobs_enable = blobs_enable_switch.isChecked();
+                        listener.onConnectButtonClick(name,host,port,autoconnect,blobs_enable);
                         dismiss();
                     }
                 }
@@ -77,6 +82,6 @@ public class Add_connect_dialog extends DialogFragment {
     }
 
     public interface Add_connec_dialogListener {
-        void onConnectButtonClick(String name,String host,int port);
+        void onConnectButtonClick(String name,String host,int port,boolean autoconnect, boolean blobs_enable);
     }
 }
