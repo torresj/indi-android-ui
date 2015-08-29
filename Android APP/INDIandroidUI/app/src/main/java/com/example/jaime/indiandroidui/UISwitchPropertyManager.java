@@ -154,9 +154,9 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         for(int i=0;i<list.size();i++){
             INDISwitchElement elem=(INDISwitchElement)list.get(i);
             if(elem.getValue().equals(Constants.SwitchStatus.ON)) {
-                text = text + "<b>" +elem.getLabel() + ":</b>" + elem.getValue() + "<br />";
+                text = text + "<b>" +elem.getLabel() + ": </b>" + elem.getValue() + "<br />";
             }else{
-                text = text + "<font color=\"grey\"><b>" +elem.getLabel() + ":</b>" + elem.getValue() + "</font><br />";
+                text = text + "<font color=\"grey\"><b>" +elem.getLabel() + ": </b>" + elem.getValue() + "</font><br />";
             }
         }
         element.setText(Html.fromHtml(text));

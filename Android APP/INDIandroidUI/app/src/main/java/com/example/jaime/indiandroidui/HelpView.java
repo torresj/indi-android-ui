@@ -2,6 +2,7 @@ package com.example.jaime.indiandroidui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,8 @@ public class HelpView extends Fragment {
         View view = inflater.inflate(R.layout.help_view, container, false);
         TextView title=(TextView) view.findViewById(R.id.title);
         TextView text=(TextView) view.findViewById(R.id.text);
-        title.setText("Título");
-        text.setText("Texto de ayuda para iniciar las conexiones");
+        title.setText(getResources().getString(R.string.help_title));
+        text.setText(Html.fromHtml(getResources().getString(R.string.help_text)));
         return view;
     }
 

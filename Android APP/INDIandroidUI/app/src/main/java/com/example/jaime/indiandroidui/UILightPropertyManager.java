@@ -90,7 +90,7 @@ public class UILightPropertyManager implements UIPropertyManager {
         String text="";
         for(int i=0;i<list.size();i++){
             INDILightElement elem=(INDILightElement)list.get(i);
-            text=text+"<b>"+elem.getLabel()+":</b>"+elem.getValue().toString()+"<br />";
+            text=text+"<b>"+elem.getLabel()+": </b>"+elem.getValue().toString()+"<br />";
         }
         element.setText(Html.fromHtml(text));
 

@@ -79,7 +79,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
 
             INDINumberElement elem = (INDINumberElement)list.get(i);
 
-            label.setText(elem.getLabel());
+            label.setText(elem.getLabel()+"\n[Max: "+elem.getMaxAsString()+", Min: "+elem.getMinAsString()+"]" );
             edit.setText(elem.getValueAsString());
 
             table.addView(row);
@@ -104,7 +104,6 @@ public class UINumberPropertyManager implements UIPropertyManager {
                 TableRow row=(TableRow)table.getChildAt(i);
                 EditText value = (EditText)row.findViewById(R.id.edit_text);
                 INDINumberElement elem=(INDINumberElement)list.get(i);
-                System.out.println(elem.getNumberFormat());
                 String n=value.getText().toString();
 
                 elem.setDesiredValue(n);
@@ -112,11 +111,16 @@ public class UINumberPropertyManager implements UIPropertyManager {
 
             p.sendChangesToDriver();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (INDIValueException e) {
             AppCompatActivity act=(AppCompatActivity)context;
-            Alert_dialog alert = Alert_dialog.newInstance(act.getResources().getString(R.string.alert_invalid_number));
-            alert.show(act.getSupportFragmentManager(), "Alert number error");
+            Alert_dialog alert = Alert_dialog.newInstance(e.getMessage()+".");
+            alert.show(act.getSupportFragmentManager(), "Alert number out of range");
+        } catch (IllegalArgumentException e){
+            AppCompatActivity act=(AppCompatActivity)context;
+            Alert_dialog alert = Alert_dialog.newInstance(e.getMessage()+".");
+            alert.show(act.getSupportFragmentManager(), "Alert number format error");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
@@ -145,7 +149,7 @@ public class UINumberPropertyManager implements UIPropertyManager {
         String text="";
         for(int i=0;i<list.size();i++){
             INDINumberElement elem=(INDINumberElement)list.get(i);
-            text=text+"<b>"+elem.getLabel()+":</b>"+elem.getValueAsString()+"<br />";
+            text=text+"<b>"+elem.getLabel()+": </b>"+elem.getValueAsString()+"<br />";
         }
         element.setText(Html.fromHtml(text));
 

@@ -77,5 +77,6 @@ public class EditViewPropery extends DialogFragment implements View.OnClickListe
     public void onClick(View v) {
         ui.updateProperty(p,this.v);
         dismiss();
+        DefaultDeviceView.adapter.notifyDataSetChanged();
     }
 }

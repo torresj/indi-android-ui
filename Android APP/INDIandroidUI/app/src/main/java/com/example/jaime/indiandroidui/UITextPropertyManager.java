@@ -143,7 +143,7 @@ public class UITextPropertyManager implements UIPropertyManager {
         String text="";
         for(int i=0;i<list.size();i++){
             INDITextElement elem=(INDITextElement)list.get(i);
-            text=text+"<b>"+elem.getLabel()+":</b>"+elem.getValue()+"<br />";
+            text=text+"<b>"+elem.getLabel()+": </b>"+elem.getValue()+"<br />";
         }
         element.setText(Html.fromHtml(text));
 

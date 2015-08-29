@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:background="@drawable/text_border"
+        android:text="@string/notifications"
+        android:id="@+id/Notifications" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_bar"
+        android:padding="15dp"
+        android:id="@+id/switch4" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_dialog"
+        android:padding="15dp"
+        android:id="@+id/switch1" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_sound"
+        android:padding="15dp"
+        android:id="@+id/switch2" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_vibrate"
+        android:padding="15dp"
+        android:id="@+id/switch3" />
+
+</LinearLayout>

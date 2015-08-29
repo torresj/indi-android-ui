@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Remove_connect_dialog extends DialogFragment{
 
     private CharSequence[] items;
+    private int[] ids;
     private Remove_connec_dialogListener listener;
 
     static Remove_connect_dialog newInstance(CharSequence[] items){
@@ -59,11 +60,8 @@ public class Remove_connect_dialog extends DialogFragment{
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ArrayList<String> selected=new ArrayList<String>();
-                                for(int i=0;i<itemsSeleccionados.size();i++){
-                                    selected.add(items[itemsSeleccionados.get(i)].toString());
-                                }
-                                listener.onDisconnectButtonClick(selected);
+                                ArrayList<Integer> selected=new ArrayList<>();
+                                listener.onDisconnectButtonClick(itemsSeleccionados);
                             }
                         })
                 .setNegativeButton(getResources().getText(R.string.cancel_button),
@@ -92,6 +90,6 @@ public class Remove_connect_dialog extends DialogFragment{
     }
 
     public interface Remove_connec_dialogListener {
-        void onDisconnectButtonClick(ArrayList<String> items);
+        void onDisconnectButtonClick(ArrayList<Integer> items);
     }
 }

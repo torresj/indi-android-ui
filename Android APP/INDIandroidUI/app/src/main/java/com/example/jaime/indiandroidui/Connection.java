@@ -5,13 +5,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.util.SparseArray;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,7 +130,10 @@ public class Connection implements INDIServerConnectionListener {
                     .setCategory(Notification.CATEGORY_MESSAGE)
                     .setContentTitle("Aviso")
                     .setContentText(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost())
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setSmallIcon(R.mipmap.ic_launcher)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                            R.drawable.notification))
                     .setContentIntent(pIntent).build();
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

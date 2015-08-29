@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">INDIandroidUI</string>
+    <string name="action_connect">New connection</string>
+    <string name="action_disconnect">Remove</string>
+    <string name="action_edit">Edit connection</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_log">Show log</string>
+    <string name="action_settings">Settings</string>
+    <string name="alert">Alert</string>
+    <string name="alert_connection_lost">Connection lost</string>
+    <string name="alert_device_add">New device added</string>
+    <string name="alert_device_remove">Device disconnect</string>
+    <string name="alert_msg">Only read property. Nothing to edit.</string>
+    <string name="autoconnect">Autoconnect</string>
+    <string name="blob_enable">Enable BLOBs </string>
+    <string name="button_connect">Add</string>
+    <string name="button_update">Update</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="conn_switch">Connect</string>
+    <string name="disconnect">Remove conncetions</string>
+    <string name="drawe_menu_title">Connections and devices</string>
+    <string name="edit_connect">Edit</string>
+    <string name="help">General help</string>
+    <string name="help_title">Welcome to INDIandroidUI</string>
+    <string name="hint_host">Server</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_port">Port</string>
+    <string name="menu_connect">Connect</string>
+    <string name="menu_disconnect">Disconnect</string>
+    <string name="menu_edit">Edit</string>
+    <string name="not_data">No data to view</string>
+    <string name="not_data_save">No data to save</string>
+    <string name="ok_button">Ok</string>
+    <string name="notifications">NOTIFICATIONS</string>
+    <string name="notification_bar">Notificaciones del sistema</string>
+    <string name="notification_dialog">Notificaciones con ventanas</string>
+    <string name="notification_sound">Notificaciones con sonido</string>
+    <string name="notification_vibrate">Notificaciones con vibración</string>
+</resources>

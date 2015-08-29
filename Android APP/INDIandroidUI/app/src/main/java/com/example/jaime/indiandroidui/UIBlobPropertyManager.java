@@ -1,6 +1,6 @@
 package com.example.jaime.indiandroidui;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,9 +20,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.GregorianCalendar;
 
 import laazotea.indi.Constants;
 import laazotea.indi.INDIBLOBValue;
@@ -112,11 +115,11 @@ public class UIBlobPropertyManager implements UIPropertyManager {
         if(list.size()>0) {
             INDIBLOBElement elem = (INDIBLOBElement) list.get(0);
             INDIBLOBValue blob = elem.getValue();
-            label.setText(Html.fromHtml("<b>" + elem.getLabel() + ":</b> " + blob.getSize() + " Bytes"));
+            label.setText(Html.fromHtml("<b>" + elem.getLabel() + ": </b> " + blob.getSize() + " Bytes"));
             if(blob.getFormat().equals(""))
-                type.setText(Html.fromHtml("<b>Type:</b> None"));
+                type.setText(Html.fromHtml("<b>Type: </b>None"));
             else
-                type.setText(Html.fromHtml("<b>Type:</b> " + blob.getFormat()));
+                type.setText(Html.fromHtml("<b>Type: </b> " + blob.getFormat()));
             blobs.put(elem.getLabel(), blob);
             save.setTag(elem.getLabel());
             view.setTag(elem.getLabel());
@@ -172,18 +175,26 @@ public class UIBlobPropertyManager implements UIPropertyManager {
     private void saveBlob(View v){
         INDIBLOBValue blob=blobs.get((String) v.getTag());
         if(blob.getSize()>0) {
-            File path = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES);
-            File file = new File(path, "/" + (String) v.getTag() + blob.getFormat());
-            try {
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(blob.getBLOBData());
-                fos.close();
-                Toast.makeText(context,context.getResources().getString(R.string.save_text)+": "+file.getName(), Toast.LENGTH_SHORT).show();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                File sd = Environment.getExternalStorageDirectory();
+                String folder_path = sd.getAbsolutePath() + "/INDIandroidUI/"+blob.getFormat().substring(1);
+                File folder = new File(folder_path);
+                if (!folder.exists())
+                    folder.mkdir();
+
+                Calendar calendar=GregorianCalendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+                File file = new File(folder.getAbsolutePath(), "/" + (String) v.getTag()+ sdf.format(calendar.getTime()) + blob.getFormat());
+                try {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    fos.write(blob.getBLOBData());
+                    fos.close();
+                    Toast.makeText(context, context.getResources().getString(R.string.save_text) + ": " + file.getName(), Toast.LENGTH_SHORT).show();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         }else{

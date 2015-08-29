@@ -1,15 +1,8 @@
 package com.example.jaime.indiandroidui;
 
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -17,15 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.widget.ArrayAdapter;
-
-
-import com.melnykov.fab.FloatingActionButton;
 
 
 import java.io.BufferedReader;
@@ -48,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     ViewPager viewPager;
     TabLayout tabLayout;
     boolean uichange;
+    String folder_path;
     static boolean pause;
 
     @Override
@@ -75,13 +64,11 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
+
+        createFolder();
+
         readConnections();
 
-        for(Connection conn:connections){
-            if(conn.getAutoconnect()){
-                conn.connect();
-            }
-        }
     }
 
     @Override
@@ -147,6 +134,13 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                 return true;
             case R.id.action_exit:
                 finish();
+                return true;
+            case R.id.action_settings:
+                adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                adapter.addFrag(new SettingsView(),getResources().getString(R.string.action_settings));
+                viewPager.setAdapter(adapter);
+                tabLayout.setupWithViewPager(viewPager);
+                setTitle("INDIandroidUI");
                 return true;
             case R.id.action_log:
                 adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -268,26 +262,16 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     }
 
     @Override
-    public void onDisconnectButtonClick(ArrayList<String> itemsSeleccionados) {
-        boolean end=false;
+    public void onDisconnectButtonClick(ArrayList<Integer> itemsSeleccionados) {
+        ArrayList<Connection> aux_connections=new ArrayList<>(connections);
         for(int i=0;i<itemsSeleccionados.size();i++){
-            String item=itemsSeleccionados.get(i);
-            for(int j=0;j<connections.size()&&!end;j++){
-                Connection conn=connections.get(i);
-                if(conn.getName().equals(item)){
-                    connections.get(i).disconnect();
-                    connections.remove(i);
-                    end=true;
-                }
-            }
-            end=false;
+            connections.remove(aux_connections.get(i));
         }
     }
 
     private void readConnections(){
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            File sd = this.getExternalFilesDir(null);
-            File f = new File(sd.getAbsolutePath(), "connections.txt");
+            File f = new File(folder_path, "connections.txt");
 
             try {
                 BufferedReader fin =
@@ -328,12 +312,17 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
             }
 
         }
+        for(Connection conn:connections){
+            if(conn.getAutoconnect()){
+                conn.connect();
+            }
+        }
     }
+
 
     private void saveConnections(){
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            File sd = this.getExternalFilesDir(null);
-            File f = new File(sd.getAbsolutePath(), "connections.txt");
+            File f = new File(folder_path, "connections.txt");
             try {
                 OutputStreamWriter fout =
                         new OutputStreamWriter(
@@ -395,5 +384,16 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    private void createFolder(){
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File sd = Environment.getExternalStorageDirectory();
+            folder_path=sd.getAbsolutePath()+"/INDIandroidUI";
+            File folder = new File(folder_path);
+            if(!folder.exists())
+                folder.mkdir();
+
+        }
     }
 }

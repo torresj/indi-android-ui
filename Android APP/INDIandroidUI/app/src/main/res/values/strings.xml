@@ -1,8 +1,8 @@
-<resources>
+<resources tools:locale="es" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">INDIandroidUI</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Opciones</string>
     <string name="action_connect">Nueva conexión</string>
     <string name="button_connect">Añadir</string>
     <string name="hint_host">Servidor</string>
@@ -20,7 +20,7 @@
     <string name="button_update">Actualizar</string>
     <string name="conn_switch">Conectar</string>
     <string name="alert">Aviso</string>
-    <string name="alert_msg">Propiedad de solo lectura. Nada que editar</string>
+    <string name="alert_msg">Propiedad de solo lectura. Nada que editar.</string>
     <string name="menu_edit">Editar</string>
     <string name="edit_connect">Editar</string>
     <string name="action_edit">Editar conexión</string>
@@ -30,8 +30,26 @@
     <string name="alert_connection_lost">Conexión perdida</string>
     <string name="alert_device_add">Nuevo dispositivo añadido</string>
     <string name="alert_device_remove">Dispositivo desconectado</string>
-    <string name="alert_invalid_number">Formato erroneo o fuera de rango</string>
-    <string name="help">Ayuda</string>
+    <string name="help">Ayuda general</string>
+    <string name="help_title">Bienvenido a INDIandroidUI</string>
+
+    <string name="help_text">
+        <![CDATA[
+        <div>
+                <p>Pulse el botón <b>+</b> en la barra de opciones para <u>añadir una conexión</u>.</p>
+                <p>En el menu lateral (pulsando el botón superior izquierdo o desplazando el dedo desde el borde izquierdo de la pantalla) se listan todas las conexiones.</p>
+                <p>Pulse el botón <u>Conectar</u> en el menu lateral para iniciar una conexión.</p>
+                <p>Una vez conectado vuelva a abrir el menu lateral para seleccionar los dispositivos que apareceran en la lista.</p>
+        </div>
+        ]]>
+
+    </string>
+
     <string name="autoconnect">Autoconectar</string>
-    <string name="blob_enable">Activar recepción de BLOBs</string>>
+    <string name="blob_enable">Activar recepción de BLOBs</string>
+    <string name="notifications">NOTIFICACIONES</string>
+    <string name="notification_bar">Sistema</string>
+    <string name="notification_dialog">Ventanas</string>
+    <string name="notification_sound">Sonido</string>
+    <string name="notification_vibrate">Vibración</string>>
 </resources>
