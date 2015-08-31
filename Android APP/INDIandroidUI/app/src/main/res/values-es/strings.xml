@@ -1,0 +1,62 @@
+<resources tools:locale="es" xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Remote Observatory</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_connect">Nueva conexión</string>
+    <string name="button_connect">Añadir</string>
+    <string name="hint_host">Servidor</string>
+    <string name="hint_port">Puerto</string>
+    <string name="action_disconnect">Borrar</string>
+    <string name="action_log">Ver log</string>
+    <string name="action_exit">Salir</string>
+    <string name="disconnect">Eliminar conexiones</string>
+    <string name="ok_button">Ok</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="drawe_menu_title">Conexiones y dispositivos</string>
+    <string name="hint_name">Nombre</string>
+    <string name="menu_connect">Conectar</string>
+    <string name="menu_disconnect">Desconectar</string>
+    <string name="button_update">Actualizar</string>
+    <string name="conn_switch">Conectar</string>
+    <string name="alert">Aviso</string>
+    <string name="alert_msg">Propiedad de solo lectura. Nada que editar.</string>
+    <string name="menu_edit">Editar</string>
+    <string name="edit_connect">Editar</string>
+    <string name="action_edit">Editar conexión</string>
+    <string name="not_data">No hay datos que mostrar.</string>
+    <string name="save_text">Archivo salvado</string>
+    <string name="not_data_save">No hay datos que salvar.</string>
+    <string name="alert_connection_lost">Conexión perdida</string>
+    <string name="alert_device_add">Nuevo dispositivo añadido</string>
+    <string name="alert_device_remove">Dispositivo desconectado</string>
+    <string name="help">Ayuda general</string>
+    <string name="help_title">Bienvenido a Remote Observatory</string>
+
+    <string name="help_text">
+        <![CDATA[
+        <div>
+                <p>Pulse el botón <b>+</b> en la barra de opciones para <u>añadir una conexión</u>.</p>
+                <p>En el menu lateral (pulsando el botón superior izquierdo o desplazando el dedo desde el borde izquierdo de la pantalla) se listan todas las conexiones.</p>
+                <p>Pulse el botón <u>Conectar</u> en el menu lateral para iniciar una conexión.</p>
+                <p>Una vez conectado vuelva a abrir el menu lateral para seleccionar los dispositivos que apareceran en la lista.</p>
+        </div>
+        ]]>
+
+    </string>
+
+    <string name="autoconnect">Autoconectar</string>
+    <string name="blob_enable">Activar recepción de BLOBs</string>
+    <string name="notifications">NOTIFICACIONES</string>
+    <string name="notification_bar">Sistema</string>
+    <string name="notification_dialog">Ventanas</string>
+    <string name="notification_sound">Sonido</string>
+    <string name="notification_vibrate">Vibración</string>
+    <string name="general_settings">AJUSTES GENERALES</string>
+    <string name="folder">Carpeta por defecto:</string>
+    <string name="title_activity_front">Front</string>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="version">Versión 0.9</string>
+    <string name="app_sub_title">Cliente INDI para controlar observatorios astrológicos</string>
+    <string name="default_view">Vista por defecto</string>>
+</resources>
