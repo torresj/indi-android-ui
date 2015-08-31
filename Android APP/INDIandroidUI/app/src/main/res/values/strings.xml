@@ -1,8 +1,8 @@
 <resources tools:locale="es" xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">INDIandroidUI</string>
+    <string name="app_name">Remote Observatory</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Opciones</string>
+    <string name="action_settings">Ajustes</string>
     <string name="action_connect">Nueva conexión</string>
     <string name="button_connect">Añadir</string>
     <string name="hint_host">Servidor</string>
@@ -31,7 +31,7 @@
     <string name="alert_device_add">Nuevo dispositivo añadido</string>
     <string name="alert_device_remove">Dispositivo desconectado</string>
     <string name="help">Ayuda general</string>
-    <string name="help_title">Bienvenido a INDIandroidUI</string>
+    <string name="help_title">Bienvenido a Remote Observatory</string>
 
     <string name="help_text">
         <![CDATA[
@@ -51,5 +51,12 @@
     <string name="notification_bar">Sistema</string>
     <string name="notification_dialog">Ventanas</string>
     <string name="notification_sound">Sonido</string>
-    <string name="notification_vibrate">Vibración</string>>
+    <string name="notification_vibrate">Vibración</string>
+    <string name="general_settings">AJUSTES GENERALES</string>
+    <string name="folder">Carpeta por defecto:</string>
+    <string name="title_activity_front">Front</string>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="version">Versión 1.0</string>
+    <string name="app_sub_title">A INDI client to control astronomical observatories</string>
+    <string name="default_view">Vista por defecto</string>>
 </resources>

@@ -6,8 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.util.SparseArray;
@@ -37,6 +41,7 @@ public class Connection implements INDIServerConnectionListener {
     private boolean connected;
     private boolean error;
     private String log;
+    private Settings settings;
 
     public Connection(String name,String host, int port,boolean autoconnect,boolean blobs_enable,Context context){
         this.name=name;
@@ -50,6 +55,7 @@ public class Connection implements INDIServerConnectionListener {
         adapters = new ArrayList<>();
         connected = false;
         error = false;
+        settings=Settings.getInstance();
     }
 
     public ArrayList<PropertyArrayAdapter> getAdapters() {
@@ -104,42 +110,131 @@ public class Connection implements INDIServerConnectionListener {
 
     @Override
     public void newDevice(INDIServerConnection connection, INDIDevice device) {
-        Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_add)+": "+device.getName());
-        alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
+        if(!MainActivity.pause) {
+            if(settings.getDialogNotifications()) {
+                Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_add)+": "+device.getName());
+                alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
+                ((MainActivity) context).set_uichange(true);
+            }
+        }else {
+            if(settings.getAndroidNotificacions()) {
+                Intent intent = new Intent(context, MainActivity.class);
+                PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
+
+                Notification notification = new NotificationCompat.Builder(context)
+                        .setCategory(Notification.CATEGORY_MESSAGE)
+                        .setContentTitle("Aviso")
+                        .setContentText(context.getResources().getString(R.string.alert_device_add) + ": " + device.getName())
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                                R.drawable.notification))
+                        .setContentIntent(pIntent).build();
+                NotificationManager notificationManager =
+                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+                notificationManager.notify(0, notification);
+            }
+        }
+
+        if(settings.getSoundNotifications()){
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+            r.play();
+        }
+
+        if(settings.getVibrateNotifications()){
+            Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 500 milliseconds
+            v.vibrate(500);
+        }
     }
 
     @Override
     public void removeDevice(INDIServerConnection connection, INDIDevice device) {
-        Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_remove)+": "+device.getName());
-        alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
+        if(!MainActivity.pause) {
+            if(settings.getDialogNotifications()) {
+                Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_remove)+": "+device.getName());
+                alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
+                ((MainActivity) context).set_uichange(true);
+            }
+        }else {
+            if(settings.getAndroidNotificacions()) {
+                Intent intent = new Intent(context, MainActivity.class);
+                PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
+
+                Notification notification = new NotificationCompat.Builder(context)
+                        .setCategory(Notification.CATEGORY_MESSAGE)
+                        .setContentTitle("Aviso")
+                        .setContentText(context.getResources().getString(R.string.alert_device_remove) + ": " + device.getName())
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                                R.drawable.notification))
+                        .setContentIntent(pIntent).build();
+                NotificationManager notificationManager =
+                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+                notificationManager.notify(0, notification);
+            }
+        }
+
+        if(settings.getSoundNotifications()){
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+            r.play();
+        }
+
+        if(settings.getVibrateNotifications()){
+            Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 500 milliseconds
+            v.vibrate(500);
+        }
     }
 
     @Override
     public void connectionLost(INDIServerConnection connection) {
         if(!MainActivity.pause) {
-            Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost());
-            alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
-            disconnect();
-            ((MainActivity) context).set_uichange(true);
+            if(settings.getDialogNotifications()) {
+                Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost());
+                alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
+                disconnect();
+                ((MainActivity) context).set_uichange(true);
+            }
         }else {
+            if(settings.getAndroidNotificacions()) {
+                Intent intent = new Intent(context, MainActivity.class);
+                PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
+                Notification notification = new NotificationCompat.Builder(context)
+                        .setCategory(Notification.CATEGORY_MESSAGE)
+                        .setContentTitle("Aviso")
+                        .setContentText(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost())
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                                R.drawable.notification))
+                        .setContentIntent(pIntent).build();
+                NotificationManager notificationManager =
+                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-            Notification notification = new NotificationCompat.Builder(context)
-                    .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setContentTitle("Aviso")
-                    .setContentText(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost())
-                    .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
-                            R.drawable.notification))
-                    .setContentIntent(pIntent).build();
-            NotificationManager notificationManager =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+                notificationManager.notify(0, notification);
+            }
+        }
 
-            notificationManager.notify(0, notification);
+        if(settings.getSoundNotifications()){
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+            r.play();
+        }
+
+        if(settings.getVibrateNotifications()){
+            Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 500 milliseconds
+            v.vibrate(500);
         }
 
     }

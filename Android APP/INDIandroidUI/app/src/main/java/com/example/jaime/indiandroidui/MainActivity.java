@@ -36,13 +36,15 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     ViewPager viewPager;
     TabLayout tabLayout;
     boolean uichange;
-    String folder_path;
+    Settings settings;
     static boolean pause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        settings=Settings.getInstance();
 
         uichange=false;
 
@@ -69,6 +71,11 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
         readConnections();
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        moveTaskToBack(true);
     }
 
     @Override
@@ -140,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                 adapter.addFrag(new SettingsView(),getResources().getString(R.string.action_settings));
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);
-                setTitle("INDIandroidUI");
+                setTitle(getResources().getString(R.string.app_name));
                 return true;
             case R.id.action_log:
                 adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -154,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                 tabLayout.setOnTabSelectedListener(this);
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);
-                setTitle("INDIandroidUI");
+                setTitle(getResources().getString(R.string.app_name));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -231,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                                 adapter.addFrag(new HelpView(), getResources().getString(R.string.help));
                                 viewPager.setAdapter(adapter);
                                 tabLayout.setupWithViewPager(viewPager);
-                                setTitle("INDIandroidUI");
+                                setTitle(getResources().getString(R.string.app_name));
                                 drawerLayout.closeDrawers();
                             } else {
                                 conn.connect();
@@ -271,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
     private void readConnections(){
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            File f = new File(folder_path, "connections.txt");
+            File f = new File(settings.getFolderPath(), "connections.txt");
 
             try {
                 BufferedReader fin =
@@ -322,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
     private void saveConnections(){
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            File f = new File(folder_path, "connections.txt");
+            File f = new File(settings.getFolderPath(), "connections.txt");
             try {
                 OutputStreamWriter fout =
                         new OutputStreamWriter(
@@ -389,8 +396,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     private void createFolder(){
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File sd = Environment.getExternalStorageDirectory();
-            folder_path=sd.getAbsolutePath()+"/INDIandroidUI";
-            File folder = new File(folder_path);
+            File folder = new File(settings.getFolderPath());
             if(!folder.exists())
                 folder.mkdir();
 
