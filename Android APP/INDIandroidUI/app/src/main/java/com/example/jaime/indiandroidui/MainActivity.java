@@ -27,7 +27,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener, TabLayout.OnTabSelectedListener {
+public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -152,13 +152,9 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
             case R.id.action_log:
                 adapter = new ViewPagerAdapter(getSupportFragmentManager());
                 for(Connection conn:connections){
-                    if(conn.getLog()!=null) {
-                        System.out.println(conn.getLog());
-                        LogView.text = conn.getLog();
-                    }
-                    adapter.addFrag(new LogView(), "Log_" + conn.getName());
+                    LogView logView=LogView.newInstance(conn.getHost());
+                    adapter.addFrag(logView, "Log_" + conn.getName());
                 }
-                tabLayout.setOnTabSelectedListener(this);
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);
                 setTitle(getResources().getString(R.string.app_name));
@@ -250,9 +246,10 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                             ArrayList<PropertyArrayAdapter> adapters = conn.getAdapters();
                             //list.setAdapter(adapters.get(menuItem.getOrder()));
                             DefaultDeviceView.adapter = (PropertyArrayAdapter) adapters.get(menuItem.getOrder());
+                            DefaultDeviceView.conn=conn;
                             adapter = new ViewPagerAdapter(getSupportFragmentManager());
                             adapter.addFrag(new HelpView(), getResources().getString(R.string.help));
-                            adapter.addFrag(new DefaultDeviceView(), "Default View");
+                            adapter.addFrag(new DefaultDeviceView(), getResources().getString(R.string.default_view));
                             viewPager.setAdapter(adapter);
                             tabLayout.setupWithViewPager(viewPager);
                             viewPager.setCurrentItem(1);
@@ -272,7 +269,12 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     public void onDisconnectButtonClick(ArrayList<Integer> itemsSeleccionados) {
         ArrayList<Connection> aux_connections=new ArrayList<>(connections);
         for(int i=0;i<itemsSeleccionados.size();i++){
-            connections.remove(aux_connections.get(i));
+            Connection conn=aux_connections.get(i);
+            File f=new File(settings.getFolderPath()+"/properties/"+conn.getHost()+".txt");
+            if(f.exists()){
+                f.delete();
+            }
+            connections.remove(conn);
         }
     }
 
@@ -373,26 +375,6 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
         uichange=change;
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        String log=connections.get(tab.getPosition()).getLog();
-        if(log!=null)
-            LogView.text=log;
-        else{
-            LogView.text="";
-        }
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
-
     private void createFolder(){
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File sd = Environment.getExternalStorageDirectory();
@@ -400,6 +382,15 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
             if(!folder.exists())
                 folder.mkdir();
 
+            //Properties hide folder
+            File porperties=new File(settings.getFolderPath()+"/properties");
+            if(!porperties.exists())
+                porperties.mkdir();
+
+            //Log folder
+            File log=new File(settings.getFolderPath()+"/log");
+            if(!log.exists())
+                log.mkdir();
         }
     }
 }

@@ -16,8 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.util.SparseArray;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
 import laazotea.indi.client.INDIDevice;
 import laazotea.indi.client.INDIProperty;
@@ -40,8 +50,10 @@ public class Connection implements INDIServerConnectionListener {
     private IndiConnect thread;
     private boolean connected;
     private boolean error;
-    private String log;
     private Settings settings;
+    private Properties properties_hide;
+    private boolean showAll;
+    private boolean property_hide_change;
 
     public Connection(String name,String host, int port,boolean autoconnect,boolean blobs_enable,Context context){
         this.name=name;
@@ -56,6 +68,9 @@ public class Connection implements INDIServerConnectionListener {
         connected = false;
         error = false;
         settings=Settings.getInstance();
+        showAll=false;
+        property_hide_change=false;
+        createFileProperties();
     }
 
     public ArrayList<PropertyArrayAdapter> getAdapters() {
@@ -99,6 +114,7 @@ public class Connection implements INDIServerConnectionListener {
             thread=null;
         }
         connected=false;
+        saveFileProperties();
     }
 
     public void connect(){
@@ -108,13 +124,80 @@ public class Connection implements INDIServerConnectionListener {
         connected=true;
     }
 
+    public void hideProperty(INDIProperty p){
+        properties_hide.setProperty(host + "_" + p.getDevice().getName() + "_" + p.getName(), "true");
+        property_hide_change=true;
+    }
+
+    public void showProperty(INDIProperty p){
+        properties_hide.setProperty(host + "_" + p.getDevice().getName() + "_" + p.getName(), "false");
+        property_hide_change=true;
+    }
+
+    public boolean isPropertyHide(INDIProperty p){
+        String hide=properties_hide.getProperty(host+"_"+p.getDevice().getName()+"_"+p.getName(),"false");
+        return Boolean.parseBoolean(hide);
+    }
+
+    public void showAll(boolean show){
+        showAll=show;
+        property_hide_change=true;
+    }
+
+    public boolean isShowAll(){
+        return showAll;
+    }
+
+    private void saveFileProperties(){
+        File f=new File(settings.getFolderPath()+"/properties/"+host+".txt");
+        try{
+            OutputStream out= new FileOutputStream(f);
+            properties_hide.store(out,"Properties hide file "+host);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createFileProperties(){
+        File f=new File(settings.getFolderPath()+"/properties/"+host+".txt");
+        if(!f.exists()){
+            properties_hide=new Properties();
+            try {
+                OutputStream out=new FileOutputStream(f);
+                properties_hide.store(out,"Properties hide file "+host);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            properties_hide=new Properties();
+            InputStream in = null;
+            try {
+                in = new FileInputStream(f);
+                properties_hide.load(in);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void saveLog(String log){
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(settings.getFolderPath()+"/log/"+host+".txt",true));
+            out.write(log);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void newDevice(INDIServerConnection connection, INDIDevice device) {
         if(!MainActivity.pause) {
             if(settings.getDialogNotifications()) {
                 Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_add)+": "+device.getName());
-                alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
-                ((MainActivity) context).set_uichange(true);
+                alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
             }
         }else {
             if(settings.getAndroidNotificacions()) {
@@ -149,6 +232,8 @@ public class Connection implements INDIServerConnectionListener {
             // Vibrate for 500 milliseconds
             v.vibrate(500);
         }
+
+        ((MainActivity) context).set_uichange(true);
     }
 
     @Override
@@ -157,7 +242,6 @@ public class Connection implements INDIServerConnectionListener {
             if(settings.getDialogNotifications()) {
                 Alert_dialog alert=Alert_dialog.newInstance(context.getResources().getString(R.string.alert_device_remove)+": "+device.getName());
                 alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
-                ((MainActivity) context).set_uichange(true);
             }
         }else {
             if(settings.getAndroidNotificacions()) {
@@ -192,6 +276,8 @@ public class Connection implements INDIServerConnectionListener {
             // Vibrate for 500 milliseconds
             v.vibrate(500);
         }
+
+        ((MainActivity) context).set_uichange(true);
     }
 
     @Override
@@ -200,8 +286,6 @@ public class Connection implements INDIServerConnectionListener {
             if(settings.getDialogNotifications()) {
                 Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost());
                 alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
-                disconnect();
-                ((MainActivity) context).set_uichange(true);
             }
         }else {
             if(settings.getAndroidNotificacions()) {
@@ -237,15 +321,14 @@ public class Connection implements INDIServerConnectionListener {
             v.vibrate(500);
         }
 
+        disconnect();
+        ((MainActivity) context).set_uichange(true);
+
     }
 
     @Override
     public void newMessage(INDIServerConnection connection, Date timestamp, String message) {
 
-    }
-
-    public String getLog(){
-        return log;
     }
 
     class IndiConnect extends AsyncTask<Void, IndiClient, Void> {
@@ -278,7 +361,6 @@ public class Connection implements INDIServerConnectionListener {
 
         @Override protected void onProgressUpdate(IndiClient... prog) {
             IndiClient c=prog[0];
-            log=c.getLog();
             boolean change=c.has_change();
             c.changeRead();
             ArrayList<String> device_names=c.getDevicesNames();
@@ -291,7 +373,10 @@ public class Connection implements INDIServerConnectionListener {
                 }
             }
             if(device_names.size()>0) {
-                if(change){
+                if(change || property_hide_change){
+                    String log=c.getLog();
+                    saveLog(log);
+                    property_hide_change=false;
                     for(int index=0;index<device_names.size();index++){
                         String device_name=device_names.get(index);
                         PropertyArrayAdapter adapter = adapters.get(index);
@@ -303,9 +388,22 @@ public class Connection implements INDIServerConnectionListener {
                             Groups_properties group=new Groups_properties(groups.get(i));
                             ArrayList<INDIProperty> list=device.getGroupProperties(groups.get(i));
                             for(int j=0;j<list.size();j++){
-                                group.properties.add(list.get(j));
+                                INDIProperty p=list.get(j);
+                                String hide=properties_hide.getProperty(host+"_"+device_name+"_"+p.getName());
+                                if(hide!=null) {
+                                    if (!Boolean.parseBoolean(hide)) {
+                                        group.properties.add(p);
+                                    }else if(showAll){
+                                        group.properties.add(p);
+                                    }
+                                }else{
+                                    properties_hide.setProperty(host+"_"+device_name+"_"+p.getName(),"false");
+                                    group.properties.add(p);
+                                }
                             }
-                            adapter.add(group);
+                            if(group.properties.size()>0) {
+                                adapter.add(group);
+                            }
                         }
                         Groups_properties group=new Groups_properties("");
                         adapter.add(group);

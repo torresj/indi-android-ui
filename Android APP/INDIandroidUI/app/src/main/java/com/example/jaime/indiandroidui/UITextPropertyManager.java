@@ -25,7 +25,7 @@ import laazotea.indi.client.INDIValueException;
 /**
  * Created by Jaime on 5/8/15.
  */
-public class UITextPropertyManager implements UIPropertyManager {
+public class UITextPropertyManager implements UIPropertyManager, View.OnClickListener {
 
     //Atributes
     int layout;
@@ -133,6 +133,10 @@ public class UITextPropertyManager implements UIPropertyManager {
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
         TextView element = (TextView)v.findViewById(R.id.element);
 
+        visibility.setTag(p);
+        visibility.setFocusable(false);
+        visibility.setOnClickListener(this);
+
         //others
         int light_res=0;
         String perm_res="";
@@ -168,12 +172,26 @@ public class UITextPropertyManager implements UIPropertyManager {
             perm_res="RW";
         }
 
-        visibility_res=R.drawable.ic_visibility_black_24dp;
+        if(DefaultDeviceView.conn.isPropertyHide(p))
+            visibility_res=R.drawable.ic_visibility_off_black_24dp;
+        else
+            visibility_res=R.drawable.ic_visibility_black_24dp;
 
 
         name.setText(p.getLabel());
         idle.setImageResource(light_res);
         perm.setText(perm_res);
         visibility.setImageResource(visibility_res);
+    }
+
+    @Override
+    public void onClick(View v) {
+        INDIProperty p=(INDIProperty)v.getTag();
+        Connection conn=DefaultDeviceView.conn;
+        if(conn.isPropertyHide(p)){
+            conn.showProperty(p);
+        }else{
+            conn.hideProperty(p);
+        }
     }
 }

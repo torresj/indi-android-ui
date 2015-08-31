@@ -37,7 +37,7 @@ import laazotea.indi.client.INDIProperty;
 /**
  * Created by Jaime on 5/8/15.
  */
-public class UIBlobPropertyManager implements UIPropertyManager {
+public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickListener {
 
     //Atributes
     private int layout;
@@ -103,8 +103,10 @@ public class UIBlobPropertyManager implements UIPropertyManager {
         final ImageButton save =(ImageButton)v.findViewById(R.id.save_button);
         ImageButton view =(ImageButton)v.findViewById(R.id.view_button);
 
+
         save.setTag(label.getText().toString());
         view.setTag(label.getText().toString());
+        visibility.setTag(p);
 
         //others
         int light_res=0;
@@ -127,6 +129,7 @@ public class UIBlobPropertyManager implements UIPropertyManager {
 
         save.setFocusable(false);
         view.setFocusable(false);
+        visibility.setFocusable(false);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +144,8 @@ public class UIBlobPropertyManager implements UIPropertyManager {
                 viewBlob(v);
             }
         });
+
+        visibility.setOnClickListener(this);
 
 
         //State
@@ -163,7 +168,10 @@ public class UIBlobPropertyManager implements UIPropertyManager {
             perm_res="RW";
         }
 
-        visibility_res=R.drawable.ic_visibility_black_24dp;
+        if(DefaultDeviceView.conn.isPropertyHide(p))
+            visibility_res=R.drawable.ic_visibility_off_black_24dp;
+        else
+            visibility_res=R.drawable.ic_visibility_black_24dp;
 
 
         name.setText(p.getLabel());
@@ -229,6 +237,17 @@ public class UIBlobPropertyManager implements UIPropertyManager {
             Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.not_data));
             alert.show(act.getSupportFragmentManager(),"Alert No Data");
 
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        INDIProperty p=(INDIProperty)v.getTag();
+        Connection conn=DefaultDeviceView.conn;
+        if(conn.isPropertyHide(p)){
+            conn.showProperty(p);
+        }else{
+            conn.hideProperty(p);
         }
     }
 }

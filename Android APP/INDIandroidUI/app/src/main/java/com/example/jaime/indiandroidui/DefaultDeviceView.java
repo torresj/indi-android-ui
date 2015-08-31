@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import laazotea.indi.Constants;
 import laazotea.indi.client.INDILightProperty;
 import laazotea.indi.client.INDIProperty;
@@ -16,10 +18,11 @@ import laazotea.indi.client.INDIProperty;
 /**
  * Created by Jaime on 26/8/15.
  */
-public class DefaultDeviceView extends Fragment implements ExpandableListView.OnChildClickListener{
+public class DefaultDeviceView extends Fragment implements ExpandableListView.OnChildClickListener, FloatingActionButton.OnClickListener{
 
     private ExpandableListView list;
     static PropertyArrayAdapter adapter;
+    static Connection conn;
     private String title;
 
 
@@ -30,6 +33,15 @@ public class DefaultDeviceView extends Fragment implements ExpandableListView.On
         list=(ExpandableListView)view.findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnChildClickListener(this);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.attachToListView(list);
+        fab.setOnClickListener(this);
+        if(conn.isShowAll()){
+            fab.setImageResource(R.drawable.ic_visibility_black_24dp);
+        }else{
+            fab.setImageResource(R.drawable.ic_visibility_off_black_24dp);
+        }
         return view;
     }
 
@@ -45,5 +57,17 @@ public class DefaultDeviceView extends Fragment implements ExpandableListView.On
             alert.show(this.getFragmentManager(), "AlertDialog");
         }
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        FloatingActionButton fab=(FloatingActionButton) v;
+        if(conn.isShowAll()){
+            conn.showAll(false);
+            fab.setImageResource(R.drawable.ic_visibility_off_black_24dp);
+        }else{
+            conn.showAll(true);
+            fab.setImageResource(R.drawable.ic_visibility_black_24dp);
+        }
     }
 }

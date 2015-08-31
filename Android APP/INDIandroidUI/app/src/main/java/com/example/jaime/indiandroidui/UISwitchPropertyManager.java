@@ -143,6 +143,21 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
         TextView element = (TextView)v.findViewById(R.id.element);
 
+        visibility.setTag(p);
+        visibility.setFocusable(false);
+        visibility.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                INDIProperty p=(INDIProperty)v.getTag();
+                Connection conn=DefaultDeviceView.conn;
+                if(conn.isPropertyHide(p)){
+                    conn.showProperty(p);
+                }else{
+                    conn.hideProperty(p);
+                }
+            }
+        });
+
         //others
         int light_res=0;
         String perm_res="";
@@ -182,7 +197,10 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
             perm_res="RW";
         }
 
-        visibility_res=R.drawable.ic_visibility_black_24dp;
+        if(DefaultDeviceView.conn.isPropertyHide(p))
+            visibility_res=R.drawable.ic_visibility_off_black_24dp;
+        else
+            visibility_res=R.drawable.ic_visibility_black_24dp;
 
 
         name.setText(p.getLabel());
