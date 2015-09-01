@@ -36,10 +36,13 @@
     <string name="help_text">
         <![CDATA[
         <div>
+                <p><font color="red"><i>AVISO: Esta aplicación se encuentra en fase beta. Usted es libre de usarla y proporcionarnos cualquier comentarios sobre ella. Sin embargo, no nos hacemos responsables de ningún posible daño que puedan sufrir el equipo controlado por este software.</i></font></p>
+                <br /><br />
                 <p>Pulse el botón <b>+</b> en la barra de opciones para <u>añadir una conexión</u>.</p>
                 <p>En el menu lateral (pulsando el botón superior izquierdo o desplazando el dedo desde el borde izquierdo de la pantalla) se listan todas las conexiones.</p>
                 <p>Pulse el botón <u>Conectar</u> en el menu lateral para iniciar una conexión.</p>
                 <p>Una vez conectado vuelva a abrir el menu lateral para seleccionar los dispositivos que apareceran en la lista.</p>
+                <p><p><Strong>Para reportar cualquier fallo o enviar comentarios, porfavor use: <i>jtbenavente@gmail.com</i></Strong></p></p>
         </div>
         ]]>
 
@@ -58,5 +61,6 @@
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
     <string name="version">Versión 0.9</string>
     <string name="app_sub_title">Cliente INDI para controlar observatorios astrológicos</string>
-    <string name="default_view">Vista por defecto</string>>
+    <string name="default_view">Vista por defecto</string>
+    <string name="abort_text">Press to abort</string>>
 </resources>

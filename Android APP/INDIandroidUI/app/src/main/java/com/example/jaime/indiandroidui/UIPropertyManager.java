@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import laazotea.indi.client.INDIProperty;
 
@@ -66,4 +67,12 @@ public interface UIPropertyManager {
      * @return priority
      */
     int getPriority();
+
+    /**
+     *  Get update button reference
+     *
+     *  @return update button
+     */
+
+    Button getUpdateButton();
 }

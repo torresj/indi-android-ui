@@ -58,9 +58,11 @@ public class EditViewPropery extends DialogFragment implements View.OnClickListe
 
         v = ui.getUpdateView(p,inflater,this);
 
-        Button button=(Button)v.findViewById(R.id.update_button);
+        Button button=ui.getUpdateButton();
 
-        button.setOnClickListener(this);
+        if (button != null) {
+            button.setOnClickListener(this);
+        }
 
         builder.setView(v);
 
@@ -74,9 +76,14 @@ public class EditViewPropery extends DialogFragment implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-        ui.updateProperty(p,this.v);
-        dismiss();
+    public void onPause(){
+        super.onPause();
         DefaultDeviceView.adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+        ui.updateProperty(p, this.v);
+        dismiss();
     }
 }

@@ -368,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
         Config.addUiPropertyManager(new UINumberPropertyManager());
         Config.addUiPropertyManager(new UILightPropertyManager());
         Config.addUiPropertyManager(new UIConnecPropertyManager());
+        Config.addUiPropertyManager(new UIAbortPropertyManager());
 
     }
 

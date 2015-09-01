@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -30,6 +31,7 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
     //Atributes
     int layout;
     int layout_dialog;
+    Button button;
     ArrayList<ToggleButton> values;
 
     public UISwitchPropertyManager(){
@@ -69,6 +71,7 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
         TableLayout table = (TableLayout)v.findViewById(R.id.table);
+        button=(Button)v.findViewById(R.id.update_button);
         INDISwitchProperty s = (INDISwitchProperty)p;
 
 
@@ -133,6 +136,11 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
     @Override
     public int getPriority() {
         return 3;
+    }
+
+    @Override
+    public Button getUpdateButton() {
+        return button;
     }
 
     void setView(View v, INDISwitchProperty p){

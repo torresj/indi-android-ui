@@ -44,13 +44,13 @@
     <string name="help_text">
         <![CDATA[
         <div>
-                <p><font color="red"><i>WARNING: This app is currently in open beta phase. You are free to use it and provide any comments about it. However, we are not responsible of any possible damage to any equipament controlled with this piece of software.</i></font></p>
+                <p><font color="red"><i>WARNING: This app is currently in open beta phase. You are free to use it and provide any comments about it. However, we are not responsible of any possible damage to any equipment controlled with this piece of software.</i></font></p>
                 <br /><br />
                 <p>Press button <b>+</b> on the toolbar to <u>add a new connection</u>.</p>
                 <p>in the sidebar (sliding the finger from left to right) all connections are listed.</p>
                 <p>Press button <u>Connect</u> on the sidebar to start a connection.</p>
                 <p>One connected, reopen sidebar to select devices.</p>
-                <p><p><Strong>To report any bugs or send comment, please use: <i>jtbenavente@gmail.com</i></Strong></p></p>
+                <p><p><Strong>To report any bugs or send comments, please use: <i>jtbenavente@gmail.com</i></Strong></p></p>
         </div>
         ]]>
 
@@ -58,4 +58,6 @@
     <string name="default_view">Default view</string>
     <string name="save_text">File saved</string>
     <string name="title_activity_front">Front</string>
+    <string name="abort_text">Press to abort</string>
+    <string name="button_abort">ABORT</string>
 </resources>

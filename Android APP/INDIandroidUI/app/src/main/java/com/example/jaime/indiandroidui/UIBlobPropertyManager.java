@@ -11,6 +11,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
     private int layout_dialog;
     private Map<String, INDIBLOBValue> blobs;
     private Context context;
+    private Button button;
 
     public UIBlobPropertyManager(){
         layout=R.layout.blob_property_view_list_item;
@@ -78,6 +80,7 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
     public View getUpdateView(INDIProperty p, LayoutInflater inflater, DialogFragment fragment) {
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
+        button=(Button)v.findViewById(R.id.update_button);
         name.setText(p.getLabel());
         return v;
     }
@@ -90,6 +93,11 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
     @Override
     public int getPriority() {
         return 0;
+    }
+
+    @Override
+    public Button getUpdateButton() {
+        return button;
     }
 
     void setView(View v, INDIBLOBProperty p){

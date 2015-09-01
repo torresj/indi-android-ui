@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class UILightPropertyManager implements UIPropertyManager,View.OnClickLis
     //Atributes
     int layout;
     int layout_dialog;
+    Button button;
 
     public UILightPropertyManager(){
         layout=R.layout.light_property_view_list_item;
@@ -57,6 +59,7 @@ public class UILightPropertyManager implements UIPropertyManager,View.OnClickLis
     public View getUpdateView(INDIProperty p, LayoutInflater inflater, DialogFragment fragment) {
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
+        button=(Button)v.findViewById(R.id.update_button);
         INDILightProperty p_l= (INDILightProperty) p;
         name.setText(p_l.getLabel());
         return v;
@@ -70,6 +73,11 @@ public class UILightPropertyManager implements UIPropertyManager,View.OnClickLis
     @Override
     public int getPriority() {
         return 1;
+    }
+
+    @Override
+    public Button getUpdateButton() {
+        return button;
     }
 
     void setView(View v, INDILightProperty p){

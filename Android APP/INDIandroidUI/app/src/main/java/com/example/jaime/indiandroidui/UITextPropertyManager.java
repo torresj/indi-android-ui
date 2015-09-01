@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -30,6 +31,7 @@ public class UITextPropertyManager implements UIPropertyManager, View.OnClickLis
     //Atributes
     int layout;
     int layout_dialog;
+    Button button;
 
     public UITextPropertyManager(){
         layout=R.layout.text_property_view_list_item;
@@ -65,6 +67,7 @@ public class UITextPropertyManager implements UIPropertyManager, View.OnClickLis
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
         TableLayout table = (TableLayout)v.findViewById(R.id.table);
+        button=(Button)v.findViewById(R.id.update_button);
         INDITextProperty p_t = (INDITextProperty)p;
 
         name.setText(p.getLabel());
@@ -123,6 +126,11 @@ public class UITextPropertyManager implements UIPropertyManager, View.OnClickLis
     @Override
     public int getPriority() {
         return 4;
+    }
+
+    @Override
+    public Button getUpdateButton() {
+        return button;
     }
 
     void setView(View v, INDITextProperty p){

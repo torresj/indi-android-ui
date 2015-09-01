@@ -2,15 +2,13 @@ package com.example.jaime.indiandroidui;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,37 +17,51 @@ import laazotea.indi.Constants;
 import laazotea.indi.client.INDIElement;
 import laazotea.indi.client.INDIProperty;
 import laazotea.indi.client.INDISwitchElement;
+import laazotea.indi.client.INDISwitchProperty;
 import laazotea.indi.client.INDIValueException;
 
 /**
- * Created by Jaime on 18/8/15.
+ * Created by Jaime on 1/9/15.
  */
-public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickListener {
+public class UIAbortPropertyManager implements UIPropertyManager,View.OnClickListener {
+
     //Atributes
     int layout;
     int layout_dialog;
     Button button;
+    Context context;
 
-    public UIConnecPropertyManager(){
-        layout=R.layout.connec_property_view_list_item;
-        layout_dialog=R.layout.connec_property_edit_view;
+    public UIAbortPropertyManager(){
+        layout=R.layout.abort_property_view_list_item;
+        layout_dialog=R.layout.abort_property_edit_view;
     }
 
     @Override
     public boolean handlesProperty(INDIProperty p) {
-
-        if(p.getName().equals("CONNECTION"))
-            return true;
-        else
+        if(p instanceof INDISwitchProperty){
+            ArrayList<INDIElement> list = p.getElementsAsList();
+            if(list.size()==1) {
+                INDISwitchElement elem = (INDISwitchElement) list.get(0);
+                if(elem.getLabel().equals("Abort")){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
             return false;
+        }
     }
 
     @Override
     public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
+        this.context=context;
         View v=inflater.inflate(layout, parent, false);
         return v;
     }
-
 
     @Override
     public void updateView(INDIProperty p, View v) {
@@ -60,41 +72,19 @@ public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickLi
     public View getUpdateView(INDIProperty p, LayoutInflater inflater, DialogFragment fragment) {
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
-        Switch s=(Switch)v.findViewById(R.id.conn_switch);
-        button=(Button)v.findViewById(R.id.update_button);
-
-        ArrayList<INDIElement> list = p.getElementsAsList();
-        INDISwitchElement elem=(INDISwitchElement)list.get(0);
-
-        if (elem.getValue().equals(Constants.SwitchStatus.ON))
-            s.setChecked(true);
-        else
-            s.setChecked(false);
-
+        button=(Button)v.findViewById(R.id.abort_button);
         name.setText(p.getLabel());
         return v;
     }
 
-
     @Override
     public void updateProperty(INDIProperty p, View v) {
-        Switch s=(Switch)v.findViewById(R.id.conn_switch);
-
         ArrayList<INDIElement> list = p.getElementsAsList();
-        INDISwitchElement conect=(INDISwitchElement)list.get(0);
-        INDISwitchElement disconect=(INDISwitchElement)list.get(1);
+        INDISwitchElement abort=(INDISwitchElement)list.get(0);
 
         try {
-            if(s.isChecked()){
-                disconect.setDesiredValue(Constants.SwitchStatus.OFF);
-                conect.setDesiredValue(Constants.SwitchStatus.ON);
-            }else{
-                disconect.setDesiredValue(Constants.SwitchStatus.ON);
-                conect.setDesiredValue(Constants.SwitchStatus.OFF);
-            }
-
-        p.sendChangesToDriver();
-
+            abort.setDesiredValue(Constants.SwitchStatus.ON);
+            p.sendChangesToDriver();
         } catch (INDIValueException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -104,7 +94,7 @@ public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickLi
 
     @Override
     public int getPriority() {
-        return 5;
+        return 9;
     }
 
     @Override
@@ -129,18 +119,9 @@ public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickLi
         String perm_res="";
         int visibility_res=0;
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        String text=context.getResources().getString(R.string.abort_text);
 
-        String text="";
-
-        INDISwitchElement elem=(INDISwitchElement)list.get(0);
-
-        if (elem.getValue().equals(Constants.SwitchStatus.ON))
-            text="Connected";
-        else
-            text="Disconnected";
-
-        element.setText(text);
+        element.setText(Html.fromHtml("<strong><font color=\"red\"><u>"+text+"</u></font></strong>"));
 
 
         //State
