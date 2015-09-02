@@ -99,5 +99,10 @@
             android:background="@drawable/text_border"
             android:id="@+id/folder" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n\n" />
+
     </LinearLayout>
 </ScrollView>

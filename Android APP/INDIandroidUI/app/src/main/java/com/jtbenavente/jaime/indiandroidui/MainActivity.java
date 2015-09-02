@@ -357,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     public void onEditButtonClick(String name,String host, int port,boolean autoconnect,boolean blobs_enable,int position) {
         Connection conn=new Connection(name,host,port,autoconnect,blobs_enable,this);
         connections.set(position, conn);
+        saveConnections();
         setDrawerMenu();
     }
 

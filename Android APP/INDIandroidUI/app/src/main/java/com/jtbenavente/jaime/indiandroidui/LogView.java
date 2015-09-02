@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -43,12 +44,21 @@ public class LogView extends Fragment {
     public void onResume(){
         super.onResume();
         try {
-            FileReader log=new FileReader(settings.getFolderPath()+"/log/"+connection+".txt");
+            File f=new File(settings.getFolderPath()+"/log/"+connection+".txt");
+            FileReader log=new FileReader(f);
             BufferedReader br = new BufferedReader(log);
             String s;
             String text="";
-            while((s = br.readLine()) != null) {
-                text+=s+" \n ";
+
+            if(f.length()<=512){
+                while((s = br.readLine()) != null) {
+                    text+=s+" \n ";
+                }
+            }else {
+                br.skip(f.length()-512);
+                while ((s = br.readLine()) != null) {
+                    text += s + " \n ";
+                }
             }
             log.close();
             text_view.setText(text);

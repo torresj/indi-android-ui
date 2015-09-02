@@ -89,9 +89,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/autoconnect"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
         android:layout_below="@+id/port"
         android:id="@+id/autconnect" />
 
@@ -100,9 +100,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/blob_enable"
-        android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_below="@+id/autconnect"
         android:id="@+id/blob_recive" />
 

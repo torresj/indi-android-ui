@@ -28,7 +28,8 @@ public class Settings {
         String default_folder= Environment.getExternalStorageDirectory().getAbsolutePath()+"/RemoteObservatory";
         this.settings_file = new Properties();
         folder_path=default_folder;
-        android_notifications=dialog_notification=sound_notifications=vibrate_notificaciones=false;
+        sound_notifications=vibrate_notificaciones=false;
+        dialog_notification=android_notifications=true;
 
         File f=new File(folder_path+"/settings.txt");
         if(!f.exists()){
