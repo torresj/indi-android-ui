@@ -1,6 +1,5 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
 
 import android.content.Context;
@@ -46,6 +46,7 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
     private Map<String, INDIBLOBValue> blobs;
     private Context context;
     private Button button;
+    private Settings settings;
 
     public UIBlobPropertyManager(){
         layout=R.layout.blob_property_view_list_item;
@@ -189,12 +190,12 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
     }
 
     private void saveBlob(View v){
+
+        settings=Settings.getInstance();
         INDIBLOBValue blob=blobs.get((String) v.getTag());
         if(blob.getSize()>0) {
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                File sd = Environment.getExternalStorageDirectory();
-                String folder_path = sd.getAbsolutePath() + "/INDIandroidUI/"+blob.getFormat().substring(1);
-                File folder = new File(folder_path);
+                File folder = new File(settings.getFolderPath()+"/"+blob.getFormat().substring(1));
                 if (!folder.exists())
                     folder.mkdir();
 
@@ -222,29 +223,40 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
     }
 
     private void viewBlob(View v) {
+
+        settings=Settings.getInstance();
         INDIBLOBValue blob=blobs.get((String) v.getTag());
         if(blob.getSize()>0) {
-            File path = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES);
-            File file = new File(path, "/" + (String) v.getTag() + blob.getFormat());
-            try {
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(blob.getBLOBData());
-                fos.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Intent intent = new Intent();
-            intent.setAction(android.content.Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(file), "image/" + blob.getFormat().substring(1));
-            context.startActivity(intent);
-        }else{
-            AppCompatActivity act=(AppCompatActivity)context;
-            Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.not_data));
-            alert.show(act.getSupportFragmentManager(),"Alert No Data");
+            if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                File folder = new File(settings.getFolderPath()+"/"+blob.getFormat().substring(1));
+                if (!folder.exists())
+                    folder.mkdir();
 
+                Calendar calendar=GregorianCalendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+                File file = new File(folder.getAbsolutePath(), "/" + (String) v.getTag()+ sdf.format(calendar.getTime()) + blob.getFormat());
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    fos.write(blob.getBLOBData());
+                    fos.close();
+
+                    Intent intent = new Intent();
+                    intent.setAction(android.content.Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(file), "image/" + blob.getFormat().substring(1));
+                    context.startActivity(intent);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }else {
+            AppCompatActivity act = (AppCompatActivity) context;
+            Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.not_data_save));
+            alert.show(act.getSupportFragmentManager(), "Alert No Data");
         }
     }
 

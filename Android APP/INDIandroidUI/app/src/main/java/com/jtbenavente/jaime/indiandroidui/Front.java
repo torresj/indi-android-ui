@@ -1,4 +1,4 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
 import android.content.Intent;
 import android.os.AsyncTask;

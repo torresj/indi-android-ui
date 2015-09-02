@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,7 +47,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="18dp"
         android:textColor="#346D7D"
-        android:text="indiserver" />
+        android:text="" />
 
     <EditText
         android:id="@+id/host"
@@ -60,7 +64,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="18dp"
         android:textColor="#346D7D"
-        android:text="indiserver.no-ip.org" />
+        android:text="" />
 
     <EditText
         android:id="@+id/port"
@@ -78,24 +82,26 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="18dp"
         android:textColor="#346D7D"
-        android:text="7624" />
+        android:text="" />
 
     <Switch
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/autoconnect"
-        android:ems="10"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/port"
         android:id="@+id/autconnect" />
 
     <Switch
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/blob_enable"
-        android:ems="10"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/autconnect"
         android:id="@+id/blob_recive" />
@@ -117,3 +123,4 @@
 
 
 </RelativeLayout>
+    </ScrollView>

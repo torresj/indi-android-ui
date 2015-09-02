@@ -1,8 +1,6 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

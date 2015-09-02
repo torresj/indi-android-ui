@@ -1,4 +1,4 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

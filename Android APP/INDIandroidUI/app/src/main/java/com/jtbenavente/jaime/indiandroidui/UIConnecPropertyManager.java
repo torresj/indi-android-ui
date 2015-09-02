@@ -1,78 +1,108 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import laazotea.indi.Constants;
 import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDILightElement;
-import laazotea.indi.client.INDILightProperty;
 import laazotea.indi.client.INDIProperty;
+import laazotea.indi.client.INDISwitchElement;
+import laazotea.indi.client.INDIValueException;
 
 /**
- * Created by Jaime on 5/8/15.
+ * Created by Jaime on 18/8/15.
  */
-public class UILightPropertyManager implements UIPropertyManager,View.OnClickListener {
-
+public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickListener {
     //Atributes
     int layout;
     int layout_dialog;
     Button button;
 
-    public UILightPropertyManager(){
-        layout=R.layout.light_property_view_list_item;
-        layout_dialog=R.layout.light_property_edit_view;
+    public UIConnecPropertyManager(){
+        layout=R.layout.connec_property_view_list_item;
+        layout_dialog=R.layout.connec_property_edit_view;
     }
 
     @Override
     public boolean handlesProperty(INDIProperty p) {
-        return p instanceof INDILightProperty;
+
+        if(p.getName().equals("CONNECTION"))
+            return true;
+        else
+            return false;
     }
 
     @Override
     public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
-        if (p instanceof INDILightProperty){
-            View v=inflater.inflate(layout, parent, false);
-            return v;
-        }else{
-            return null;
-        }
+        View v=inflater.inflate(layout, parent, false);
+        return v;
     }
+
 
     @Override
     public void updateView(INDIProperty p, View v) {
-        if (p instanceof INDILightProperty){
-            setView(v,(INDILightProperty)p);
-        }
+        setView(v, p);
     }
 
     @Override
     public View getUpdateView(INDIProperty p, LayoutInflater inflater, DialogFragment fragment) {
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
+        Switch s=(Switch)v.findViewById(R.id.conn_switch);
         button=(Button)v.findViewById(R.id.update_button);
-        INDILightProperty p_l= (INDILightProperty) p;
-        name.setText(p_l.getLabel());
+
+        ArrayList<INDIElement> list = p.getElementsAsList();
+        INDISwitchElement elem=(INDISwitchElement)list.get(0);
+
+        if (elem.getValue().equals(Constants.SwitchStatus.ON))
+            s.setChecked(true);
+        else
+            s.setChecked(false);
+
+        name.setText(p.getLabel());
         return v;
     }
 
+
     @Override
     public void updateProperty(INDIProperty p, View v) {
+        Switch s=(Switch)v.findViewById(R.id.conn_switch);
 
+        ArrayList<INDIElement> list = p.getElementsAsList();
+        INDISwitchElement conect=(INDISwitchElement)list.get(0);
+        INDISwitchElement disconect=(INDISwitchElement)list.get(1);
+
+        try {
+            if(s.isChecked()){
+                disconect.setDesiredValue(Constants.SwitchStatus.OFF);
+                conect.setDesiredValue(Constants.SwitchStatus.ON);
+            }else{
+                disconect.setDesiredValue(Constants.SwitchStatus.ON);
+                conect.setDesiredValue(Constants.SwitchStatus.OFF);
+            }
+
+        p.sendChangesToDriver();
+
+        } catch (INDIValueException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int getPriority() {
-        return 1;
+        return 5;
     }
 
     @Override
@@ -80,7 +110,7 @@ public class UILightPropertyManager implements UIPropertyManager,View.OnClickLis
         return button;
     }
 
-    void setView(View v, INDILightProperty p){
+    void setView(View v, INDIProperty p){
         //Views
         TextView name = (TextView)v.findViewById(R.id.name);
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
@@ -100,11 +130,15 @@ public class UILightPropertyManager implements UIPropertyManager,View.OnClickLis
         ArrayList<INDIElement> list = p.getElementsAsList();
 
         String text="";
-        for(int i=0;i<list.size();i++){
-            INDILightElement elem=(INDILightElement)list.get(i);
-            text=text+"<b>"+elem.getLabel()+": </b>"+elem.getValue().toString()+"<br />";
-        }
-        element.setText(Html.fromHtml(text));
+
+        INDISwitchElement elem=(INDISwitchElement)list.get(0);
+
+        if (elem.getValue().equals(Constants.SwitchStatus.ON))
+            text="Connected";
+        else
+            text="Disconnected";
+
+        element.setText(text);
 
 
         //State

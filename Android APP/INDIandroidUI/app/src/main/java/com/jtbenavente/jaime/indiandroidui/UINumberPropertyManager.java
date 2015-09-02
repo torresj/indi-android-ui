@@ -1,53 +1,55 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import laazotea.indi.Constants;
 import laazotea.indi.client.INDIElement;
+import laazotea.indi.client.INDINumberElement;
+import laazotea.indi.client.INDINumberProperty;
 import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDISwitchElement;
-import laazotea.indi.client.INDISwitchProperty;
 import laazotea.indi.client.INDIValueException;
+
 
 /**
  * Created by Jaime on 5/8/15.
  */
-public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickListener {
+public class UINumberPropertyManager implements UIPropertyManager,View.OnClickListener {
 
     //Atributes
     int layout;
     int layout_dialog;
+    Context context;
     Button button;
-    ArrayList<ToggleButton> values;
 
-    public UISwitchPropertyManager(){
-        layout=R.layout.switch_property_view_list_item;
-        layout_dialog=R.layout.switch_property_edit_view;
-
+    public UINumberPropertyManager(){
+        layout=R.layout.number_property_view_list_item;
+        layout_dialog=R.layout.number_property_edit_view;
     }
 
     @Override
     public boolean handlesProperty(INDIProperty p) {
-        return p instanceof INDISwitchProperty;
+        return p instanceof INDINumberProperty;
     }
 
     @Override
     public View getPropertyView(INDIProperty p, LayoutInflater inflater, ViewGroup parent, Context context) {
-        if (p instanceof INDISwitchProperty){
+        this.context=context;
+        if (p instanceof INDINumberProperty){
             View v=inflater.inflate(layout, parent, false);
             return v;
         }else{
@@ -55,87 +57,81 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         }
     }
 
+
     @Override
     public void updateView(INDIProperty p, View v) {
-        if (p instanceof INDISwitchProperty){
-            setView(v,(INDISwitchProperty)p);
+        if (p instanceof INDINumberProperty){
+            setView(v,(INDINumberProperty)p);
         }
     }
 
     @Override
     public View getUpdateView(INDIProperty p, LayoutInflater inflater,DialogFragment fragment) {
-
-        ArrayList<INDIElement> list = p.getElementsAsList();
-        values=new ArrayList<>();
-
         View v = inflater.inflate(layout_dialog,null);
         TextView name=(TextView)v.findViewById(R.id.property_name);
         TableLayout table = (TableLayout)v.findViewById(R.id.table);
         button=(Button)v.findViewById(R.id.update_button);
-        INDISwitchProperty s = (INDISwitchProperty)p;
+        INDINumberProperty p_n = (INDINumberProperty)p;
 
+        ArrayList<INDIElement> list = p_n.getElementsAsList();
 
         for(int i=0;i<list.size();i++) {
-            TableRow row = (TableRow) LayoutInflater.from(fragment.getActivity()).inflate(R.layout.switch_row, null);
+            TableRow row = (TableRow) LayoutInflater.from(fragment.getActivity()).inflate(R.layout.text_row, null);
             TextView label = (TextView) row.findViewById(R.id.label);
-            ToggleButton value = (ToggleButton) row.findViewById(R.id.value);
+            EditText edit = (EditText) row.findViewById(R.id.edit_text);
 
-            if(s.getRule()==Constants.SwitchRules.ONE_OF_MANY || s.getRule()==Constants.SwitchRules.AT_MOST_ONE) {
-                value.setOnClickListener(this);
-            }
+            INDINumberElement elem = (INDINumberElement)list.get(i);
 
-            INDISwitchElement elem=(INDISwitchElement)list.get(i);
-
-            label.setText(elem.getLabel());
-            if(elem.getValue()==Constants.SwitchStatus.ON)
-                value.setChecked(true);
-            else
-                value.setChecked(false);
+            label.setText(elem.getLabel()+"\n["+elem.getMinAsString()+","+elem.getMaxAsString()+"]");
+            edit.setText(elem.getValueAsString());
 
             table.addView(row);
-            values.add(value);
         }
 
         name.setText(p.getLabel());
         return v;
     }
 
+
     @Override
     public void updateProperty(INDIProperty p, View v) {
 
-        INDISwitchProperty s = (INDISwitchProperty) p;
         TableLayout table = (TableLayout)v.findViewById(R.id.table);
 
         ArrayList<INDIElement> list = p.getElementsAsList();
 
         int rows=table.getChildCount();
 
-        for(int i=0;i<rows;i++){
-            TableRow row=(TableRow)table.getChildAt(i);
-            ToggleButton value = (ToggleButton) row.findViewById(R.id.value);
-            INDISwitchElement elem=(INDISwitchElement)list.get(i);
+        try{
+            for(int i=0;i<rows;i++){
+                TableRow row=(TableRow)table.getChildAt(i);
+                EditText value = (EditText)row.findViewById(R.id.edit_text);
+                INDINumberElement elem=(INDINumberElement)list.get(i);
+                String n=value.getText().toString();
 
-            try {
-                if(value.isChecked()){
-                    elem.setDesiredValue(Constants.SwitchStatus.ON);
-                }else{
-                    elem.setDesiredValue(Constants.SwitchStatus.OFF);
-                }
-
-                p.sendChangesToDriver();
-
-            } catch (INDIValueException e) {
-                System.out.println(e.getLocalizedMessage());
-            } catch (IOException e) {
-                System.out.println(e.getLocalizedMessage());
+                elem.setDesiredValue(n);
             }
+
+            p.sendChangesToDriver();
+
+        } catch (INDIValueException e) {
+            AppCompatActivity act=(AppCompatActivity)context;
+            Alert_dialog alert = Alert_dialog.newInstance(e.getMessage()+".");
+            alert.show(act.getSupportFragmentManager(), "Alert number out of range");
+        } catch (IllegalArgumentException e){
+            AppCompatActivity act=(AppCompatActivity)context;
+            Alert_dialog alert = Alert_dialog.newInstance(e.getMessage()+".");
+            alert.show(act.getSupportFragmentManager(), "Alert number format error");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
 
     }
 
     @Override
     public int getPriority() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -143,28 +139,16 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         return button;
     }
 
-    void setView(View v, INDISwitchProperty p){
+    void setView(View v, INDINumberProperty p){
         //Views
         TextView name = (TextView)v.findViewById(R.id.name);
         ImageView idle = (ImageView)v.findViewById(R.id.idle);
         TextView perm = (TextView)v.findViewById(R.id.perm);
         ImageView visibility = (ImageView)v.findViewById(R.id.visibility);
         TextView element = (TextView)v.findViewById(R.id.element);
-
         visibility.setTag(p);
         visibility.setFocusable(false);
-        visibility.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                INDIProperty p=(INDIProperty)v.getTag();
-                Connection conn=DefaultDeviceView.conn;
-                if(conn.isPropertyHide(p)){
-                    conn.showProperty(p);
-                }else{
-                    conn.hideProperty(p);
-                }
-            }
-        });
+        visibility.setOnClickListener(this);
 
         //others
         int light_res=0;
@@ -175,12 +159,8 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
 
         String text="";
         for(int i=0;i<list.size();i++){
-            INDISwitchElement elem=(INDISwitchElement)list.get(i);
-            if(elem.getValue().equals(Constants.SwitchStatus.ON)) {
-                text = text + "<b>" +elem.getLabel() + ": </b>" + elem.getValue() + "<br />";
-            }else{
-                text = text + "<font color=\"grey\"><b>" +elem.getLabel() + ": </b>" + elem.getValue() + "</font><br />";
-            }
+            INDINumberElement elem=(INDINumberElement)list.get(i);
+            text=text+"<b>"+elem.getLabel()+": </b>"+elem.getValueAsString()+"<br />";
         }
         element.setText(Html.fromHtml(text));
 
@@ -219,11 +199,12 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
 
     @Override
     public void onClick(View v) {
-        ToggleButton b=(ToggleButton)v;
-
-        for(ToggleButton value:values){
-            if(!b.equals(value))
-                value.setChecked(false);
+        INDIProperty p=(INDIProperty)v.getTag();
+        Connection conn=DefaultDeviceView.conn;
+        if(conn.isPropertyHide(p)){
+            conn.showProperty(p);
+        }else{
+            conn.hideProperty(p);
         }
     }
 }

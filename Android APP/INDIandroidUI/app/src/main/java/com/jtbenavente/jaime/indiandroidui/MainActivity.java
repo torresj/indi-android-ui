@@ -1,4 +1,4 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
 
 import android.os.Bundle;
@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
         Connection conn=new Connection(name,host,port,autoconnect,blobs_enable,this);
         //conn.connect();
         connections.add(conn);
+        saveConnections();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

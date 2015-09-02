@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Remote Observatory</string>
     <string name="action_connect">New connection</string>
-    <string name="action_disconnect">Remove</string>
+    <string name="action_disconnect">Remove connections</string>
     <string name="action_edit">Edit connection</string>
     <string name="action_exit">Exit</string>
     <string name="action_log">Show log</string>

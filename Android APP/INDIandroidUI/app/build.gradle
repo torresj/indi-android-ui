@@ -5,11 +5,11 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.example.jaime.indiandroidui"
-        minSdkVersion 16
+        applicationId "com.jtbenavente.jaime.indiandroidui"
+        minSdkVersion 17
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "0.9.21"
     }
     buildTypes {
         release {

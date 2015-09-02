@@ -12,5 +12,12 @@
         android:text=""
         android:id="@+id/text"
         android:layout_margin="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="\n\n\n\n\n"
+        android:id="@+id/final_lines"
+        android:layout_below="@+id/text">
+        </TextView>
 </RelativeLayout>
     </ScrollView>

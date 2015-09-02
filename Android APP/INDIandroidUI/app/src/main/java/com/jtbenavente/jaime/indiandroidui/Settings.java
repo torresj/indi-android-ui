@@ -1,6 +1,5 @@
-package com.example.jaime.indiandroidui;
+package com.jtbenavente.jaime.indiandroidui;
 
-import android.content.res.Configuration;
 import android.os.Environment;
 
 import java.io.File;
