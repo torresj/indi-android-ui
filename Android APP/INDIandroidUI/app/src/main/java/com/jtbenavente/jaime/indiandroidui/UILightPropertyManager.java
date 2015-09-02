@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDILightElement;
-import laazotea.indi.client.INDILightProperty;
-import laazotea.indi.client.INDIProperty;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.client.INDIElement;
+import org.indilib.i4j.client.INDILightElement;
+import org.indilib.i4j.client.INDILightProperty;
+import org.indilib.i4j.client.INDIProperty;
 
 /**
  * Created by Jaime on 5/8/15.
@@ -97,7 +97,7 @@ public class UILightPropertyManager implements UIPropertyManager,View.OnClickLis
         String perm_res="";
         int visibility_res=0;
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
 
         String text="";
         for(int i=0;i<list.size();i++){

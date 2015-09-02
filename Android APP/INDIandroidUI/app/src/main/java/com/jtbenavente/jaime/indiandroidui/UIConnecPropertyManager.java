@@ -13,11 +13,11 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDISwitchElement;
-import laazotea.indi.client.INDIValueException;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.client.INDIElement;
+import org.indilib.i4j.client.INDIProperty;
+import org.indilib.i4j.client.INDISwitchElement;
+import org.indilib.i4j.client.INDIValueException;
 
 /**
  * Created by Jaime on 18/8/15.
@@ -61,7 +61,7 @@ public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickLi
         Switch s=(Switch)v.findViewById(R.id.conn_switch);
         button=(Button)v.findViewById(R.id.update_button);
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
         INDISwitchElement elem=(INDISwitchElement)list.get(0);
 
         if (elem.getValue().equals(Constants.SwitchStatus.ON))
@@ -78,7 +78,7 @@ public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickLi
     public void updateProperty(INDIProperty p, View v) {
         Switch s=(Switch)v.findViewById(R.id.conn_switch);
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
         INDISwitchElement conect=(INDISwitchElement)list.get(0);
         INDISwitchElement disconect=(INDISwitchElement)list.get(1);
 
@@ -127,7 +127,7 @@ public class UIConnecPropertyManager implements UIPropertyManager,View.OnClickLi
         String perm_res="";
         int visibility_res=0;
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
 
         String text="";
 

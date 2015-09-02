@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
+import org.indilib.i4j.protocol.url.INDIURLStreamHandlerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +25,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.util.ArrayList;
+
+
 
 
 public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener {
@@ -38,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     boolean uichange;
     Settings settings;
     static boolean pause;
+
+    static {
+        INDIURLStreamHandlerFactory.init();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

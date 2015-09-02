@@ -9,13 +9,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import laazotea.indi.client.INDIDevice;
-import laazotea.indi.client.INDIDeviceListener;
-import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDIPropertyListener;
-import laazotea.indi.client.INDIServerConnection;
-import laazotea.indi.client.INDIServerConnectionListener;
-import laazotea.indi.Constants;
+import org.indilib.i4j.client.INDIDevice;
+import org.indilib.i4j.client.INDIDeviceListener;
+import org.indilib.i4j.client.INDIProperty;
+import org.indilib.i4j.client.INDIPropertyListener;
+import org.indilib.i4j.client.INDIServerConnection;
+import org.indilib.i4j.client.INDIServerConnectionListener;
+import org.indilib.i4j.Constants;
 
 /**
  * Created by jaime on 20/01/2015.
@@ -65,9 +65,9 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
         devices.put(device.getName(),new Device(device.getName()));
         try {
             if(blobs_enable) {
-                device.BLOBsEnable(Constants.BLOBEnables.ALSO); // Enable receiving BLOBs from this Device
+                device.blobsEnable(Constants.BLOBEnables.ALSO); // Enable receiving BLOBs from this Device
             }else{
-                device.BLOBsEnable(Constants.BLOBEnables.NEVER);
+                device.blobsEnable(Constants.BLOBEnables.NEVER);
             }
         } catch (IOException e) {
         }
@@ -163,6 +163,6 @@ public class IndiClient implements INDIServerConnectionListener, INDIDeviceListe
     }
 
     public String getNameConecction(){
-        return connection.getHost();
+        return connection.getURL().getHost();
     }
 }

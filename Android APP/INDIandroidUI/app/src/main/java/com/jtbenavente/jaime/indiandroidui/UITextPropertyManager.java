@@ -16,12 +16,12 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDITextElement;
-import laazotea.indi.client.INDITextProperty;
-import laazotea.indi.client.INDIValueException;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.client.INDIElement;
+import org.indilib.i4j.client.INDIProperty;
+import org.indilib.i4j.client.INDITextElement;
+import org.indilib.i4j.client.INDITextProperty;
+import org.indilib.i4j.client.INDIValueException;
 
 /**
  * Created by Jaime on 5/8/15.
@@ -72,7 +72,7 @@ public class UITextPropertyManager implements UIPropertyManager, View.OnClickLis
 
         name.setText(p.getLabel());
 
-        ArrayList<INDIElement> list = p_t.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p_t.getElementsAsList();
 
         for(int i=0;i<list.size();i++) {
             TableRow row = (TableRow) LayoutInflater.from(fragment.getActivity()).inflate(R.layout.text_row, null);
@@ -96,7 +96,7 @@ public class UITextPropertyManager implements UIPropertyManager, View.OnClickLis
     public void updateProperty(INDIProperty p, View v) {
         TableLayout table = (TableLayout)v.findViewById(R.id.table);
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
 
         int rows=table.getChildCount();
 
@@ -150,7 +150,7 @@ public class UITextPropertyManager implements UIPropertyManager, View.OnClickLis
         String perm_res="";
         int visibility_res=0;
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
 
         String text="";
         for(int i=0;i<list.size();i++){

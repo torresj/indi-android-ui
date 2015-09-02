@@ -17,12 +17,12 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDINumberElement;
-import laazotea.indi.client.INDINumberProperty;
-import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDIValueException;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.client.INDIElement;
+import org.indilib.i4j.client.INDINumberElement;
+import org.indilib.i4j.client.INDINumberProperty;
+import org.indilib.i4j.client.INDIProperty;
+import org.indilib.i4j.client.INDIValueException;
 
 
 /**
@@ -73,7 +73,7 @@ public class UINumberPropertyManager implements UIPropertyManager,View.OnClickLi
         button=(Button)v.findViewById(R.id.update_button);
         INDINumberProperty p_n = (INDINumberProperty)p;
 
-        ArrayList<INDIElement> list = p_n.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p_n.getElementsAsList();
 
         for(int i=0;i<list.size();i++) {
             TableRow row = (TableRow) LayoutInflater.from(fragment.getActivity()).inflate(R.layout.text_row, null);
@@ -98,7 +98,7 @@ public class UINumberPropertyManager implements UIPropertyManager,View.OnClickLi
 
         TableLayout table = (TableLayout)v.findViewById(R.id.table);
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
 
         int rows=table.getChildCount();
 
@@ -155,7 +155,7 @@ public class UINumberPropertyManager implements UIPropertyManager,View.OnClickLi
         String perm_res="";
         int visibility_res=0;
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list = (ArrayList)p.getElementsAsList();
 
         String text="";
         for(int i=0;i<list.size();i++){

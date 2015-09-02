@@ -12,7 +12,7 @@ import android.widget.Button;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import laazotea.indi.client.INDIProperty;
+import org.indilib.i4j.client.INDIProperty;
 
 /**
  * Created by Jaime on 18/8/15.

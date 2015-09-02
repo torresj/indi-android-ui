@@ -16,12 +16,12 @@ import android.widget.ToggleButton;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDISwitchElement;
-import laazotea.indi.client.INDISwitchProperty;
-import laazotea.indi.client.INDIValueException;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.client.INDIElement;
+import org.indilib.i4j.client.INDIProperty;
+import org.indilib.i4j.client.INDISwitchElement;
+import org.indilib.i4j.client.INDISwitchProperty;
+import org.indilib.i4j.client.INDIValueException;
 
 /**
  * Created by Jaime on 5/8/15.
@@ -65,7 +65,7 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
     @Override
     public View getUpdateView(INDIProperty p, LayoutInflater inflater,DialogFragment fragment) {
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
         values=new ArrayList<>();
 
         View v = inflater.inflate(layout_dialog,null);
@@ -106,7 +106,7 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         INDISwitchProperty s = (INDISwitchProperty) p;
         TableLayout table = (TableLayout)v.findViewById(R.id.table);
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
 
         int rows=table.getChildCount();
 
@@ -171,7 +171,7 @@ public class UISwitchPropertyManager implements UIPropertyManager, View.OnClickL
         String perm_res="";
         int visibility_res=0;
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
 
         String text="";
         for(int i=0;i<list.size();i++){

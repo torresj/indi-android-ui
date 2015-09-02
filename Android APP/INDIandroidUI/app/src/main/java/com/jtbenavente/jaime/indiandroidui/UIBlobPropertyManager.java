@@ -28,12 +28,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.GregorianCalendar;
 
-import laazotea.indi.Constants;
-import laazotea.indi.INDIBLOBValue;
-import laazotea.indi.client.INDIBLOBElement;
-import laazotea.indi.client.INDIBLOBProperty;
-import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDIProperty;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.INDIBLOBValue;
+import org.indilib.i4j.client.INDIBLOBElement;
+import org.indilib.i4j.client.INDIBLOBProperty;
+import org.indilib.i4j.client.INDIElement;
+import org.indilib.i4j.client.INDIProperty;
 
 /**
  * Created by Jaime on 5/8/15.
@@ -122,7 +122,7 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
         String perm_res="";
         int visibility_res=0;
 
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
         if(list.size()>0) {
             INDIBLOBElement elem = (INDIBLOBElement) list.get(0);
             INDIBLOBValue blob = elem.getValue();
@@ -204,7 +204,7 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
                 File file = new File(folder.getAbsolutePath(), "/" + (String) v.getTag()+ sdf.format(calendar.getTime()) + blob.getFormat());
                 try {
                     FileOutputStream fos = new FileOutputStream(file);
-                    fos.write(blob.getBLOBData());
+                    fos.write(blob.getBlobData());
                     fos.close();
                     Toast.makeText(context, context.getResources().getString(R.string.save_text) + ": " + file.getName(), Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
@@ -238,7 +238,7 @@ public class UIBlobPropertyManager implements UIPropertyManager, View.OnClickLis
 
                 try {
                     FileOutputStream fos = new FileOutputStream(file);
-                    fos.write(blob.getBLOBData());
+                    fos.write(blob.getBlobData());
                     fos.close();
 
                     Intent intent = new Intent();

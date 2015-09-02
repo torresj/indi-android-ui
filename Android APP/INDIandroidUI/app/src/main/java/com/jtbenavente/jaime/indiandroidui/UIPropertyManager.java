@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import laazotea.indi.client.INDIProperty;
+import org.indilib.i4j.client.INDIProperty;
 
 /**
  * Created by Jaime on 5/8/15.

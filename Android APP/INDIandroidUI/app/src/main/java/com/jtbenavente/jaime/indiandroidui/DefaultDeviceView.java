@@ -9,9 +9,9 @@ import android.widget.ExpandableListView;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDILightProperty;
-import laazotea.indi.client.INDIProperty;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.client.INDILightProperty;
+import org.indilib.i4j.client.INDIProperty;
 
 /**
  * Created by Jaime on 26/8/15.

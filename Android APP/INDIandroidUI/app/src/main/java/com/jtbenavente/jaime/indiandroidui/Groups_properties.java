@@ -3,7 +3,7 @@ package com.jtbenavente.jaime.indiandroidui;
 import java.util.ArrayList;
 import java.util.List;
 
-import laazotea.indi.client.INDIProperty;
+import org.indilib.i4j.client.INDIProperty;
 
 /**
  * Created by Jaime on 26/8/15.

@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
-import laazotea.indi.client.INDIDevice;
-import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDIServerConnection;
-import laazotea.indi.client.INDIServerConnectionListener;
+import org.indilib.i4j.client.INDIDevice;
+import org.indilib.i4j.client.INDIProperty;
+import org.indilib.i4j.client.INDIServerConnection;
+import org.indilib.i4j.client.INDIServerConnectionListener;
 
 /**
  * Created by Jaime on 17/8/15.
@@ -284,7 +284,7 @@ public class Connection implements INDIServerConnectionListener {
     public void connectionLost(INDIServerConnection connection) {
         if(!MainActivity.pause) {
             if(settings.getDialogNotifications()) {
-                Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost());
+                Alert_dialog alert = Alert_dialog.newInstance(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getURL().getHost());
                 alert.show(((AppCompatActivity) context).getSupportFragmentManager(), "AlertDialog");
             }
         }else {
@@ -295,7 +295,7 @@ public class Connection implements INDIServerConnectionListener {
                 Notification notification = new NotificationCompat.Builder(context)
                         .setCategory(Notification.CATEGORY_MESSAGE)
                         .setContentTitle("Aviso")
-                        .setContentText(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getHost())
+                        .setContentText(context.getResources().getString(R.string.alert_connection_lost) + ": " + connection.getURL().getHost())
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
@@ -355,6 +355,7 @@ public class Connection implements INDIServerConnectionListener {
                 alert.show(((AppCompatActivity)context).getSupportFragmentManager(), "AlertDialog");
                 disconnect();
                 error=true;
+                e.printStackTrace();
             }
             return null;
         }

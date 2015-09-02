@@ -13,12 +13,12 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import laazotea.indi.Constants;
-import laazotea.indi.client.INDIElement;
-import laazotea.indi.client.INDIProperty;
-import laazotea.indi.client.INDISwitchElement;
-import laazotea.indi.client.INDISwitchProperty;
-import laazotea.indi.client.INDIValueException;
+import org.indilib.i4j.Constants;
+import org.indilib.i4j.client.INDIElement;
+import org.indilib.i4j.client.INDIProperty;
+import org.indilib.i4j.client.INDISwitchElement;
+import org.indilib.i4j.client.INDISwitchProperty;
+import org.indilib.i4j.client.INDIValueException;
 
 /**
  * Created by Jaime on 1/9/15.
@@ -39,7 +39,7 @@ public class UIAbortPropertyManager implements UIPropertyManager,View.OnClickLis
     @Override
     public boolean handlesProperty(INDIProperty p) {
         if(p instanceof INDISwitchProperty){
-            ArrayList<INDIElement> list = p.getElementsAsList();
+            ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
             if(list.size()==1) {
                 INDISwitchElement elem = (INDISwitchElement) list.get(0);
                 if(elem.getLabel().equals("Abort")){
@@ -79,7 +79,7 @@ public class UIAbortPropertyManager implements UIPropertyManager,View.OnClickLis
 
     @Override
     public void updateProperty(INDIProperty p, View v) {
-        ArrayList<INDIElement> list = p.getElementsAsList();
+        ArrayList<INDIElement> list =(ArrayList) p.getElementsAsList();
         INDISwitchElement abort=(INDISwitchElement)list.get(0);
 
         try {
