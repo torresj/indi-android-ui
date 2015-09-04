@@ -47,7 +47,7 @@ public class Front extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             for(int i=0;i<100;i+=5){
-                SystemClock.sleep(400);
+                SystemClock.sleep(200);
                 publishProgress(i);
             }
 

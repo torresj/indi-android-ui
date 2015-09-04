@@ -63,5 +63,9 @@
     <string name="app_sub_title">Cliente INDI para controlar observatorios astronómicos</string>
     <string name="default_view">Vista por defecto</string>
     <string name="abort_text">Pulse para abortar</string>
-    <string name="button_abort">ABORTAR</string>>
+    <string name="button_abort">ABORTAR</string>
+    <string name="remove_log">Borrar Log</string>
+    <string name="remove_log_text">¿Desea borrar el log?</string>
+    <string name="yes">si</string>
+    <string name="no">no</string>>
 </resources>

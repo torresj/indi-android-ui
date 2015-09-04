@@ -60,4 +60,9 @@
     <string name="title_activity_front">Front</string>
     <string name="abort_text">Press to abort</string>
     <string name="button_abort">ABORT</string>
+    <string name="remove_log">Remove Log</string>
+    <string name="remove_log_text">Do you want to clear log?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
 </resources>

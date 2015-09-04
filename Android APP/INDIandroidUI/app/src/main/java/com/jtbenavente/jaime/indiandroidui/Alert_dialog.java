@@ -41,6 +41,7 @@ public class Alert_dialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.alert)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(text)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {

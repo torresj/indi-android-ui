@@ -50,12 +50,13 @@ public class LogView extends Fragment {
             String s;
             String text="";
 
-            if(f.length()<=512){
+            if(f.length()<=512000){
                 while((s = br.readLine()) != null) {
                     text+=s+" \n ";
                 }
             }else {
-                br.skip(f.length()-512);
+                br.skip(f.length()-512000);
+                br.readLine();
                 while ((s = br.readLine()) != null) {
                     text += s + " \n ";
                 }

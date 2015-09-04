@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 
 
+
 public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener {
 
     private DrawerLayout drawerLayout;
@@ -276,14 +277,20 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
     @Override
     public void onDisconnectButtonClick(ArrayList<Integer> itemsSeleccionados) {
-        ArrayList<Connection> aux_connections=new ArrayList<>(connections);
-        for(int i=0;i<itemsSeleccionados.size();i++){
-            Connection conn=aux_connections.get(i);
-            File f=new File(settings.getFolderPath()+"/properties/"+conn.getHost()+".txt");
-            if(f.exists()){
-                f.delete();
+
+        for(int i=itemsSeleccionados.size()-1;i>=0;i--){
+            int index=itemsSeleccionados.get(i);
+            boolean end=false;
+            for(int j=connections.size()-1;j>=0 && !end;j--){
+                if(index==j){
+                    end=true;
+                    File f=new File(settings.getFolderPath()+"/properties/"+connections.get(j).getHost()+".txt");
+                    if(f.exists()){
+                        f.delete();
+                    }
+                    connections.remove(j);
+                }
             }
-            connections.remove(conn);
         }
     }
 

@@ -2,6 +2,7 @@ package com.jtbenavente.jaime.indiandroidui;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+
+import java.io.File;
 
 /**
  * Created by Jaime on 24/8/15.
@@ -24,6 +27,7 @@ public class Edit_connect_dialg extends DialogFragment {
     private boolean autoconnect;
     private boolean blobs_enable;
     private Edit_connect_dialogListener listener;
+    private Settings settings;
 
     static Edit_connect_dialg newInstance(Connection conn, int position){
         Edit_connect_dialg fragment = new Edit_connect_dialg();
@@ -59,6 +63,8 @@ public class Edit_connect_dialg extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        settings=Settings.getInstance();
+
         View v = inflater.inflate(R.layout.edit_connection_dialog, null);
 
         final Button edit = (Button) v.findViewById(R.id.edit_button);
@@ -67,6 +73,7 @@ public class Edit_connect_dialg extends DialogFragment {
         final EditText name_edit=(EditText) v.findViewById(R.id.name);
         final Switch autoconnect_switch=(Switch) v.findViewById(R.id.autconnect);
         final Switch blobs_enable_switch=(Switch) v.findViewById(R.id.blob_recive);
+        final Button r_log = (Button)v.findViewById(R.id.remove_log_button);
 
         host_edit.setText(host);
         name_edit.setText(name);
@@ -78,16 +85,48 @@ public class Edit_connect_dialg extends DialogFragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String host=host_edit.getText().toString();
-                        String name=name_edit.getText().toString();
-                        int port=Integer.parseInt(port_edit.getText().toString());
+                        String host = host_edit.getText().toString();
+                        String name = name_edit.getText().toString();
+                        int port = Integer.parseInt(port_edit.getText().toString());
                         boolean autoconnect = autoconnect_switch.isChecked();
                         boolean blobs_enable = blobs_enable_switch.isChecked();
-                        listener.onEditButtonClick(name,host,port,autoconnect,blobs_enable,position);
+                        listener.onEditButtonClick(name, host, port, autoconnect, blobs_enable, position);
                         dismiss();
                     }
                 }
         );
+
+        File log=new File(settings.getFolderPath()+"/log/"+host_edit.getText().toString()+".txt");
+
+        if(log.exists()){
+            if(log.length()>0)
+                r_log.setEnabled(true);
+            else
+                r_log.setEnabled(false);
+        }else
+            r_log.setEnabled(false);
+
+        r_log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(Edit_connect_dialg.this.getActivity())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(R.string.alert)
+                        .setMessage(R.string.remove_log_text)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                r_log.setEnabled(false);
+                                File log=new File(settings.getFolderPath()+"/log/"+host_edit.getText().toString()+".txt");
+                                log.delete();
+                            }
+
+                        })
+                        .setNegativeButton(R.string.no, null)
+                        .show();
+            }
+        });
 
         builder.setView(v);
 
