@@ -2,204 +2,81 @@
 
 \section{Análisis de requisitos}
 
-Todo software se desarrolla para cubrir una necesidad, por lo que en este apartado vamos a describir los requisitos que se estiman necesarios para cubrir los objetivos propuestos.
-
-\subsection{Descripción de los actores}
-
-Los actores implicados serán dos: el \textbf{desarrollador} y el \textbf{usuario}.
+El primer paso en el análisis de un desarrollo software es identificar los requisitos funcionales y no funcionales. Estos requisitos son los que deberá garantizar el producto final y son generados a partir de las entrevistas con el cliente y los objetivos marcados para el software.
 
 \bigskip
-El \textbf{desarrollador} será el encargado de solucionar los problemas de visualización de los datos en el portal, además de portar el desarrollo actual del portal a un entorno de desarrollo continuo. También asumirá la administración del portal ya que este tipo de rol está muy integrado con las labores de despliegue en el desarrollo continuo.
+Nuestra metodología es ágil basada en iteraciones incrementales por lo que los requesitos son analizados en cada iteración, pudiendo ser modificados según las necesidades.
 
-\bigskip
-El \textbf{usuario} de la aplicación será cualquier persona que tenga interés por conocer datos internos de la \textbf{Universidad de Granada} fácilmente. El usuario no pertenece a ningún público objetivo concreto, por lo que no se tiene que considerar que tenga una experiencia previa en navegador por sitios web.
-
-\bigskip
-Los dos tipos de actores descritos son la generalización de todo los tipos de personas que usarían el portal, sin embargo, podríamos hacer un análisis más extenso si nos basáramos en una metodología orientada al usuario como \textbf{persona}. Una persona sería la representación de usuarios que comparten objetivos y a los que se espera comportamientos similares. Un par de ejemplos:
-
-\newpage
-\begin{itemize}
-	\item Alguien de la propia \textbf{Universidad de Granada} y de otra universidad que accedan al portal, ambos encajarían dentro del actor \textbf{usuario}, sin embargo eso no quiere decir que el objetivo de ambos sea el mismo, los usuarios de la propia universidad pueden querer consultar datos únicamente y los de otra universidad puede que estén más interesados en ver la estructura de las páginas del portal.
-	\item Alguien que quiera hacer una despliegue de la aplicación, puede que no quiere hacerlo para una universidad sino para un ayuntamiento, volvemos a estar en el mismo caso, ambos entrarían en el tipo de actor \textbf{desarrollador}, pero sus intenciones e interés son muy distintos entre sí.
-\end{itemize}
 
 \subsection{Requisitos funcionales}
 
-Los requisitos funcionales son las características que tiene que implementar el sistema para cubrir todas las necesidades de los distintos usuarios.
-
-\bigskip
-Al usuario lo único que le interesa es ver una página web estática con la información que desea 
-consultar, para ello el desarrollador deberá hacer que sea posible que se generen siempre las tablas con los elementos de información. 
-
-\bigskip
-Por otra parte, el desarrollador quiere integrar el sistema en un desarrollo continuo, por lo que añadirá tests unitarios, test de cobertura, integración continua, despliegue automático y provisionamiento con tal fin.
+Los requisitos funcionales son las características que debe satisfacer el sistema, es decir, todas aquellas funciones que debe cumplir el producto final:
 
 \begin{itemize}
-  \item \textbf{RF-1.} Administración portal:
-    \begin{itemize}
-    \item \textbf{RF-1.1.} Automatizar inicio del servidor del portal.
-    \end{itemize}
-\end{itemize}
-
-\begin{itemize}
-  \item \textbf{RF-2.} Acceso información:
-    \begin{itemize}
-    \item \textbf{RF-2.1.} Consultar información de \textit{Administración}.
-    \item \textbf{RF-2.1.} Consultar información de \textit{Docencia}.
-    \item \textbf{RF-2.1.} Consultar información de \textit{Gestión e Investigación}.
-    \item \textbf{RF-2.1.} Consultar información de \textit{Normativa Legal}.
-    \end{itemize}
-\end{itemize}
-
-\begin{itemize}
-  \item \textbf{RF-3.} Pruebas de software:
-  \begin{itemize}
-    \item \textbf{RF-3.1.} Realizar tests unitarios.
-    \item \textbf{RF-3.2.} Realizar test de cobertura.
-    \item \textbf{RF-3.2.} Usar integración continua.
-    \end{itemize}
-\end{itemize}
-
-\begin{itemize}
-  \item \textbf{RF-4.} Configuración automática:
-  \begin{itemize}
-    \item \textbf{RF-4.1.} Usar despliegue automático.
-    \item \textbf{RF-4.2.} Usar provisionamiento.
-    \end{itemize}
+	\item \textbf{RF-1.} Conectarse con un servidor INDI.
+	\item \textbf{RF-2.} Gestionar conexiones (crear, editar y borrar).
+	\item \textbf{RF-3.} Listar todos los dispositivos de una conexión INDI.
+	\item \textbf{RF-4.} Listar todas las propiedades de un dispositivo INDI.
+	\item \textbf{RF-5.} Tener más de una conexión INDI simultáneamente.
+	\item \textbf{RF-6.} Mostrar un log para cada conexíon.
+	\item \textbf{RF-7.} Agrupar las propiedades por grupos.
+	\item \textbf{RF-8.} Editar las propiedades INDI:
+		\begin{itemize}
+			\item \textbf{RF-8.1.} Propiedad Blob.
+			\item \textbf{RF-8.2.} Propiedad Switch.
+			\item \textbf{RF-8.3.} Propiedad Number.
+			\item \textbf{RF-8.4.} Propiedad Text.
+			\item \textbf{RF-8.5.} Propiedad Light.
+		\end{itemize}
 \end{itemize}
 
 \subsection{Requisitos no funcionales}
 
-Los requisitos no funcionales son las características propias del desarrollo, pero que no tienen que estar relacionadas con su funcionalidad.
+Los requerimientos no funcionales, como su nombre sugiere, son aquellos requerimientos que no se refieren directamente a las funciones específicas que proporciona el sistema, sino a las propiedades emergentes de éste:
 
 \begin{itemize}
-  \item \textbf{RN-1.} Toda la programación del portal se hará en {\tt Node.js} y los módulos que se usen deben ser instalables a través de su gestor de paquetes {\tt NPM}.
-  \item \textbf{RN-2.} El portal se iniciará y se detendrá mediante scripts lanzados con {\tt NPM}.
-  \item \textbf{RN-3.} Para iniciar la ejecución del portal es necesario que reciba el puerto de escucha del servidor y la dirección de acceso.
-  \item \textbf{RN-4.} Todos los módulos se ejecutarán desde scripts lanzamos con {\tt NPM}.
-  \item \textbf{RN-5.} Los tests unitarios se realizarán en base a comportamientos esperados y valores de estados.
-  recibidos como contestación a las peticiones que se realicen al portal.
-  \item \textbf{RN-6.} Los tests unitarios tienen que recibir las páginas del portal para ejecutarse.
-  \item \textbf{RN-7.} El test de cobertura tiene que tener una automatización integrable con los tests unitarios. 
-  \item \textbf{RN-8.} La integración continua se ejecutará automáticamente con cada cambio que se haga en la programación del portal.
-  \item \textbf{RN-9.} El despliegue automático se realizará mediante conexiones {\tt SSH}.
-  \item \textbf{RN-10.} Tanto para el despliegue automático como para el provisionamiento es necesario indicar el usuario que lo realiza y el destino en el que se realiza.
+  \item \textbf{RN-1.} Las interfaces deben seguir las recomendaciones de diseño establecidas por Android.
+  \item \textbf{RN-2.} Se deben usar las clases y elementos de interfaz recomendados para la última versión de Android y usar las bibliotecas de compatibilidad.
+  \item \textbf{RN-3.} Controlar la hebra principal para no sobre cargarla, creando nuevas hebras en paralelo mejorando así el rendimiento.
+  \item \textbf{RN-4.} Crear interfaces específicas para las propiedades genéricas de INDI y para dispositivos conocidos.
+  \item \textbf{RN-5.} Utilizar licencias libres para publicar el proyecto como Software libre
+  \item \textbf{RN-6.} Adaptar la aplicación a distintos tamaños de pantalla.
+  \item \textbf{RN-7.} Diseñar el software para facilitar la extensibilidad de las vistas de dispositivos y propiedades.
+  \item \textbf{RN-8.} Internacionalización de la aplicación: Mínimo inglés y castellano.
 \end{itemize}
 
-\subsection{Requisitos de información}
+\section{Casos de uso}
 
-Los requisitos de información se refieren a la información que es necesaria almacenar en el sistema. La única información relevante que se va a almacenar son los datos descriptivos y de enlace de cada uno de los elementos del portal {\tt OpenData UGR} que se van a mostrar en {\tt UGR Transparente}.
+Un caso de uso es una descripción de los pasos o las actividades que deberán realizarse para llevar a cabo algún proceso. Los personajes o entidades que participarán en un caso de uso se denominan actores
 
-\begin{itemize}
-  \item \textbf{RI-1.} Datos abiertos.
-  \begin{itemize}
-    \item Información sobre cada uno de los elementos que se van a mostrar en el portal de transparencia como datos abiertos.
-    \item Contenido: nombre, categoría, conjunto de datos, enlace a {\tt OpenData UGR}, enlace al recurso.
-  \end{itemize}
-\end{itemize}
-
-\section{Modelos de casos de uso}
-
-Aunque ya se ha indicado que la parte funcional ya se encuentra implementada de forma previa a este proyecto, se van a incluir unos modelos de caso de uso simples para dar un visión más clara del funcionamiento general del portal {\tt UGR Transparente}.
-
-\subsection{Descripción básica de actores}
+\subsection{Descripción de actores}
 
 \begin{itemize}
-  \item \textbf{Ac-1.} Desarrollador.
+  \item \textbf{Ac-1.} Usuario.
   \begin{itemize}
-   \item Descripción: Encargado del desarrollo y administración del portal.
-   \item Características: Su trabajo está en el lado del servidor que genera la página, nunca trabaja desde el lado del cliente.
+   \item Descripción: Persona que utilizará la aplicación.
+   \item Características: Es el usuario estándar de una aplicación.
    \item Relaciones: Ninguna.
    \item Atributos: Ninguno.
-   \item Comentarios: Es el encargado de que la información se muestre en el portal y de añadir funcionalidades al portal.
-  \end{itemize}
-  
-  \item \textbf{Ac-2.} Usuario.
-  \begin{itemize}
-   \item Descripción: Persona que usa el portal para consultar datos.
-   \item Características: Es el usuario común que accederá a la página.
-   \item Relaciones: Ninguna.
-   \item Atributos: Ninguno.
-   \item Comentarios: El usuario no es necesario que tenga ningún conocimiento previo al uso del portal, simplemente accederá y consultará los datos que sean de su interés.
+   \item Comentarios: El usuario no tiene ningún conocimiento previo.
   \end{itemize}
 \end{itemize}
 
 \subsection{Descripción casos de uso}
 
 \begin{itemize}
-  \item \textbf{CU-1.} Inicio automático del servidor del portal.
-  \begin{itemize}
-    \item Actores: Desarrollador.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El servidor esté detenido.
-    \item Postcondición: El portal será accesible públicamente.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Iniciar el servidor del portal {\tt UGR Transparente}.
-    \item Resumen: Cuando se ejecuta el script de inicio de la aplicación, arranca el servidor y el portal será accesible desde Internet.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Desarrollador: da orden de\\
-	    que se inicie el servidor\\
-	    del portal.
-	  \end{tabular} &
-	  &
-	  \\ \hline
-	  &
-	  &
-	  {\it 2a} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Comprueba que el servidor\\
-	    está detenido y lo inicia\\
-	    para que el portal esté\\
-	    operativo.
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-1. Inicio automático del servidor del portal}
-	\label{table:cn_cu_1}
-      \end{center}
-    \end{table}
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|}
-	  \hline
-	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
-	  \\ \hline
-	  {\it 2b} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Si el servidor está funcionando, no se ejecuta el script de\\
-	    inicio del servidor.
-	  \end{tabular}\\
-	  \hline
-	\end{tabular}
-	\caption{Curso alterno de CU-1. Inicio automático del servidor del portal}
-	\label{table:ca_cu_1}
-      \end{center}
-    \end{table}
-  \end{itemize}
- 
-  \newpage
-  \item \textbf{CU-2.} Consultar información de \textit{Administración}.
+  \item \textbf{CU-1.} Añadir una conexión.
   \begin{itemize}
     \item Actores: Usuario.
     \item Tipo: Primario, esencial.
     \item Referencias:
-    \item Precondición: Existan archivos con los datos abiertos.
-    \item Postcondición:
+    \item Precondición:
+    \item Postcondición: La nueva conexión será añadida a la lista y guardada.
     \item Autor: \autor.
     \item Versión: 1.0.
-    \item Propósito: El usuario consulta datos de administración en el portal {\tt UGR Transparente}.
-    \item Resumen: El usuario que accede al portal de transparencia selecciona la sección de \textit{Administración} y consulta la información de sus subsecciones.
+    \item Propósito: Añadir una nueva conexión.
+    \item Resumen: El usuario rellenará una serie de campos y marcará unas opciones para añadir una nueva conexión a la lista.
+    \end{itemize}
     \begin{table}[!ht]
       \begin{center}
 	\begin{tabular}{|l|l|l|l|}
@@ -210,9 +87,8 @@ Aunque ya se ha indicado que la parte funcional ya se encuentra implementada de 
 	  \\ \hline
 	  {\it 1} & 
 	  \begin{tabular}[c]{@{}l@{}}
-	    Usuario: consulta la información\\
-	    de \textit{Administración} publicada en el\\
-	    portal.
+	    Usuario: Pulsa el botón para\\
+	    añadir una nueva conexión.\\
 	  \end{tabular} &
 	  &
 	  \\ \hline
@@ -220,41 +96,44 @@ Aunque ya se ha indicado que la parte funcional ya se encuentra implementada de 
 	  &
 	  {\it 2} &
 	  \begin{tabular}[c]{@{}l@{}}
-	    Se generan las tablas con\\
-	    todos los elementos de\\
-	    información de la sección\\
-	    \textit{Administración}.
+	    El sistema muestra el formulario\\
+	    para añadir nuevas conexiones. \\
 	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Rellena los campos del \\
+	    formulario, marca las opciones  \\
+	    y pulsa en el botón de añadir.   \\
+	  \end{tabular} &
+	  &
 	  \\ \hline
 	  &
 	  &
-	  {\it 3} &
+	  {\it 4} &
 	  \begin{tabular}[c]{@{}l@{}}
-	    Se muestran en la página\\
-	    todos las tablas generadas\\
-	    con los elementos de\\
-	    información.
+	    El sistema almacena la conexión\\
+	    y la añade a la lsita de conexiones.\\
 	  \end{tabular}
 	  \\ \hline
 	\end{tabular}
-	\caption{Curso normal de CU-2. Consultar información de Administración}
-	\label{table:cn_cu_2}
+	\caption{CU-1. Añadir nueva conexión.}
+	\label{table:cu_1}
       \end{center}
     \end{table}
-  \end{itemize}
-  
-  \newpage
-  \item \textbf{CU-3.} Consultar información de \textit{Docencia}.
+    \newpage
+    \item \textbf{CU-2.} Editar una conexión.
   \begin{itemize}
     \item Actores: Usuario.
     \item Tipo: Primario, esencial.
     \item Referencias:
-    \item Precondición: Existan archivos con los datos abiertos.
-    \item Postcondición:
+    \item Precondición: La conexión debe exisitir y estar en estado ``desconectada''.
+    \item Postcondición: La conexión sera editada y guardada.
     \item Autor: \autor.
     \item Versión: 1.0.
-    \item Propósito: El usuario consulta datos de administración en el portal {\tt UGR Transparente}.
-    \item Resumen: El usuario que accede al portal de transparencia selecciona la sección de \textit{Docencia} y consulta la información de sus subsecciones.
+    \item Propósito: Editar una conexión existente.
+    \item Resumen: El usuario rellenará una serie de campos y marcará unas opciones para editar la conexión.
+    \end{itemize}
     \begin{table}[!ht]
       \begin{center}
 	\begin{tabular}{|l|l|l|l|}
@@ -265,9 +144,8 @@ Aunque ya se ha indicado que la parte funcional ya se encuentra implementada de 
 	  \\ \hline
 	  {\it 1} & 
 	  \begin{tabular}[c]{@{}l@{}}
-	    Usuario: consulta la información\\
-	    de \textit{Docencia} publicada en el\\
-	    portal.
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú lateral.\\
 	  \end{tabular} &
 	  &
 	  \\ \hline
@@ -275,500 +153,248 @@ Aunque ya se ha indicado que la parte funcional ya se encuentra implementada de 
 	  &
 	  {\it 2} &
 	  \begin{tabular}[c]{@{}l@{}}
-	    Se generan las tablas con\\
-	    todos los elementos de\\
-	    información de la sección\\
-	    \textit{Docencia}.
+	    El sistema muestra el menú lateral\\
+	    con las conexiones, su estado y sus \\
+	    dispositivos.\\
 	  \end{tabular}
 	  \\ \hline
-	  &
-	  &
-	  {\it 3} &
+	  {\it 3} & 
 	  \begin{tabular}[c]{@{}l@{}}
-	    Se muestran en la página\\
-	    todos las tablas generadas\\
-	    con los elementos de\\
-	    información.
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-3. Consultar información de Docencia}
-	\label{table:cn_cu_3}
-      \end{center}
-    \end{table}
-  \end{itemize}
-  
-  \newpage
-  \item \textbf{CU-4.} Consultar información de \textit{Gestión e Investigación}.
-  \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: Existan archivos con los datos abiertos.
-    \item Postcondición:
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: El usuario consulta datos de administración en el portal {\tt UGR Transparente}.
-    \item Resumen: El usuario que accede al portal de transparencia selecciona la sección de \textit{Gestión e Investigación} y consulta la información de sus subsecciones.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Usuario: consulta la información\\
-	    de \textit{Gestión e Investigación} publicada\\
-	    en el portal.
+	    Usuario: Pulsa el botón editar\\
+	    para una conexión concreta.\\
 	  \end{tabular} &
 	  &
 	  \\ \hline
 	  &
 	  &
-	  {\it 2} &
+	  {\it 4} &
 	  \begin{tabular}[c]{@{}l@{}}
-	    Se generan las tablas con\\
-	    todos los elementos de\\
-	    información de la sección\\
-	    \textit{Gestión e Investigación}.
+	    El sistema muestra el formulario\\
+	    para la edición de una conexión. \\
 	  \end{tabular}
 	  \\ \hline
-	  &
-	  &
-	  {\it 3} &
+	  {\it 5} & 
 	  \begin{tabular}[c]{@{}l@{}}
-	    Se muestran en la página\\
-	    todos las tablas generadas\\
-	    con los elementos de\\
-	    información.
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-4. Consultar información de Gestión e Investigación}
-	\label{table:cn_cu_4}
-      \end{center}
-    \end{table}
-  \end{itemize}
-  
-  \newpage
-  \item \textbf{CU-5.} Consultar información de \textit{Normativa Legal}.
-  \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: Existan archivos con los datos abiertos.
-    \item Postcondición:
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: El usuario consulta datos de administración en el portal {\tt UGR Transparente}.
-    \item Resumen: El usuario que accede al portal de transparencia selecciona la sección de \textit{Normativa Legal} y consulta la información de sus subsecciones.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Usuario: consulta la información\\
-	    de \textit{Normativa Legal} publicada en el\\
-	    portal.
+	    Usuario: edita los campos del \\
+	    formulario, marca las opciones  \\
+	    y pulsa en el botón de editar.   \\
 	  \end{tabular} &
 	  &
-	  \\ \hline
-	  &
-	  &
-	  {\it 2} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Se generan las tablas con\\
-	    todos los elementos de\\
-	    información de la sección\\
-	    \textit{Normativa Legal}.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 3} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Se muestran en la página\\
-	    todos las tablas generadas\\
-	    con los elementos de\\
-	    información.
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-5. Consultar información de Normativa Legal}
-	\label{table:cn_cu_5}
-      \end{center}
-    \end{table}
-  \end{itemize}
- 
-  \newpage
-  \item \textbf{CU-6.} Realizar tests unitarios.
-  \begin{itemize}
-    \item Actores: Desarrollador.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: Existan tests unitarios.
-    \item Postcondición: 
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Realizar tests unitarios para comprobar las funcionalidades de la aplicación.
-    \item Resumen: Cada vez que se añadan nuevas páginas o funcionalidades al portal, se comprueba que funcionan correctamente.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Desarrollador: da orden de\\
-	    ejecutar los tests unitarios.
-	  \end{tabular} &
-	  &
-	  \\ \hline
-	  &
-	  &
-	  {\it 2a} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Comprueba que hay tests\\
-	    unitarios y los ejecuta.\\
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-6. Realizar tests unitarios}
-	\label{table:cn_cu_6}
-      \end{center}
-    \end{table}
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|}
-	  \hline
-	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
-	  \\ \hline
-	  {\it 2b} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Si no hay tests unitarios creados, el sistema no hace nada.
-	  \end{tabular}\\
-	  \hline
-	\end{tabular}
-	\caption{Curso alterno de CU-6. Realizar tests unitarios}
-	\label{table:ca_cu_6}
-      \end{center}
-    \end{table}
-  \end{itemize}
- 
-  \newpage
-  \item \textbf{CU-7.} Realizar tests de cobertura.
-  \begin{itemize}
-    \item Actores: Desarrollador.
-    \item Tipo: Primario, esencial.
-    \item Referencias: (CU-6.) Realizar tests unitarios.
-    \item Precondición: Existan tests unitarios.
-    \item Postcondición: 
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Realizar test de cobertura para comprobar calidad de los tests unitarios.
-    \item Resumen: Para comprobar si los tests unitarios cumplen correctamente con su función se analiza el porcentaje del código que está cubierto por los mismos.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Desarrollador: da orden de\\
-	    ejecutar test de cobertura.
-	  \end{tabular} &
-	  &
-	  \\ \hline
-	  &
-	  &
-	  {\it 2a} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Comprueba que hay tests\\
-	    unitarios y los ejecuta.\\
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 3} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Se ejecuta el test de \\
-	    cobertura en base a los\\
-	    tests unitarios ejecutados.
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-7. Realizar test de cobertura}
-	\label{table:cn_cu_7}
-      \end{center}
-    \end{table}
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|}
-	  \hline
-	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
-	  \\ \hline
-	  {\it 2b} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Si no hay tests unitarios creados, el sistema no hace nada.
-	  \end{tabular}\\
-	  \hline
-	\end{tabular}
-	\caption{Curso alterno de CU-7. Realizar test de cobertura}
-	\label{table:ca_cu_7}
-      \end{center}
-    \end{table}
-  \end{itemize}
- 
-  \newpage
-  \item \textbf{CU-8.} Usar integración continua.
-  \begin{itemize}
-    \item Actores: Desarrollador.
-    \item Tipo: Primario, esencial.
-    \item Referencias: (CU-5.) Realizar tests unitarios.
-    \item Precondición: Existan test unitarios.
-    \item Postcondición: Se genera un informe con el resultado de los tests unitarios.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Comprobar si los cambios en la aplicación provocan errores.
-    \item Resumen: Cuando se efectúan cambios en la aplicación automáticamente se ejecutan los tests unitarios para comprobar si los cambios introducidos provocan conflictos en la plataforma.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Desarrollador: guardar\\
-	    cambios en el repositorio.
-	  \end{tabular} &
-	  &
-	  \\ \hline
-	  &
-	  &
-	  {\it 2a} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Comprueba que hay tests\\
-	    unitarios y comienza la\\
-	    verificación de la\\
-	    integración continua.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 3} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Ejecuta los tests unitarios\\
-	    para cada entorno definido.
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-8. Usar integración continua}
-	\label{table:cn_cu_8}
-      \end{center}
-    \end{table}
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|}
-	  \hline
-	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
-	  \\ \hline
-	  {\it 2b} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Si no hay tests unitarios creados, el sistema no hace nada.
-	  \end{tabular}\\
-	  \hline
-	\end{tabular}
-	\caption{Curso alterno de CU-8. Usar integración continua}
-	\label{table:ca_cu_8}
-      \end{center}
-    \end{table}
-  \end{itemize}
- 
-  \newpage
-  \item \textbf{CU-.9 } Usar despliegue automático.
-  \begin{itemize}
-    \item Actores: Desarrollador.
-    \item Tipo: Primario, esencial.
-    \item Referencias: (CU-1.) Iniciar plataforma.
-    \item Precondición: 
-    \item Postcondición: Los cambios introducidos son aplicados en la plataforma.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Aplicar automáticamente los cambios realizados a la aplicación. 
-    \item Resumen: Para no tener que acceder manualmente al servidor de la plataforma y tener que desplegar los cambios introducidos, desde el entorno de desarrollo desplegamos automáticamente los cambios en el servidor.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Desarrollador: ordenar\\
-	    despliegue automático.
-	  \end{tabular} &
-	  &
-	  \\ \hline
-	  &
-	  &
-	  {\it 2} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Conectar al servidor.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 3} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Crear copia de seguridad.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 4a} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Comprobar si hay cambios en\\
-	    el repositorio de la\\
-	    plataforma y descargarlos\\
-	    en dicho caso.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 5} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Iniciar la plataforma con\\
-	    los cambios aplicados.
-	  \end{tabular}
-	  \\ \hline
-	\end{tabular}
-	\caption{Curso normal de CU-9. Usar despliegue automático}
-	\label{table:cn_cu_9}
-      \end{center}
-    \end{table}
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|}
-	  \hline
-	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
-	  \\ \hline
-	  {\it 4b} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Si no hay cambios aplicables, se continua con el proceso.
-	  \end{tabular}\\
-	  \hline
-	\end{tabular}
-	\caption{Curso alterno de CU-9. Usar despliegue automático}
-	\label{table:ca_cu_9}
-      \end{center}
-    \end{table}
-  \end{itemize}
- 
-  \newpage
-  \item \textbf{CU-.10} Usar provisionamiento.
-  \begin{itemize}
-    \item Actores: Desarrollador.
-    \item Tipo: Primario, esencial.
-    \item Referencias: (CU-1.) Iniciar plataforma.
-    \item Precondición: 
-    \item Postcondición: El portal queda instalado en la infraestructura seleccionada.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Instalar automáticamente el portal en una infraestructura dada.
-    \item Resumen: Se instalarán automáticamente todos los elementos necesarios para poner en funcionamiento el portal en cualquier infraestructura que se indique.
-    \begin{table}[!ht]
-      \begin{center}
-	\begin{tabular}{|l|l|l|l|}
-	  \hline
-	  \multicolumn{4}{|c|}{{\bf Curso normal}}
-	  \\ \hline
-	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
-	  \\ \hline
-	  {\it 1} & 
-	  \begin{tabular}[c]{@{}l@{}}
-	    Desarrollador: ordenar\\
-	    despliegue automático.
-	  \end{tabular} &
-	  &
-	  \\ \hline
-	  &
-	  &
-	  {\it 2} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Conectar al servidor.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 3} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Comprobar aplicación necesaria.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 4a} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Se comprueba si la aplicación\\
-	    necesaria está instalada,\\
-	    instalándola en caso de que\\
-	    no lo esté.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 5} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Descarga la plataforma desde\\
-	    el repositorio.
-	  \end{tabular}
 	  \\ \hline
 	  &
 	  &
 	  {\it 6} &
 	  \begin{tabular}[c]{@{}l@{}}
-	    Instalar todas las dependencias\\
-	    de la plataforma.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 7} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Se establecen los parámetros de\\
-	    acceso al portal desde Internet.
-	  \end{tabular}
-	  \\ \hline
-	  &
-	  &
-	  {\it 8} &
-	  \begin{tabular}[c]{@{}l@{}}
-	    Con todo preparado, se inicia\\
-	    la plataforma.
+	    El sistema almacena la conexión\\
 	  \end{tabular}
 	  \\ \hline
 	\end{tabular}
-	\caption{Curso normal de CU-10. Usar provisionamiento}
-	\label{table:cn_cu_10}
+	\caption{CU-2. Editar una conexión.}
+	\label{table:cu_2}
+      \end{center}
+    \end{table}
+
+    \newpage
+     \item \textbf{CU-3.} Borrar conexiones.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: Las conexiones deben existir.
+    \item Postcondición: Las conexiones serán borradas.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Borrar conexiones.
+    \item Resumen: El usuario seleccionará de entre las conexiones disponibles, una selección para que sean borradas.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú superior derecho.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el menú superior.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    borrar conexiones.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el formulario\\
+	    con una lista de todas las conexiones \\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 5} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: selecciona aquellas conexiones\\
+	    que desee borrar.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 6} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema Borra las conexiones\\ 
+	    seleccionadas\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-3. Borrar conexiones.}
+	\label{table:cu_3}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-4.} Editar los ajustes.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición:
+    \item Postcondición: Los ajustes serán guardados.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Editar los ajustes.
+    \item Resumen: El usuario establecerá las distintas configuraciones.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú superior derecho.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el menú superior.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    ver los ajustes.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la pantalla cin\\
+	    con una lista de ajustes y su estado.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 5} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: editada los ajustes que\\ 
+	    considere.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 6} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema guarda el estado de\\
+	    cada configuraión.
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-4. Editar los ajustes.}
+	\label{table:cu_4}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-5.} Conectarse a un servidor.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: La conexión debe haber sido añadida previamente. La conexión debe estar desconectada.
+    \item Postcondición: Se añaden los dispositivos de la conexión a la lista (si los hubiese).
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Conectarse a un servidor.
+    \item Resumen: El usuario se conectará a un servidor.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú lateral izquierdo.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el menú lateral\\
+	    izquierdo con la lista de conexiones \\
+	    y dispositivos.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    conetarse.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema esconde el menú lateral y\\
+	    realiza la conexión. A partir de ahora \\
+	    la conexión se mantiene en segundo plano\\
+	    para refrescar los dispositivos añadidos \\
+	    o borrados que serán listados al desplegar\\
+	    el menú lateral izquierdo.
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-4. Conterase a un servidor.}
+	\label{table:cu_5}
       \end{center}
     \end{table}
     \begin{table}[!ht]
@@ -779,16 +405,671 @@ Aunque ya se ha indicado que la parte funcional ya se encuentra implementada de 
 	  \\ \hline
 	  {\it 4b} &
 	  \begin{tabular}[c]{@{}l@{}}
-	    Si la aplicación está instalada, se continua con el proceso.
+	    Si el servidor no responde, o los datos de la conexión no son\\
+	    correctos, el sistema muestra una alerta para informar al \\
+	    usuario.\\
 	  \end{tabular}\\
 	  \hline
 	\end{tabular}
-	\caption{Curso alterno de CU-10. Usar provisionamiento}
+	\caption{Curso alterno de CU-5. Conectarse a un servidor.}
+	\label{table:ca_cu_5}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-6.} Desconectarse de un servidor.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: La conexión debe haber sido añadida previamente. La conexión debe estar conectada.
+    \item Postcondición: Se borran de la lista los dispositivos (si los hubiera).
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Desconectarse de un servidor.
+    \item Resumen: El usuario se desconecta de un servidor.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú lateral izquierdo.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el menú lateral\\
+	    izquierdo con la lista de conexiones \\
+	    y dispositivos.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desconectarse.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema esconde el menú lateral y\\
+	    realiza la desconexión. .
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-6. Desconectarse de un servidor.}
+	\label{table:cu_6}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-7.} Salir de la aplicación.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: La aplicación debe estar iniciada.
+    \item Postcondición: Se cierran todas las conexiones, hebras y procesos liberando todos los recursos de la aplicación.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Salir de la aplicación.
+    \item Resumen: El usuario cierra la aplicación explicitamente.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú superior derecho.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el menú superior.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón salir.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema comprueba cada conexión\\ 
+	    y se desconecta de todas, cerrando\\
+	    todas las hebras. Después cierra la\\ 
+	    aplicación.
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-7. Salir de la aplicación.}
+	\label{table:cu_7}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-8.} Mostrar dispositivo.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: La conexión debe haber sido añadida previamente. La conexión debe estar conectada.
+    \item Postcondición: Se listan todas las propiedades del dispositivo. Cualquier cambio en las propiedades será mostrado en la lista en tiempo real.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Mostrar las propiedades de un dispositivo.
+    \item Resumen: El usuario seleciona un dispositivo para mostrar la lista de sus propiedades.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú lateral izquierdo.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el menú lateral\\
+	    izquierdo con la lista de conexiones \\
+	    y dispositivos.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el dispositivo\\
+	    deseado.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema esconde el menú lateral y\\
+	    y muestra una pantalla tabulada con\\
+	    todas las vistas especiales que tenga\\
+	    el dispositivo (si las tiene) más la\\
+	    vista por defecto con la lista de \\
+	    de porpiedades y la ayuda general de\\
+	    la aplicación.
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-8. Mostrar dispositivo.}
+	\label{table:cu_8}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-9.} Cambiar vista de dispositivo.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición:
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Cambiar entre las vistas de un dispositivo.
+    \item Resumen: El usuario cambia de vista de un dispositivo entre las disponibles.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el nombre\\
+	    de la pestaña correspondiente o \\
+	    desliza el dedo por la pantalla.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la vista correspondiente.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-9. Cambiar vista de dispositivo.}
+	\label{table:cu_9}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-10.} Editar propiedad \textit{text}.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: La propiedad es editada y enviada al servidor.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Editar una propiedad \textit{text}.
+    \item Resumen: El usuario pulsará sobre una propiedad \textit{text} para editarla.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre una porpiedad\\
+	    de tipo \textit{text}. \\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la vista para la\\
+	    edición de las propiedades \textit{text}\\ 
+	    con todos los elementos de la\\ 
+	    propiedad concreta.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: edita los elementos que desee\\
+	    y pulsa el botón de actualizar\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema cierra la vista de edición\\
+	    y actualiza la vista de la propiedad.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-10. Editar una propiedad \textit{text}.}
+	\label{table:cu_10}
+      \end{center}
+    \end{table}
+
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|}
+	  \hline
+	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
+	  \\ \hline
+	  {\it 2b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si la propiedad es de solo lectura, el sistema muestra una\\
+	    alerta.\\
+	  \end{tabular}\\
+	  \hline
+	\end{tabular}
+	\caption{Curso alterno de CU-10. Editar una propiedad \textit{text}.}
 	\label{table:ca_cu_10}
       \end{center}
     \end{table}
-  \end{itemize}
- \end{itemize}
+
+    \newpage
+    \item \textbf{CU-11.} Editar propiedad \textit{number}.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: La propiedad es editada y enviada al servidor.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Editar una propiedad \textit{number}.
+    \item Resumen: El usuario pulsará sobre una propiedad \textit{number} para editarla.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre una porpiedad\\
+	    de tipo \textit{number}. \\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la vista para la\\
+	    edición de las propiedades \textit{number}\\ 
+	    con todos los elementos de la\\ 
+	    propiedad concreta.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: edita los elementos que desee\\
+	    y pulsa el botón de actualizar\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema cierra la vista de edición\\
+	    y actualiza la vista de la propiedad.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-11 Editar una propiedad \textit{number}.}
+	\label{table:cu_11}
+      \end{center}
+    \end{table}
+
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|}
+	  \hline
+	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
+	  \\ \hline
+	  {\it 2b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si la propiedad es de solo lectura, el sistema muestra una\\
+	    alerta.\\
+	  \end{tabular}\\
+	  \hline
+	  {\it 4b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si algún valor de algún elemento editado está fuera de rango\\
+	    o tiene un formato erróneo, el sistema mostrará una alerta.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{Curso alterno de CU-11. Editar una propiedad \textit{number}.}
+	\label{table:ca_cu_11}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-12.} Editar propiedad \textit{switch}.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: La propiedad es editada y enviada al servidor.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Editar una propiedad \textit{switch}.
+    \item Resumen: El usuario pulsará sobre una propiedad \textit{switch} para editarla.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre una porpiedad\\
+	    de tipo \textit{switch}. \\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la vista para la\\
+	    edición de las propiedades \textit{switch}\\ 
+	    con todos los elementos de la\\ 
+	    propiedad concreta.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: edita los elementos que desee\\
+	    y pulsa el botón de actualizar\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema cierra la vista de edición\\
+	    y actualiza la vista de la propiedad.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-12 Editar una propiedad \textit{switch}.}
+	\label{table:cu_12}
+      \end{center}
+    \end{table}
+
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|}
+	  \hline
+	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
+	  \\ \hline
+	  {\it 2b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si la propiedad es de solo lectura, el sistema muestra una\\
+	    alerta.\\
+	  \end{tabular}\\
+	  \hline
+	\end{tabular}
+	\caption{Curso alterno de CU-12. Editar una propiedad \textit{switch}.}
+	\label{table:ca_cu_12}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-13.} Editar propiedad \textit{blob}.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: La propiedad es editada y enviada al servidor.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Editar una propiedad \textit{blob}.
+    \item Resumen: El usuario pulsará sobre una propiedad \textit{blob} para editarla.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre una porpiedad\\
+	    de tipo \textit{blob}. \\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la vista para la\\
+	    edición de las propiedades \textit{blob}\\ 
+	    con todos los elementos de la\\ 
+	    propiedad concreta.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: edita los elementos que desee\\
+	    y pulsa el botón de actualizar\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema cierra la vista de edición\\
+	    y actualiza la vista de la propiedad.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-13 Editar una propiedad \textit{blob}.}
+	\label{table:cu_13}
+      \end{center}
+    \end{table}
+
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|}
+	  \hline
+	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
+	  \\ \hline
+	  {\it 2b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si la propiedad es de solo lectura, el sistema muestra una\\
+	    alerta.\\
+	  \end{tabular}\\
+	  \hline
+	\end{tabular}
+	\caption{Curso alterno de CU-13. Editar una propiedad \textit{blob}.}
+	\label{table:ca_cu_13}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-14.} Editar propiedad \textit{connection}.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: La propiedad es editada y enviada al servidor.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Editar una propiedad \textit{connection}.
+    \item Resumen: El usuario pulsará sobre una propiedad \textit{connection} para editarla.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre una porpiedad\\
+	    de tipo \textit{connection}. \\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la vista para la\\
+	    edición de las propiedades \textit{connection}\\ 
+	    con un \textit{switch} para conectar\\
+	    o desconectar la propiedad.
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: pulsa sobre el \textit{switch}\\ 
+	    para conectar o desconectar la\\ 
+	    propiedad y después pulsa en el\\ 
+	    botón actualizar.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema cierra la vista de edición\\
+	    y actualiza la vista de la propiedad.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-14 Editar una propiedad \textit{connection}.}
+	\label{table:cu_14}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-15.} Editar propiedad \textit{abort}.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: La propiedad es editada y enviada al servidor.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Editar una propiedad \textit{abort}.
+    \item Resumen: El usuario pulsará sobre una propiedad \textit{abort} para editarla.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre una porpiedad\\
+	    de tipo \textit{abort}. \\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra la vista para la\\
+	    edición de las propiedades \textit{abort}\\ 
+	    con un botón para abortar.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: pulsa sobre el botón\\ 
+	    para abortar.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema cierra la vista de edición\\
+	    y actualiza la vista de la propiedad.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-15 Editar una propiedad \textit{abort}.}
+	\label{table:cu_15}
+      \end{center}
+    \end{table}
+
+\end{itemize}
 
 \newpage
 \section{Diagrama de paquetes}

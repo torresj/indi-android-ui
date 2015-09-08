@@ -1,80 +1,52 @@
 \chapter{Planificación}
 
-\section{Fases y entregas}
+\section{Fases}
 
-\subsection{Fases}
-
-Como este va a ser un proyecto que ya cuenta con un trabajo previo realizado, la fase inicial de gestión va a ser muy breve porque se parte de que ya se han realizado varias reuniones y el proyecto está parcialmente funcionando, por lo que no se parte de cero, es una ampliación de un proyecto inicial.
+El proyecto se divide en una sucesión de fases previamente establecidas que nos ayudará a estructurar, temporizar y evaluar los costes tanto económicos como humanos. Dado que el propio planteamiento del proyecto implica el uso de una serie de tecnologías como \testbf{Android} e \textbf{INDI}, y la necesidad de conocer el campo de la \textbf{astronomía}, se propuso el proyecto con bastante antelación ya que se preveía tener que realizar una fase de familiarización con las tecnologías y campos implicados. Esta fase es bastante extensa ya que se parte de 0.
 
 \begin{itemize}
-  \item \textbf{Fase 1:} Especificaciones del proyecto.
-  \item \textbf{Fase 2:} Planificación.
+  \item \textbf{Fase 0:} Planteamiento del problema.
+  \item \textbf{Fase 1:} Familiarización con las tecnologías implicadas.
+  \item \textbf{Fase 2:} Especificaciones del proyecto.
   \item \textbf{Fase 3:} Análisis y diseño.
   \item \textbf{Fase 4:} Implementación.
   \item \textbf{Fase 5:} Pruebas.
   \item \textbf{Fase 6:} Documentación.
 \end{itemize}
-
-\subsection{Lista de entregas}
-
-Se harán una serie de breves informes sobre el contenido de cada una de las fases de planificación del proyecto.
-
-\begin{itemize}
-  \item \textbf{Fase 1:} Especificación del proyecto.
-  \begin{itemize}
-    \item Descripción: Se establecen los objetivos a cumplir para que el desarrollo del proyecto se considere completado.
-    \item Tipo: informe.
-  \end{itemize}
-  \newpage
-  \item \textbf{Fase 2:} Planificación.
-  \begin{itemize}
-    \item Descripción: Se desarrolla la documentación con toda la planificación del desarrollo del proyecto.
-    \item Tipo: informe.
-  \end{itemize}
-  \item \textbf{Fase 3:} Análisis y diseño.
-  \begin{itemize}
-    \item Descripción: Todos los aspectos del proyectos son analizados para concretar la forma de desarrollarlo.
-    \item Tipo: informe.
-  \end{itemize}
-  \item \textbf{Fase 4:} Implementación.
-  \begin{itemize}
-    \item Descripción: Con el proyecto ya planificado y diseña se pasa programar todo lo necesario para cumplir los objetivos.
-    \item Tipo: software.
-  \end{itemize}
-  \item \textbf{Fase 5:} Pruebas.
-  \begin{itemize}
-    \item Descripción: Una vez este todo programado, se pasa a validar con diferentes procedimientos que el proyecto funciona correctamente tomando como referentes unas métricas propias.
-    \item Tipo: informe y software.
-  \end{itemize}
-  \item \textbf{Fase 6:} Documentación.
-  \begin{itemize}
-    \item Descripción: Para finalizar el proyecto se realiza toda la documentación informativa y explicativa.
-    \item Tipo: informe.
-  \end{itemize}
-\end{itemize}
-
-\section{Estructura de descomposición del trabajo}
-
-El diagrama de estructura de descomposición del trabajo (\textit{figura 3.1}) es una descomposición jerárquica de las diferentes fases y entregas en las que está planificado el proyecto.
 
 \newpage
-\section{Lista de actividades}
+\section{Estimación de tiempos}
 
-Las actividades que se vayan a desarrollar en cada una de las fases para cada una de las entregas se va a listar junto con una estimación del tiempo que deberían tomar en ser cumplidas.
+A continuación se muestran las fases con sus actividades principales y la estimación inicial de tiempos.
 
 \begin{itemize}
-   \item \textbf{Especificaciones del proyecto:}
+   \item \textbf{Planteamiento del problema:}
    \begin{itemize}
-    \item Determinación de objetivos.
-    \item Determinación de requisitos.
-    \item \underline{\textit{Estimación}}: 9 horas.
+    \item Priemra reunión con el cliente.
+    \item Descripción de los objetivos que se persiguen.
+    \item Planteamiento de las posibles tecnologías.
+    \item \underline{\textit{Estimación}}: 4 horas.
     \end{itemize}
 \end{itemize}
 
 \begin{itemize}
-   \item \textbf{Planificación:}
+   \item \textbf{Familiarización con las tecnologías implicadas:}
    \begin{itemize}
-    \item Lista de actividades.
+    \item Android: Generación de aplicaciones.
+    \item Android: Generación de interfaces de usuario.
+    \item Android: Posibles entornos para el desarrollador
+    \item INDI: Comprensión del protocolo.
+    \item INDI: Familiarización con la blilbioteca \textit{``INDI for Java''}
+    \item Familiarización con el campo de la astronomía.
+    \item Realización de pruebas simples para estudiar la viabilidad técnica del proyecto
+    \item \underline{\textit{Estimación:}} 80 horas.
+   \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+   \item \textbf{Especificación del proyecto:}
+   \begin{itemize}
+    \item Tecnoloías elegidas. Entornos de trabajo.
     \item Recursos humanos.
     \item Presupuesto.
     \item Temporización.
@@ -88,7 +60,6 @@ Las actividades que se vayan a desarrollar en cada una de las fases para cada un
     \item Análisis de requisitos.
     \item Diagramas.
     \item Metodología de desarrollo.
-    \item Descripción estructural.
     \item \underline{\textit{Estimación:}} 36 horas.
    \end{itemize}
 \end{itemize}
@@ -97,22 +68,21 @@ Las actividades que se vayan a desarrollar en cada una de las fases para cada un
  \item \textbf{Implementación:}
  \begin{itemize}
   \item Herramientas seleccionadas.
-  \item Solucionar problema de generación de páginas.
-  \item Implementar tests unitarios.
-  \item Implementar test de cobertura.
-  \item Introducir integración continua.
-  \item Agregar despliegue automático.
-  \item Actualizar provisionamiento.
-  \item \underline{\textit{Estimación:}} 90 horas.
+  \item Creación de una aplicación en Android para abrir y cerrar conexiones de red.
+  \item Creación de una aplicación en Android para conectarse con un driver INDI.
+  \item Creación de una aplicación en Android para poder listar todas las propiedades y dispositivos de una conexión INDI.
+  \item Creación de una aplicación en Android para poder interactuar con las porpiedades de los dispositivos de una conexión INDI.
+  \item Creación de una aplicación en Android para poder gestionar varias conexiones INDI simultaneamente.
+  \item Creación de interfaces de usuario especificas para propiedades concretas y dispositivos concretos.
+  \item \underline{\textit{Estimación:}} 180 horas.
  \end{itemize}
 \end{itemize}
 
-\newpage
 \begin{itemize}
  \item \textbf{Pruebas:}
  \begin{itemize}
-  \item Pruebas de software.
-  \item Pruebas de carga.
+  \item Pruebas de la aplicación en entronos simulados.
+  \item Pruebas de la aplicación en entornos reales.
   \item \underline{\textit{Estimación:}} 30 horas.
  \end{itemize}
 \end{itemize}
@@ -123,48 +93,78 @@ Las actividades que se vayan a desarrollar en cada una de las fases para cada un
   \item Documentación de la aplicación.
   \item Manual de usuario.
   \item Documentación del proyecto.
+  \item Manual del desarrollador.
   \item \underline{\textit{Estimación:}} 30 horas.
  \end{itemize}
 \end{itemize}
 
 \section{Recursos humanos}
 
-Como este es un proyecto que comenzó su desarrollo en la \textbf{Oficina de Software Libre de la Universidad de Granada}, cuento con el apoyo de todos sus colaboradores, además del resto de becarios que se encuentran realizando prácticas en empresa en ella como es mi situación actual, además, siendo el tutor de este proyecto el director de la propia oficina.
-
+Dado que el objetivo es demostrar las capacidades y competencias del alumno a la hora de afrontar un proyecto, el equipo de recursos humanos solo lo formará él, teniendo que afrontar todas las etapas del desarrollo del proyecto.
+\newpage
 \section{Presupuesto}
 
-Una de las ventajas de usar software libre es que no es necesario adquirir licencias por las que haya que pagar para realizar su uso, como todas las herramientas que usen (al igual que las que se generen) serán software libre, el coste en software para el desarrollo será cero.
+Para el presente proyecto se tendrán en cuenta los siguientes costes:
+
+\begin{itemize}
+  \item \textbf{Costes por hora de equipo humano:} En este caso son las horas dedicadas al proyecto por parte del alumno. Podemos ver que el total de horas dedicadas son 298 horas. si cuantificamos el precio de desarrollo por hora. Si estimamos el precio por hora en 25\euro tenemos un coste de 7450\euro.
+  \item \textbf{Costes asociados a licencias necesarias para publicar o desarrollar el software:} Dado que hemos elegido la plataforma \textbf{Android} y que basamos el proyecto en \textbf{Software Libre} no será necesario realizar ninguna inversión previa. Unicamente debemos tener en cuenta que para poder publicar la aplicación en \textit{Google Play} debemos pagar 25\euro.
+  \item \textbf{Costes asociados a los entornos de prueba simulados:} Para poder realizar las pruebas ha sido necesario comprar una \textit{Raspberry Pi B+} que tiene un coste asociado de 35\euro. En ella se alojan los simuladores necesarios para testear las diferentes funciones del software.
+  \item \textbf{Costes asociados a los entornos de prueba con equipos:} Los entornos de prueba simulados son limitados, por lo que para poder probar de forma completa el software es necesario adquitir instrumental astronómico. Por ello ha adquirido una montura, un telescopio básico y una cámara basica por 400\euro.
+  \item \textbf{Costes asociados a la publicación y difusión a través de internet:} Para dar difusión y permitir descargar la aplicación sin tener que usar \textit{Google Play} se ha desarrollado una página web cuyo coste anual de dominio y hosting asciende a 30\euro al año.
+\end{itemize}
 
 \bigskip
+Como puede observarse, el coste inicial del proyecto es de \textbf{7940\euro}
 
-El único recurso necesario es el servidor en que estará instalada el portal, servidor ya que adquirido anteriormente, por lo que tampoco es necesario considerarlo un gasto a afrontar de cara al desarrollo.
+\section{SCRUM}
+
+Hasta ahora hemos basado la planificación en una metodología de desarrollo clásica o \textit{en cascada}. Esta metodología se basa en un conocimiento alto de los requisitos del sistema por parte del cliente y una estructura fija y previamente establecida. 
+
+\bigskip
+Para el proyecto actual no podemos utilizar este tipo de metodología ya que el cliente no sabe con exactitud lo que quiere, dado que hay una parte de investigación asociada a la consecución del proyecto, lo cual implica la revisión de los requerimientos a lo largo del proceso de desarrollo. Es por ello que se considera más idóneo el uso de una \textbf{metodología ágil} basada en iteraciones incrementales como \textbf{Scrum}.
+
+\bigskip
+En \textbf{Scrum} se realizan entregas parciales y regulares del producto final, priorizadas por el beneficio que aportan al receptor del proyecto. Por ello, \textbf{Scrum} está especialmente indicado para proyectos en entornos complejos, donde se necesita obtener resultados pronto, donde los requisitos son cambiantes o poco definidos, donde la innovación, la competitividad, la flexibilidad y la productividad son fundamentales.
+
+\bigskip
+En \textbf{Scrum} un proyecto se ejecuta en bloques temporales cortos y fijos (iteraciones de un mes natural y hasta de dos semanas, si así se necesita). Cada iteración tiene que proporcionar un resultado completo, un incremento de producto final que sea susceptible de ser entregado con el mínimo esfuerzo al cliente cuando lo solicite.
+
+\bigskip
+Debida a las caracteristicas descritas, se puede aplicar al proyecto dado que en cada iteración el cliente tendrá una aplicación funcional que podrá probar y comprobar si cumple con los objetivos y que nuevos requerimientos son necesarios para, de esta forma, retroalimentar el proceso de desarrollo produciendo una nueva iteración.
+
+\bigskip
+En el siguiente diagrama podemos ver el proceso de desarrollo por iteraciones incrementales en \textbf{Scrum}.
+
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{../images/scrum-iteration-detail-es.png}
+  \caption{Proceso de desarrollo Scrum (\url{http://www.qasoluciones.es/metodologia/agile})}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+
+El cambio de metodología redefine las fases en tanto en cuanto ahora debemos repetir n veces las fases de analisis, diseño, implementación, pruebas y documentación. Las horas estimadas son las mimas ya que se repartirían entre las iteraciones. De esta forma el coste del proyecto no se ve incrementado, solo la organización de las tareas y fases de cara al desarrollo del software. 
 
 \section{Temporización}
 
-Para percibir de forma más visual la planificación temporal de las tareas se incluyen la \textit{figura 3.2} con una tabla indicando los plazos de cada tarea y la \textit{figura 3.3} con un diagrama de \textit{Gantt} de dichas tareas.
-\newpage
+A continuación se mostrá un diagrama de \textbf{Grantt}\footnote{Herramienta gráfica para mostrar la temporización de una serie de tareas} para ilustrar la temporización de las tareas basandonos en la planificación inicial. 
 
 \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[scale=0.25,angle=90]{../images/diagrama_edt.png}
-    \caption{Diagrama de estructura de descomposición de trabajo}
-    \label{fig:diag_edt}
+  \includegraphics[width=0.8\textwidth]{../images/diagrama_grantt_inicial.png}
+  \caption{Diagrama de Grantt inicial}
+  \label{fig:diag_grant_inicial}
   \end{center}
 \end{figure}
 
-\newpage
-\begin{figure}[!ht]
-  \begin{center}
-    \includegraphics[width=1\textwidth]{../images/tempo_tareas.png}
-    \caption{Temporización de las tareas}
-    \label{fig:tempo_tareas}
-  \end{center}
-\end{figure}
+\bigskip
+Aunque inicialmente se plantea una temporización basada en un número fijo de iteraciones, el proceso de desarrollo hace necesario modificar los planteamientos iniciales de horas, costes y temporización. Por ello, a continuación puede observarse una diagrama de \textbf{Grantt} con la temporización real.
 
 \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=1\textwidth]{../images/diagrama_gantt.png}
-    \caption{Diagrama de Gantt}
-    \label{fig:diag_gant}
+  \includegraphics[width=0.8\textwidth]{../images/diagrama_grantt_final.png}
+  \caption{Diagrama de Grantt final}
+  \label{fig:diag_grant_final}
   \end{center}
 \end{figure}
