@@ -269,7 +269,7 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \item \textbf{CU-4.} Editar los ajustes.
   \begin{itemize}
     \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
+    \item Tipo: Opcional, esencial.
     \item Referencias:
     \item Precondición:
     \item Postcondición: Los ajustes serán guardados.
@@ -393,7 +393,7 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
 	  \end{tabular}
 	  \\ \hline
 	\end{tabular}
-	\caption{CU-4. Conterase a un servidor.}
+	\caption{CU-4. Conectarse a un servidor.}
 	\label{table:cu_5}
       \end{center}
     \end{table}
@@ -478,7 +478,7 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \item \textbf{CU-7.} Salir de la aplicación.
   \begin{itemize}
     \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
+    \item Tipo: Secunadrio, esencial.
     \item Referencias:
     \item Precondición: La aplicación debe estar iniciada.
     \item Postcondición: Se cierran todas las conexiones, hebras y procesos liberando todos los recursos de la aplicación.
@@ -1069,180 +1069,534 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
       \end{center}
     \end{table}
 
+     \newpage
+    \item \textbf{CU-16.} Guardar blob.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8). El dispositivo debe tener una propiedad de tipo \textit{blob}.
+    \item Postcondición: Se guardará en la carpeta de la aplicación un archivo con el \textit{blob}.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Guardar un \textit{blob}.
+    \item Resumen: El usuario guardará un blob que haya recibido.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el botón guardar\\
+	    en la vista de una porpiedad\\
+	    de tipo \textit{blob}.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema guarda el blob en la\\
+	    carpeta de la aplicación y muestra\\
+	    un mensaje por pantalla informando\\
+	    del éxito de la acción.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-16 Guardar un \textit{blob}.}
+	\label{table:cu_16}
+      \end{center}
+    \end{table}
+
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|}
+	  \hline
+	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
+	  \\ \hline
+	  {\it 2b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si la propiedad blob no tiene ningún dato que guardar\\
+	    se muestra una alerta informando al usuario.\\
+	  \end{tabular}\\
+	  \hline
+	\end{tabular}
+	\caption{Curso alterno de CU-16. Guardar un \textit{blob}.}
+	\label{table:ca_cu_16}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-17.} Mostrar un blob.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Primario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8). El dispositivo debe tener una propiedad de tipo \textit{blob}.
+    \item Postcondición: Se pasará al sistema operativo \textbf{Android} el archivo para que muestre una lista de posibles aplicaciones instaladas que puedan manejarlo.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Mostrar un \textit{blob}.
+    \item Resumen: El usuario guardará un blob que haya recibido.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el botón mostrar\\
+	    en la vista de una porpiedad\\
+	    de tipo \textit{blob}.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema guarda el blob en la\\
+	    carpeta de la aplicación y envía\\
+	    el archivo al sistema operativo\\
+	    para poder mostrar el blob con una\\
+	    aplicación adecuada según el formato.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-17 Mostrar un \textit{blob}.}
+	\label{table:cu_17}
+      \end{center}
+    \end{table}
+
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|}
+	  \hline
+	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
+	  \\ \hline
+	  {\it 2b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si la propiedad blob no tiene ningún dato que mostrar\\
+	    se muestra una alerta informando al usuario.\\
+	  \end{tabular}\\
+	  \hline
+	\end{tabular}
+	\caption{Curso alterno de CU-17. Mostrar un \textit{blob}.}
+	\label{table:ca_cu_17}
+      \end{center}
+    \end{table}
+
+    \newpage
+     \item \textbf{CU-18.} Ver el log.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Opcional, esencial.
+    \item Referencias:
+    \item Precondición:
+    \item Postcondición:
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Ver el log.
+    \item Resumen: El usuario podrá ver el log de cada una de las conexiones guardadas.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    desplegar el menú superior derecho.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra el menú superior.\\
+	  \end{tabular}
+	  \\ \hline
+	  {\it 3} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa el botón para\\
+	    ver el log.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 4} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema muestra una vista tabulada\\
+	    con cada uno de los log que corresponden\\
+	    a cada una de las conexiones guardadas
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-18. Ver el log.}
+	\label{table:cu_18}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-19.} Ocultar una propiedad.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Secundario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8). La propiedad debe estar visible.
+    \item Postcondición: La propiedad se maraca como oculta.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Ocultar una propiedad.
+    \item Resumen: El usuario ocultará una porpiedad visible.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el icono\\
+	    de visibilidad para ocultar una\\
+	    porpiedad\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2a} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema marca la porpiedad como \\
+	    ``no visible'' y cambia el icono de\\
+	    de visibilidad en la vista de la \\
+	    propiedad.
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-19. Ocultar una propiedad.}
+	\label{table:cu_19}
+      \end{center}
+    \end{table}
+
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|}
+	  \hline
+	  \multicolumn{2}{|c|}{{\bf Curso alterno}}
+	  \\ \hline
+	  {\it 2b} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    Si la lista de porpiedades tiene marcada la opción\\
+	    de ``ocultar propiedades'', la propiedad desaparecerá\\
+	    de la vista. Si el grupo al que pertenece la propiedad\\
+	    no tiene ninguna propiedad visible, también desaparecerá\\
+	    de la vista.\\
+	  \end{tabular}\\
+	  \hline
+	\end{tabular}
+	\caption{Curso alterno de CU-19. Ocultar una propiedad.}
+	\label{table:ca_cu_19}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-20.} Mostrar una propiedad.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Secundario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8). La propiedad debe estar ``no visible''. Debe estar activada la opción de ``ver todas las propiedades'' para que las que estén marcadas como ocultas se añadan también a la vista
+    \item Postcondición: La propiedad se maraca como visible.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Mostrar una propiedad.
+    \item Resumen: El usuario marcará una porpiedad como visible.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el icono\\
+	    de visibilidad para marcar una\\
+	    porpiedad como visible.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema marca la porpiedad como \\
+	    visible y cambia el icono de\\
+	    de visibilidad en la vista de la \\
+	    propiedad.
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-20. Mostrar una propiedad.}
+	\label{table:cu_20}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-21.} Activar la visibilidad de todas las propiedades ocultas.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Secundario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: Se muestran todas las propiedades sea cual sea su visibilidad.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Activar la visibilidad de todas las propiedades ocultas.
+    \item Resumen: El usuario activa la visibilidad de todas las porpiedades, estén marcadas como ocultas o no.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el botón\\
+	    flotante para activar la visibilidad\\
+	    de todas las propiedades.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema refresca la lista de\\
+	    propiedades añadiendolas todas\\
+	    aunque su estado sea ``no visible''.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-21. Activar la visibilidad de todas las propiedades ocultas.}
+	\label{table:cu_21}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-22.} Desactivar la visibilidad de todas las propiedades ocultas.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Secundario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8).
+    \item Postcondición: Se ocultan todas las propiedades cuyo estado esa ``no visible''.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Desactivar la visibilidad de todas las propiedades ocultas.
+    \item Resumen: El usuario desactiva la visibilidad de todas las porpiedades con el estado ``no visible''.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el botón\\
+	    flotante para desactivar la \\
+	    visibilidad de todas las propiedades\\
+	    ocultas.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema refresca la lista de\\
+	    propiedades mostrando solo\\
+	    aquellas que estén visibles.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-21. Desactivar la visibilidad de todas las propiedades ocultas.}
+	\label{table:cu_22}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-23.} Expandir un grupo.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Secundario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8). El grupo debe estar contraído.
+    \item Postcondición: se expande el grupo selecionado.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Expandir un grupo.
+    \item Resumen: El usuario Expande uno de los grupos de la lista que esté contraído.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el nombre\\
+	    del grupo que desee expandir.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema refresca la lista de\\
+	    propiedades mostrando el grupo\\
+	    expandido y todas las propiedades\\
+	    que contenga.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-23. Expandir un grupo.}
+	\label{table:cu_23}
+      \end{center}
+    \end{table}
+
+    \newpage
+    \item \textbf{CU-24.} Contraer un grupo.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: Secundario, esencial.
+    \item Referencias:
+    \item Precondición: El usuario debe haber selecionado un dispositivo (CU-8). El grupo debe estar expandido.
+    \item Postcondición: se contrae el grupo selecionado.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Contraer un grupo.
+    \item Resumen: El usuario contrae uno de los grupos de la lista que esté expandido.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el nombre\\
+	    del grupo que desee contraer.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema refresca la lista de\\
+	    propiedades mostrando el grupo\\
+	    contraído.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-24. Contraer un grupo.}
+	\label{table:cu_24}
+      \end{center}
+    \end{table}
+    
+    \newpage
+    \item \textbf{CU-25.} Abrir la aplicación.
+  \begin{itemize}
+    \item Actores: Usuario.
+    \item Tipo: primaria, esencial.
+    \item Referencias:
+    \item Precondición:
+    \item Postcondición: La aplicación queda iniciada. Si alguna conexión tiene activada la opción de ``autoconectar'', se realizará la conexión con el servidor.
+    \item Autor: \autor.
+    \item Versión: 1.0.
+    \item Propósito: Iniciar la aplicación.
+    \item Resumen: El usuario inicia la aplicación.
+    \end{itemize}
+    \begin{table}[!ht]
+      \begin{center}
+	\begin{tabular}{|l|l|l|l|}
+	  \hline
+	  \multicolumn{4}{|c|}{{\bf Curso normal}}
+	  \\ \hline
+	  \multicolumn{2}{|c|}{{\bf Actor}} & \multicolumn{2}{c|}{{\bf Sistema}}
+	  \\ \hline
+	  {\it 1} & 
+	  \begin{tabular}[c]{@{}l@{}}
+	    Usuario: Pulsa sobre el icono\\
+	    de la aplicación.\\
+	  \end{tabular} &
+	  &
+	  \\ \hline
+	  &
+	  &
+	  {\it 2} &
+	  \begin{tabular}[c]{@{}l@{}}
+	    El sistema carga las configuraciones\\
+	    o las crea en caso de no existir. Después\\
+	    muestra la interfaz de la aplicación\\
+	    mostrando la sección de ayuda.\\
+	  \end{tabular}
+	  \\ \hline
+	\end{tabular}
+	\caption{CU-25. Iniciar la aplicación.}
+	\label{table:cu_25}
+      \end{center}
+    \end{table}
+
 \end{itemize}
 
 \newpage
-\section{Diagrama de paquetes}
-
-Este diagrama representa la estructura lógica del sistema basado en las dependencias existentes entre sí. El paquete de \textbf{Configuración automática} depende del paquete \textbf{Administración portal} porque necesita de tareas de administración como es iniciar el servidor.
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=0.8\textwidth]{../images/diagrama_paquetes.png}
-  \caption{Diagrama de paquetes}
-  \label{fig:diag_paquetes}
-  \end{center}
-\end{figure}
- 
 \section{Diagramas de casos de uso}
 
-Los diagramas de casos de uso representa como los diferentes actores se relacionan con el sistema para usar sus funciones. Por ejemplo, en el primer caso de uso vemos como el \textbf{desarrollador} se relaciona con el sistema para iniciar el servidor del portal, mientras, en el segundo vemos como el \textbf{usuario} se relaciona con el sistema para consultar la información de las diferentes secciones del portal.
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=0.65\textwidth]{../images/diag_cu_ap.png}
-  \caption{Diagrama de casos de uso: paquete Administración portal}
-  \label{fig:diag_cu_ap}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=0.65\textwidth]{../images/diag_cu_ai.png}
-  \caption{Diagrama de casos de uso: paquete Acceso información}
-  \label{fig:diag_cu_ai}
-  \end{center}
-\end{figure}
-
-\newpage
-\
-\newpage
-En el tercer diagrama vemos como el \textbf{desarrollador} se relaciona con los procesos relacionadas con las pruebas (que a su vez son dependientes entre sí); y en el cuarto vemos como también el \textbf{desarrollador} se relaciona con el sistema para realizar las tareas de configuración automática, como son el despliegue automático y el provisionamiento.
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=0.65\textwidth]{../images/diag_cu_ps.png}
-  \caption{Diagrama de casos de uso: paquete Pruebas de software}
-  \label{fig:diag_cu_ps}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=0.65\textwidth]{../images/diag_cu_ca.png}
-  \caption{Diagrama de casos de uso: paquete Configuración automática}
-  \label{fig:diag_cu_ca}
-  \end{center}
-\end{figure}
-
-\newpage
-\section{Diagramas de actividad}
-
-Los diagramas de actividad sirven para representar la descomposición de un proceso en las diferentes acciones de las que está compuesto. Las actividades de consultar algún tipo de información son procedimiento secuenciales en los que la ejecución es bastante simple; pero la actividad de iniciar el servidor del portal, realizar los test unitarios, realizar los test de cobertura, usar la integración continua tienen situaciones condicionales que son los que dan lugar a cursos alternos de la ejecución. Las actividades de despliegue automático y provisionamiento además tienen también puntos de sincronización que harán que el proceso siga el mismo cauce en su ejecución.
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_01.png}
-  \caption{Diagrama de actividad CU-1. Inicio automático del servidor del portal}
-  \label{fig:diag_act_cu_01}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_02.png}
-  \caption{Diagrama de actividad CU-2. Consultar información de Administración}
-  \label{fig:diag_act_cu_02}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_03.png}
-  \caption{Diagrama de actividad CU-3. Consultar información de Docencia}
-  \label{fig:diag_act_cu_03}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_04.png}
-  \caption{Diagrama de actividad CU-4. Consultar información de Gestión e Investigación}
-  \label{fig:diag_act_cu_04}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_05.png}
-  \caption{Diagrama de actividad CU-5. Consultar información de Normativa Legal}
-  \label{fig:diag_act_cu_05}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_06.png}
-  \caption{Diagrama de actividad CU-6. Realizar tests unitarios}
-  \label{fig:diag_act_cu_06}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_07.png}
-  \caption{Diagrama de actividad CU-7. Realizar test de cobertura}
-  \label{fig:diag_act_cu_07}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_08.png}
-  \caption{Diagrama de actividad CU-8. Usar integración continua}
-  \label{fig:diag_act_cu_08}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_09.png}
-  \caption{Diagrama de actividad CU-9. Usar despliegue automático}
-  \label{fig:diag_act_cu_09}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diag_act_cu_10.png}
-  \caption{Diagrama de actividad CU-10. Usar provisionamiento}
-  \label{fig:diag_act_cu_10}
-  \end{center}
-\end{figure}
-
-\newpage
-\
-\newpage
-\
-\newpage
-\
-\newpage
-\
-\newpage
-\
-\newpage
-\
-\newpage
-\
-\newpage
-\
-\newpage
-
-\section{Diagrama conceptual}
-
-En el diagrama conceptual podemos ver una representación de la estructura de la implementación. A excepción de la clase \textbf{test}, todas las clases son parte de la aplicación principal (\textbf{app}) por lo que tienen una relación de composición con la misma y no tienen sentido sin esta. Las clases de \textbf{test} y \textbf{app} tiene una relación de agrupación, porque el módulo test puede realizar las pruebas sobre cualquier módulo de aplicación que sea recibido.
-
-\begin{figure}[!ht]
-  \begin{center}
-  \includegraphics[width=1\textwidth]{../images/diagrama_conceptual.png}
-  \caption{Diagrama conceptual}
-  \label{fig:diagrama_conceptual}
-  \end{center}
-\end{figure}
-
-\section{Otros diagramas o interfaces}
-
-Gran parte de la implementación no va a ser de la aplicación principal en si misma, sino herramientas que se le van a agregar para obtener diferentes funcionalidades que se usarán durante su desarrollo, de ahí que no se considere necesario el realizar diagramas de comunicación ni diagramas de secuencia.
+Los diagramas de casos de uso sirven para representar los relaciones que existen entre los diferentes actores y el sistema. Dado que en nuestro caso solo hay un actor, todos los casos de uso son iniciados por él.
 
 \bigskip
-En cuanto a la interfaz gráfica, no será necesaria porque todas las herramientas solo tienen modo de funcionamiento a través de terminal.
+
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/diagrama_casos_de_uso.png}
+  \caption{Diagrama de casos de uso.}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}

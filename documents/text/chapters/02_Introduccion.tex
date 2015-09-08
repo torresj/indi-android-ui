@@ -1,10 +1,20 @@
 \chapter{Introducción}
 
+El presente proyecto constituye un esfuerzo por unir las tecnologías móviles con la astronomía y los instrumentos astronómicos. En los siguientes apartados describiremos las distintas tecnologías o campos de estudio que se verán implicados en el desarrollo posterior:
+
+\begin{itemize}
+  \item \itembf{La astronomía.}
+  \item \itembf{Instrumental astronómico.}
+  \item \itembf{Control de dispositivos astronómicos.}
+  \item \itembf{INDI.}
+  \item \itembf{Dispositivos móviles.}
+\end{itemize}
+
 \section{La Astronomía}
 
-Desde el princpio de los tiempos, el ser humano a mirado al cielo con incertidumbre, viendolo como una fuente inagotable de interrogantes sin resolver. En casi todas las religiones antiguas existía la \textbf{``cosmogonía''} que intentaba explicar el origen del universo, ligando este a los elementos mitológicos, dando paso esta a la \textbf{``astronomía''}:
+Desde el princpio de los tiempos, el ser humano ha mirado al cielo con incertidumbre, viéndolo como una fuente inagotable de interrogantes sin resolver. En casi todas las religiones antiguas existía la \textbf{``cosmogonía''} que intentaba explicar el origen del universo, ligando este a los elementos mitológicos, dando paso esta a la \textbf{``astronomía''}:
 
-\begin{quote}``\textit{Ciencia que se ocupa del estudio de los cuerpos celestes del universo, incluidos los planetas y sus satélites, los cometas y meteorítos, las estrellas y la materia interestelar, los sistemas de materia oscura, estrellas, gas y polvo llamados galaxias y los cúmulos de galaxias; por lo que estudia sus movimientos y fenómenos ligaods a ellos.}''
+\begin{quote}``\textit{Ciencia que se ocupa del estudio de los cuerpos celestes del universo, incluidos los planetas y sus satélites, los cometas y meteoritos, las estrellas y la materia interestelar, los sistemas de materia oscura, estrellas, gas y polvo llamados galaxias y los cúmulos de galaxias; por lo que estudia sus movimientos y fenómenos ligados a ellos.}''
 \newline(\url{https://es.wikipedia.org/wiki/Astronom%C3%ADa})
 \end{quote}
 
@@ -31,13 +41,21 @@ Existe una gran variedad de \textbf{instrumental astronómico} en la actualidad.
 \newline(\url{https://es.wikipedia.org/wiki/Telescopio})
 \end{quote}
 
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/telescopio.jpg}
+  \caption{Telescopio (\url{https://josevicentediaz.files.wordpress.com}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+
 \bigskip
 Hace cuatro siglos nació un invento que habría de redefinir nuestro lugar en el universo. Tachado en su momento como el instrumento más diabólico de la historia, el telescopio sacudió la sociedad hasta las raíces. Al alzar los ojos al cielo nos convencimos de que éramos el centro de la creación, y había razones para ello: desde nuestra perspectiva, todo parece girar en torno a la Tierra
 
 \bigskip
 Los fabricantes de vidrio sabían desde la antigüedad que una esfera de vidrio podía aumentar imágenes, pero tuvieron que pasar siglos antes de que alguien ensamblara dos lentes en un tubo y mirara a través de ellas. Señalar la fecha, lugar y autor exactos de su invención es controvertido. Los holandeses se inclinan por el 2 de octubre de 1608, el día en que \textit{Hans Lippershey} patentó un instrumento llamado \textbf{kijker}, que significa mirador. Un moledor de vidrio holandés aseguraba haber inventado un aparato similar, pero el primero en patentarlo fue \textit{Lippershey}. Como era alemán, vivía en Holanda y registró la patente en Bélgica, más de un país ha pugnado por el honor de su autoría. Sin embargo, como dijo \textit{Darwin}:
 \begin{quote}``\textit{en la ciencia el crédito es del que convence al mundo y no del primero en tener la idea}''
-\newline(\textbr{Charles Darwin})
+\newline(\textbf{Charles Darwin})
 \end{quote}
 Por eso la gloria se la llevó Italia, ya que fueron las mejoras que introdujo \textit{Galileo} las que permitieron usar el aparato como instrumento astronómico. El diseño de \textit{Galileo} consistía en una lente convexa para el objetivo y otra cóncava en el ocular. En 1611 el alemán \textit{Johannes Kepler} fue el primero en usar dos lentes convexas que enfocaban los rayos en un mismo punto. La configuración de \textit{Kepler} aún se usa en binoculares y cámaras fotográficas modernas y es la base del telescopio refractor.
 
@@ -53,6 +71,15 @@ Y así, sobre la herencia de \textit{Galileo}, \textit{Newton} inventó el \text
 \subsection{Cámaras CCD}
 
 Un dispositivo de carga acoplada (en inglés \textbf{Charge-Coupled Device}, conocido también como \textbf{CCD}), es un circuito integrado que contiene un número determinado de condensadores enlazados o acoplados. Bajo el control de un circuito interno, cada condensador puede transferir su carga eléctrica a uno o a varios de los condensadores que estén a su lado en el circuito impreso.
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/ccd.jpg}
+  \caption{Cámara CCD (\url{http://www.lunatico.es/}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
 
 \bigskip
 El \textbf{CCD} se inventó a finales delos 60 por investigadores de \textbf{Bell Laboratories}. Originalmente se concibió como un nuevo tipo de memoria de ordenador pero pronto se observó que tenía muchas más aplicaciones potenciales tales como el proceso de señales y sobretodo la captación de imagen, esto último debido a la sensibilidad a la luz que presenta el silicio.
@@ -78,6 +105,16 @@ La necesidad de usar chips distintos implica dos desventajas importantes; la nec
 La montura de un telescopio es la parte mecánica que une el trípode o base al instrumento óptico. Existen varios tipos de monturas, algunas muy simples, otras mas complejas, incluso con correctores electrónicos y dispositivos de localización y seguimiento muy sofisticados (sistenas \textbf{GOTO})
 
 \bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/montura.jpg}
+  \caption{Montura (\url{http://astrofacil.com/}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+http://nimax-img.de/
+
+\bigskip
 La montura tiene como objetivo proveer de movimiento controlado al telescopio. Es muy importante la firmeza y suavidad de los movimientos, para que la observación sea confortable y las astrofotografías perfectas. Las monturas se clasifican en dos grandes grupos, según los planos de referencia que utilicen (coordenadas).
 
 \bigskip
@@ -89,13 +126,32 @@ Le sigue la montura ecuatorial, que utiliza como plano fundamental el ecuador ce
 \bigskip
 Existen varios tipos de monturas basados en los dos diseños fundamentales anteriores. La montura \textbf{Dobson} por ejemplo (suelen llamarse telescopios \textit{dobsonianos} a los que la poseen), es un modelo basado en la altacimutal, sin trípode y un telescopio de diseño newtoniano como instrumento de observación. Es muy utilizado por los que desean una gran apertura en reflectores, por ejemplo los que se construyen su propio espejo y no quieran tener grandes gastos en monturas sofisticadas.
 
-\subsection{Rueda portafiltro}
+\subsection{Rueda portafiltros}
 
 La rueda porta-filtros consiste en un cuerpo, generalmente de aluminio, que en su interior puede alojar varios filtros, normalmente de 1,25" de diámetro. Lo aconsejable es que tenga, al menos, 4 huecos para filtros si queremos hacer astrofotografía con cámaras CCD blanco y negro, puesto que vamos a necesitar el azul, rojo y verde (RGB) y, posiblemente, un filtro para infrarrojos.
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/portafiltros.jpg}
+  \caption{Rueda portafiltros (\url{http://www.lunatico.es/}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
 
 \subsection{Enfocadores}
 
 El \textbf{enfocador} es una pieza fundamental del telescopio. Nos permitirá ver las imágenes formadas tras la reflexión de la luz en el espejo primario y su desviación por el espejo secundario. Para verlas necesitaremos un juego de oculares. La longitud focal de los oculares combinada con la longitud focal de nuestro telescopio nos dará el número de aumentos total del sistema. Dichos oculares están montados en el \textbf{enfocador}, un dispositivo móvil que permitirá mover la posición vertical del ocular para enfocar adecuadamente la imagen.
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/enfocador.jpg}
+  \caption{Enfocador (\url{http://nimax-img.de/}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+http://cesar-programme.cab.inta-csic.es/
 
 \bigskip
 Un ejemplo de enfocador son los de tipo \textbf{Crayford} y los \textbf{rack and pinion}.
@@ -103,9 +159,30 @@ Un ejemplo de enfocador son los de tipo \textbf{Crayford} y los \textbf{rack and
 \subsection{Cúpulas}
 Las \textbf{cúpulas} son recintos cerrados mas o menos grandes que nos permiten albergar y proteger el instrumental astronómico. De esta forma, las \textbf{cúpulas} pueden ser abiertas o cerradas para exponer los instrumentos en el momento de las observaciones.
 
-\subsection{Ópticas adaptativas}
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/cupula.jpg}
+  \caption{Cúpula (\url{http://cesar-programme.cab.inta-csic.es/}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+https://www.valkanik.com
+
+\subsection{Ópticas activas/adaptativas}
 
 La \textbf{óptica adaptativa} es una técnica que permite corregir las perturbaciones más importantes que sufren las imágenes astronómicas debido a la atmósfera terrestre. Con este sistema es posible obtener imágenes más nítidas o de mejor resolución espacial. La diferencia que introduce esta técnica es comparable a la que existe entre mirar un objeto situado en el fondo de una piscina con agua o sin agua.
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/optica.jpg}
+  \caption{Óptica adaptativa (\url{https://www.valkanik.com}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+http://www.depositohidrografico.com/
+
 
 \bigskip
 Las posibilidades que la óptica adaptativa ofrece a la astronomía son espectaculares. Eliminar las perturbaciones producidas por la atmósfera equivale esencialmente a observar desde el espacio. Las perturbaciones atmosféricas causan una pérdida en nitidez o resolución espacial. Esta pérdida se traduce, por un lado, en una disminuida capacidad para resolver objetos, es decir, para realizar estudios detallados de su morfología. Por otro lado, influye también en la capacidad de detectar objetos débiles, dado que la imagen se dispersa en puntos de luz mayores.
@@ -115,7 +192,17 @@ La mejora que introduce la óptica adaptativa se puede cuantificar utilizando la
 
 \subsection{Estaciones meteorológicas}
 
-Las \textbf{estaciones meteorológicas} son sistemas compuestos por un \textit{``data logger''} y un conjunto de sensores que nos proprcionan datos de las distintas magnitudes meteorolóygicas, tales como la temperatura, humedad, presión barométrica, etc... permitiéndonos generar modelos a partir de los cuales conocer la situación climática y su posible evolución. 
+Las \textbf{estaciones meteorológicas} son sistemas compuestos por un \textit{``data logger''} y un conjunto de sensores que nos proprcionan datos de las distintas magnitudes meteorológicas, tales como la temperatura, humedad, presión barométrica, etc... permitiéndonos generar modelos a partir de los cuales conocer la situación climática y su posible evolución. 
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/estacion.jpg}
+  \caption{Estación meteorológica (\url{http://www.depositohidrografico.com/}).}
+  \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+
 
 \bigskip
 Gracias a los datos aportados por las \textbf{estaciones meteorológicas}, podemos conocer la climatología en el momento de realizar observaciones astronómicas. De esta forma podemos decidir si las condiciones son óptimas, o incluso decidir si debemos cerrar la cúpula para evitar daños en los intrumentos por lluvias o similar. 
@@ -133,7 +220,7 @@ Actualmente existen diversas formas de controlar los dispositivos astronómicos 
 
 \bigskip
 
-Por otro lado, existen estándares como el de \textbf{ASCOM} para instrumental astronómico. Con él, se intenta crear una capa entre los programas para controlar dispositivos astronómicos y los propios dispositivos. La principal desventaja es que solo puede utilizarse en sistemas \textit{Microsoft Windows}
+Por otro lado, existen estándares como el de \textbf{ASCOM} para instrumental astronómico. Con él, se intenta crear una capa entre los programas para controlar dispositivos astronómicos y los propios dispositivos. \textbf{ASCOM} solo puede utilizarse en sistemas \textit{Microsoft Windows}. Su diseño tiene una relación bastante profunda con el sistema operativo lo cual dificulta el desarrollo basado en red.
 
 \bigskip
 \begin{figure}[!ht]
@@ -188,6 +275,104 @@ El protocolo \textbf{INDI} es una plataforma software diseñada para el control 
 
 \bigskip
 
+\subsection{Breve introducción a INDI}
+
+INDI consiste a su nivel más básico en un protocolo que permite el control, automatización, obtención de datos e intercambio de los mismos entre distintos dispositivos hardware y programas cliente. La idea subyacente en el protocolo INDI es desacoplar aspectos específicos del hardware que se controla de tal manera que cambios en el hardware no impliquen necesariamente cambios en el software (cosa que ocurre en sistemas más habituales donde el el frontend software está fuertemente acoplado con el backend hardware.
+
+\bigskip
+Para conseguir un desacople efectivo entre los clientes y el hardware se define un protocolo basado en XML que permite abstraer los dispositivos hardware como conjuntos de propiedades que pueden ser leidas, y modificadas por los clientes (siempre estableciendo las restricciones oportunas).
+
+
+\subsection{Drivers, Servidores y Clientes INDI}
+
+Pese a que nivel más básico INDI es ``simplemente'' una especificación de un protocolo basado en XML, a un nivel superior se distinguen tres entidades diferentes que interaccionan entre sí para tener un sistema de control plenamente funcional:
+
+\begin{itemize}
+  \item \textbf{Drivers:} Son programas que se ejecutarán en la máquina en la que están conectados los dispositivos hardware. Son los encargados de la comunicación directa con los dispositivos y su abstracción a propiedades INDI.
+  
+  \item \textbf{Servidor:} Es un programa cuya función principal es ejecutar los drivers y permitir la conexión a los mismos por parte de los clientes (funciona de un modo similar a un proxy). Normalmente reside en la máquina donde están conectados los dispositivos, aunque en principio se pueden crear estructuras de red tipo árbol de servidores. El interambio de información entre el servidor y los drivers se realiza utilizando el protocolo INDI.
+  
+  \item \textbf{Cliente:} Es un programa que permite conectar con uno o más servidores y su función principal e hacer de interfaz con el usuario. Para ello conecta (usualmente a través de la red) con el servidor e intercambia información sobre los dispositivos utilizando el protocolo INDI (FIGURA \ref{fig:indi_server} ). Es interesante recalcar que los clientes pueden ser de cualquier estilo: desde programas con interfaz de usuario avanzadas, hasta programas simples en línea de comandos scripts completamente automáticos que controlen o monitoricen los dispositivos.
+\end{itemize}
+
+
+\subsection{Abstracción de los Dispositivos}
+
+Para conseguir abstraer los dispositivos y que puedan ser controlados o monitorizados por los clientes el protocolo INDI define las llamadas \textit{propiedades}. Las propiedades tienen ciertas características como por ejemplo:
+
+\begin{itemize}
+  \item \textbf{Permiso:} Las propiedades tienen uno de 3 posibles permisos:
+    \begin{itemize}
+     \item \textbf{Lectura y escritura (R/W):} La propiedad puede ser leida y modificada.
+     \item \textbf{Solo lectura (RO)}
+     \item \textbf{Solo escritura (WO)}
+    \end{itemize}
+
+  \item \textbf{Estado:} Las propiedades tienen uno de los siguientes 4 posibles estados:
+    \begin{itemize}
+     \item \textbf{Ok:} Estado correcto
+     \item \textbf{Idle:} Estado indefinido (normalmente la propiedad aun no ha sido usada)
+     \item \textbf{Busy:} Está ocupada (probablemente cambiando de valor)
+     \item \textbf{Alert:} Ha ocurrido algún problema con la propiedad.
+    \end{itemize}
+\end{itemize}
+
+\bigskip
+Al margen de esas características, hay que mencionar que las propiedades son un conjunto de usualmente uno o más elementos distintos. Es decir, una única propiedad puede agregar varios valores distintos (normalmente relacionados).
+
+Existen 5 tipos de propiedades distintas:
+
+\begin{itemize}
+ \item \textbf{Textuales:} Permiten manejar información textual (cadenas de caracteres).
+ 
+ \item \textbf{Numéricas:} Permiten manejar información numérica. Estas propiedades permiten espeificar los rangos de valores válidos así como el formato de visualización del número (entero, flotante, flotante exponencial o sexagesimal).
+ 
+ \item \textbf{Luces:} Permiten manejar ``señales'' o luces que tienen uno de los siguientes cuatro posibles valores:
+   \begin{itemize}
+     \item \textbf{Ok}
+     \item \textbf{Idle}
+     \item \textbf{Busy}
+     \item \textbf{Alert}
+   \end{itemize}
+
+
+ \item \textbf{Switch:} Permiten manejar valores entre una lista de posibles alternativas. Permiten especificar la regla de selección de cada una de las alternativas:
+   \begin{itemize}
+     \item \textbf{Una de muchas:} De todas las alternativas, una y solo una debe estar elegida.
+     \item \textbf{Como mucho una:} De todas las alternativas se puede elegir una o ninguna.
+     \item \textbf{Cualesquiera de muchas:} De todas las alternativas se pueden seleccionar cualquier numero de ella (desde ninguna a todas).
+
+   \end{itemize}
+ \item \textbf{BLOB:} Permite manejar valores binarios (como por ejemplo datos de imagen en una cámara).
+
+\end{itemize}
+
+
+
+\subsection{Ejemplo de Abstracción de un Dispositivo}
+
+Para comprender mejor el mecanismo de abstracción que aplica INDI, vamos a realizar un ejemplo sencillo de como el programador de un driver abstrae un dispositivo. Supongamos que se trata de una cámara sencilla. La especificación de la cámara dice que su funcionamiento es muy simple: Solo hace falta comunicarle por el puerto serie un comando que incluye el tiempo de exposición de la misma. Una vez mandado ese comando la cámara tomará la fotografía y devolverá los datos de la fotografía en bruto, como un array de valores numéricos (a mayor valor, mayor intensidad luminosa del pixel).
+
+\bigskip
+Por tanto, para ofrecer la funcionalidad al cliente INDI, el driver define las siguientes propiedades:
+
+\begin{itemize}
+  \item \texttt{Nombre del driver:} Tipo texto, \texttt{RO}. Contendrá el nombre del driver y dispositivo. No cambiará nunca.
+  \item \texttt{Tiempo de Exposición:} Tipo numérico, \texttt{R/W}, entre \texttt{0} y \texttt{3600} (segundos). Por defecto \texttt{0}.
+  \item \texttt{Imagen:} Tipo BLOB, \texttt{RO}. Contendrá la información binaria de la imagen. En este ejemplo, será una imagen tipo \texttt{PNG}.
+\end{itemize}
+
+\bigskip
+El driver, además de definir esas propiedades tendrá el siguiente comportamiento general:
+
+\begin{itemize}
+ \item Cuando conecte un cliente mandará la información de las tres propiedades.
+ \item Quedará a la espera de que cambie el \texttt{tiempo de exposición}.
+ \item Cuando el cliente mande un \texttt{tiempo de exposición} nuevo, mandará el comando apropiado a la cámara para que haga la captura de la imagen y esperará a recibir los datos binarios en bruto de la misma.
+ \item Una vez recibidos dichos datos binarios los transformará a formato  \texttt{PNG}.
+ \item Mandará al cliente nuevos valores para las propiedades de \texttt{tiempo de exposición} (\texttt{0}, para indicar que ya ha acabado la exposición) e \texttt{imagen} (con los datos binarios, el \texttt{PNG}).
+\end{itemize}
+
 \subsection{INDI for Java}
 
 La biblioteca \textbf{INDI} está escrita en lenguaje \textbf{C}, pero existe una implementación realizada en Java y que se encuentra en desarrollo. En la página oficial de \textbf{INDI} \url{http://indilib.org/develop/indiforjava.html} podemos encontrar toda la información sobre nuevas versiónes y la documentación para poder utilizarla. La principal ventaja de poder usar Java es que podemos implementar drivers y clientes con la potencia de un lenguaje Orientado a Objetos y combinarlo con otras tecnologías como los dispositivos móviles basados en la plataforma \textbf{Android}
@@ -215,7 +400,7 @@ Paralelamente a la expansión de los \textbf{dispositivos móviles}, se han crea
 \end{itemize}
 
 \bigskip
-Actualmente \textbf{Android} y \textbf{iOS} copan el 96.3\% del mercado\footnote{Fuente:http://www.idc.com/getdoc.jsp?containerId=prUS25450615.} . Por lo que nos centraremos principalmente en estos S.O.\footnote{Sistema Operativo.} y los \textbf{dispositivos móviles} compatibles con ellos.
+Actualmente \textbf{Android} y \textbf{iOS} copan el 96.3\% del mercado\footnote{Fuente:http://www.idc.com/getdoc.jsp?containerId=prUS25450615.} . Por lo que nos centraremos principalmente en estos sistemas operativos (S.O.) y los \textbf{dispositivos móviles} compatibles con ellos.
 
 \subsection{iOS}
 
