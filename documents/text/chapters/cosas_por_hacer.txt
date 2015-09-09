@@ -1,0 +1,8 @@
+- pruebas
+- manual del desarrollador
+- revisar indice diseño e implementación
+- conclusiones
+- añadir difusión
+- añadir manual
+- bibliografía y revisón
+- diagrama de actividades

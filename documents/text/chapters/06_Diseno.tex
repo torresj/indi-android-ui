@@ -1,120 +1,198 @@
 \chapter{Diseño}
 
-\section{Diseño general del portal}
-
-Para describir el diseño que se va a seguir en la programación del proyecto hay que tener en cuenta que se va a usar {\tt Node.js}, que está basado en el lenguaje de programación {\tt JavaScript} (que es un lenguaje orientado a objetos). Se usará un paradigma de programación orientado a objetos con diversas clases, que en este entorno de programación suelen ser referidos como módulos.
-
-\bigskip
-Existirá un módulo principal de la plataforma ({\tt app.js}) que será la plataforma en si misma, que es el encargado de generar el servidor al que se realizarán las peticiones y visualizar cada unas de las páginas. Existirán también un módulo por cada una de las secciones del portal: \textit{Administración} ({\tt administración.js}), \textit{Docencia} ({\tt docencia.js}), \textit{Gestión e Investigación} ({\tt gestionInvestigacion.js}) y \textit{Normativa Legal} ({\tt normativaLegal.js}. Si comparamos este esquema con el de una aplicación más tradicional, podríamos considerar el módulo ({\tt app.js}) como la clase principal y el resto de módulos como otras clases que tienen como función ser atributos compuestos de esa clase principal.
-
-\bigskip
-Cada uno de estos módulos de las diversas secciones, obtendrá la información para generar las páginas de sus subsecciones desde un archivo de datos \textit{JSON}, organizados de la siguiente forma.
-
-\newpage
-\begin{itemize}
- \item {\tt UGR Transparente} ({\tt app.js}).
- \begin{itemize}
-  \item \textit{Administración} ({\tt administración.js}).
-  \begin{itemize}
-   \item \textit{Personal} ({\tt personal.json}).
-   \item \textit{Información Económica} ({\tt infoEcononica.json}).
-   \item \textit{Servicios} ({\tt servicios.json}).
-  \end{itemize}
-  \item \textit{Docencia}.
-  \begin{itemize}
-   \item \textit{Oferta y Demanda Académica} ({\tt ofertaDemanda.json}).
-   \item \textit{Claustro} ({\tt claustro.json}).
-   \item \textit{Estudiantes} ({\tt estudiantes.json}).
-  \end{itemize}
-  \item \textit{Gestión e Investigación}.
-  \begin{itemize}
-   \item \textit{Misión} ({\tt mision.json}).
-   \item \textit{Plan Estratégico} ({\tt .json}).
-   \item \textit{Gobierno} ({\tt gobierno.json}).
-   \item \textit{Estadísticas} ({\tt estadistica.json}).
-  \end{itemize}
-  \item \textit{Normativa Legal}.
-  \begin{itemize}
-   \item \textit{Normativa Legal} ({\tt normativaLegal.json}).
-  \end{itemize}
- \end{itemize}
-\end{itemize}
-
-Cada vez que un usuario quiere consultar la información de una subsección, el portal de transparencia ({\tt UGR Transparente}) hace una llamada al método de generación de la página de la sección elegida para su subsección determinada; ese método, procesará la plantilla {\tt Jade} para la página pasándole el archivo \textit{JSON} de datos y el resultado final será la página web que será visible en el portal.
-
-\bigskip
-De igual forma a lo mencionado de la aplicación del portal de transparencia, los test unitarios ({\tt test.js}) y el despliegue automático ({\tt flightplan.js}) son otros módulos que ejecutan dichas acciones, el test de cobertura se realiza automáticamente a partir de los test unitarios, la integración continua se realiza en base a la configuración del archivo {\tt .travis.yml}, y finalmente, el provisionamiento sigue las tareas en el archivo de configuración {\tt transparente.yml}. Todos estos módulos son independientes del funcionamiento del módulo principal, y simplemente llamaremos cuando queramos hacer uso de sus funcionalidades.
-
-\newpage
-\section{Diseño de una aplicación con desarrollo colaborativo}
-
-En varias ocasiones se ha indicado que este proyecto parte de un desarrollo colaborativo, esto es debido a que hoy en día es muy difícil concebir un proyecto de software libre fuera de un entorno colaborativo que permita publicar el código libremente en Internet donde sea accesible por cualquier persona, esta filosofía es la que sigue por ejemplo el desarrollo de {\tt Linux} a principio de los años 90, el que se podría considerar como el más grande y relevante proyecto de software libre a nivel mundial. Además de abogar por la transparencia, este sistema de desarrollo hace que se más fácil encontrar errores durante el desarrollo ya que un mayor número de personas tienen acceso total al mismo. También hay que tener en cuenta como en todo proyecto que es imprescindible una herramienta de control de versiones, aún más en uno colaborativo donde es fácil que se produzcan conflictos en los archivos modificados por unos y otros desarrolladores.
-
-\bigskip
-La plataforma de desarrollo colaborativo y la herramienta de control de versiones a usar son {\tt GitHub} y {\tt Git} respectivamente. {\tt GitHub} es una de las plataformas de desarrollo colaborativo más usadas en proyectos libres y usa {\tt Git} como sistema de control de versiones para gestionar los proyectos que se almacenan en la plataforma. Estás son las herramientas que nos van a permitir que nuestro proyecto se convierta en un proyecto que se desarrollo de forma ágil, concretamente se va a seguir una metodología \textit{DevOps}.
-
-\bigskip
-Una metodología de desarrollo \textit{DevOps} consiste inicialmente en no hacer distinción entre el desarrollo del software y la administración del mismo, todo estará comunicado para que sea posible realizar entregas del software de forma frecuente asegurándose de que esas mismas entregas continuas no sea el origen de fallos futuros. La forma de asegurarse de que esos fallos no se producirán es dividir todo el desarrollo en fases que tengan que realizarse secuencialmente, controlando a cada fase que no se produzcan errores en la misma; como una cadena de montaje en la que podemos estar seguro de que el producto que llega al final está en perfectas condiciones, porque en caso contrario hubiera sido retirado durante el proceso.
-
-\bigskip
-En este proyecto, hemos considerado que las fases que nos permitirían asegurarnos que el producto que sale de la cadena de montaje en perfectas condiciones sean los test unitarios, la integración continua y el despliegue automático, todo esto apoyado en un sistema de control de versiones y una plataforma de desarrollo colaborativo abierto. Además, también se usará provisionamiento para facilitar la portabilidad del portal de una infraestructura a otra distinta. 
-
-\section{Diseño de los tests unitarios y test de cobertura}
-
-Para cumplir la parte de testeo de la implementación de la metodología \textit{DevOps}, a partir del desarrollo de este proyecto se pretende seguir un desarrollo guiado por pruebas (en inglés, \textit{Test-Driven Development} o \textit{TDD}). Esto consiste en escribir primero las pruebas que consideremos que la aplicación debe superar y luego desarrollar el código que realice la función que queremos cumplir, pero superando dichas pruebas. 
-
-\bigskip
-Estas pruebas estarán basadas en la ejecución de tests unitarios que estarán diseñados para comprobar de forma de automática que el código escrito cumple con el objetivo determinado; por lo que si una vez ejecutamos todos los tests unitarios no obtenemos que todos han tenido una ejecución exitosa, tenemos que revisar el código escrito para saber por qué fallan.
-
-\bigskip
-Haciendo esto nos aseguraremos que todos las funcionalidades que vayamos añadiendo a la implementación de la aplicación funcionarán correctamente; también nos asegura que si tenemos que hacer grandes modificaciones en el código, siempre que estas modificaciones sigan pasando las pruebas, no deberemos preocuparnos por estropear el funcionamiento de la aplicación.
-
-\bigskip
-El tipo de test unitario que vamos a usar es un test basado en el comportamiento, es decir, la forma de evaluar si un test se supera con éxito o fracaso es mediante la comprobación de la respuesta que da nuestra aplicación ante una solicitud 
-determinada. Ejemplos:
+El proyecto tiene dos partes claramente diferenciadas a la hora de plantear el diseño:
 
 \begin{itemize}
- \item Para comprobar que un archivo con datos de configuración ha sido cargado, el archivo cargado no debe ser nulo.
- \item Para comprobar que en la información cargado se encuentra el nombre de la categoría, la categoría debe tener una propiedad llamada ``nombre''.
- \item Para comprobar que las páginas del portal están accesibles, las respuesta a las solicitudes se espera que tenga el valor 200 (código de respuesta estándar para peticiones correctas en conexiones \textit{HTTP}).
+  \item \textbf{Diseño de clases.}
+  \item \textbf{Diseño de las interfaces de usuario.}
+  \item \textbf{Mecanismo de adición de vistas.}
 \end{itemize}
 
-Pero el diseño de las pruebas no termina con escribir los tests unitarios que consideremos oportunos, también es necesario que esos tests pasen a su vez un test de cobertura. Un test de cobertura comprueba el porcentaje de código desarrollado y/o número de funciones de la aplicación que se están evaluando con los tests unitarios desarrollados, con esto se puede verificar la completitud de los tests unitarios; si todos nuestros tests unitarios se evalúan correctamente, pero solo están cubriendo un 30\% del total de la aplicación, este resultado satisfactorio no nos puede asegurar que la funcionalidad completa de la aplicación se vaya a ejecutar sin problemas.
+Además, hay que tener en cuenta que uno de los objetivos principales es que la aplicación sea facilmente extensible y que permita añadir nuevas interfaces de usuario para propiedades y dispositivos por lo que es parte importante de la fase de diseño, en la que se describirán todos detalladamente.
 
 \bigskip
-Los tests unitarios se van a desarrollar usando {\tt Should} y {\tt Supertest}, ambos módulos de {\tt Node.js} para evaluar comportamientos en las peticiones. Estos tests unitarios a su vez van a ser evaluados por {\tt Mocha}, un framework de {\tt JavaScript} para testeo que se ejecuta tanto en aplicaciones {\tt Node.js} como en navegadores web. Por último, todo esto pasará por las pruebas de cobertura de código de {\tt Istanbul}, que generará un informa detallado especificando la cantidad de código y el número de funciones que están cubiertas y también los que no.
+\section{Diseño de clases}
 
-\section{Diseño de la integración continua}
-
-La integración continua (en inglés, \textit{continuous integration} o \textit{CI}) consiste en comprobar cada vez que hacemos cambios en el código de la aplicación esto no genere problemas en su ejecución, ya que el cambio del comportamiento en una simple función puede cambiar en gran parte el comportamiento de la aplicación entera, y si otra función requiere del resultado de esta última, las consecuencias pueden ser desastrosas. Teniendo en cuenta que vamos a trabajar en un entorno de desarrollo colaborativo, es todavía más necesario que se asegure la integridad de la aplicación frente a los cambios.
+En todo proyecto de software es muy importante diseñar correctamente las clases antes de comenzar la fase de implementación. Un mal diseño puede provocar retrasos en la fase de implementación, incluso obligando a retroceder y rediseñarlas.
 
 \bigskip
-Para que esto se pueda realizar, con cada cambios se activará automáticamente un proceso que verificará mediante la ejecución de los tests unitarios escritos que los cambios realizados no producen errores en la aplicación. Al igual que pasaba con los tests unitarios, la integración continua es una medida que nos permite incrementar la calidad del software producido porque cuanto más a menudo se hagan estas comprobaciones, mayor será la facilidad para detectar fallos en el propio software.
+Podemos dividir el diseño en cuatro bloques:
 
-\bigskip
-Realizaremos la integración continua a través de {\tt Travis CI}, que es un sistema distribuido de integración continua libre que está integrado con {\tt GitHub}. Este sistema además tiene como ventajas el soporte para numerosos lenguajes y la posibilidad de ejecutar las pruebas en distintas versiones del propio lenguaje, por lo que fácilmente podríamos probar nuestro desarrollo con diferentes configuraciones sin tener que realizar cambios en nuestro sistema local.
-
-\bigskip
-El procedimiento para realizar la integración continua consistirá en configurar el repositorio del proyecto en {\tt GitHub} para que cada vez se realice un cambio en los archivos del repositorio, este iniciará un proceso por el cual se creará un \textit{build} automático en un servidor virtual de {\tt Travis CI} que se ha creado con tal finalidad y se desplegará en él la última versión con los cambios que acabamos de realizar, para acto seguido ejecutar las pruebas que hayamos desarrollado y generar un informe sobre los resultados de las pruebas para cada una de las configuraciones que hayamos definido para la integración continua. Estos informes son almacenados en el propio sitio de {\tt Travis}, recibiendo un aviso por correo en el caso de que las pruebas no hayan finalizado exitosamente en alguna de las configuraciones.
-
-\section{Diseño del despliegue automático}
-
-Una vez que tenemos la seguridad de que toda la aplicación funciona correctamente, solo nos queda desplegarla en nuestro servidor de producción; además, vamos a automatizar las tareas que deberíamos realizar manualmente para evitar posibles errores. En esto consiste el despliegue automático, hacer efectivos los cambios en nuestro software de nuestro software en una o varias plataformas objetivo sin que tengamos que realizar personalmente y paso a paso el proceso necesario para ello, todo es 
-automatizado.
-
-\bigskip
-Antes de pasar a implementar el despliegue automático, hay que pensar que tareas es necesario o queremos que se realicen. Independientemente del tipo de aplicación, como medida preventiva se debe hacer una copia de seguridad del estado actual de la aplicación desplegada en el servidor. La ejecución del portal depende de que el servidor creado por {\tt Express} esté en ejecución, por lo que antes de desplegar la nueva versión, se debería detener la ejecución de la versión anterior. Con todo esto hecho solo nos quedaría obtener los propios cambios realizamos, comprobar que todas las dependencias se siguen cumpliendo y establecer los parámetros para que el servidor sea accesible desde Internet; para finalizar la tarea, se iniciaría la ejecución de la aplicación.
-
-\bigskip
-Todas las tareas descritas, queremos que sean ejecutadas de forma secuencial una tras otra, de forma automática y necesitar la interacción con el usuario. Para cumplir esto usaremos {\tt Flightplan}, un módulo de {\tt Node.js} que nos permite coordinar de forma automática el despliegue de aplicaciones con tareas de administración del sistema.
+\begin{itemize}
+  \item \textbf{Diseño de las actividades de Android.}
+  \item \textbf{Diseño del cliente INDI.}
+  \item \textbf{Diseño de las clases manejadoras de propiedades.}
+  \item \textbf{Diseño de las clases manejadoras de dispositivos.}
+\end{itemize}
 
 \newpage
-\section{Diseño del provisionamiento}
+\subsection{Diseño de las actividades de Android}
 
-Con toda la aplicación ya realizada, para su instalación inicial en un plataforma determinada primero tenemos que provisionarla con todos los recursos software necesarios. Encontraremos una mayor cantidad de referencias a este procedimiento por su término en ingles, \textit{software provisioning}, ya que el termino en español es una traducción literal que salvo por el acompañamiento del termino \textit{``software''}, puede referirse a abastecimientos de recursos necesarios en general no necesariamente relacionado con el campo de la informática.
+Las actividades en android son el cuerpo principal de las aplicaciónes. Son ejecutadas en la hebra principal del sistema y gestionan la interfaz principal. Se pueden tener tantas actividades como se desee. En nuestro caso tenemos dos actividades:
+
+
+\begin{itemize}
+  \item \textbf{Front activity}
+  \item \textbf{Main activity}
+\end{itemize}
+
+\subsubsection{Front activity}
+
+Esta actividad inicia la aplicación, mostrando una pantalla de inicio con la información como portada. Una vez lanzada la aplicación esta actividad no volvera a ejecutarse a no ser que el sistema cierre la aplicación o que lo haga el usuario explicitamente. Como podemos ver en el diagrama de la figura \ref{fig:diag_front}, la actividad solo tiene una clase que hereda de \textit{AppCompatActivity}. Esta clase pertenece a la biblioteca de compatibilidad de \textbf{android}. Además, esta actividad tiene un objeto de la clase \textit{UpdateProgress}. Esta clase sirve para ejecutar código en una hebra separada en la que controlar el progreso.
 
 \bigskip
-Entre el software básico necesario hay que considerar para instalar la propia plataforma del desarrollo de la aplicación ({\tt Node.js}) y la herramienta de control de versiones ({\tt Git}). Con esto instalado, se clona el repositorio en {\tt GitHub} del proyecto en un directorio local, y una vez instalada las dependencias de la aplicación y establecidos los parámetros de acceso, se arrancará el servidor para que el portal esté funcionando.
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/front_diag.png}
+  \caption{Diagrama de clases de la actividad front}
+  \label{fig:diag_front}
+  \end{center}
+\end{figure}
+
+
+\subsubsection{Main activity}
+
+La actividad principal es el núcleo de la aplicación. Esta clase es la más importante ya que su ciclo de vida condiciona el ciclo de vida de la aplicación. Es por ello que esta clase es la más compleja. En la figura \ref{fig:diag_main_activity} podemos ver el diagrama de clases. Las clases que no contienen ninguna especificación pertenecen a \textbf{Android} y simplemente se añaden para indicar las relaciones que las clases implementadas.
 
 \bigskip
-Todas estas tareas se harán de forma automática, para ello usaremos {\tt Ansible}, una aplicación de software libre que nos permitirá configurar y administrar los ordenadores que indiquemos en la lista de hosts objetivo. Su funcionamiento básicamente se basa en conectarse al ordenador a configurar mediante una conexión \textit{SSH} (por lo que deberemos indicarle con el usuario que tiene que realizarse la conexión) e irá ejecutando secuencialmente cada unas de las tareas del archivo \textit{YAML} de su archivo de configuración (al que se hace referencia como \textit{playbook}).
+Dado que esta clase es la responsable de la visualización de los distintos menús, necesitamos declarar objetos de las clases que representan cada uno de los elementos visuales principales, tales como \textit{NavigationView} o \textit{TabLayout}.
+
+\bigskip
+Por otro lado, la actividad implementa una serie de escuchadores que le permiten capturar los eventos disparados por los distintos botones de la interfaz de usuario para realizar las acciones oportunas.
+
+\bigskip
+Además de estas clases, se ha diseñado la clase \textit{Settings} que representa las configuraciones generales de la aplicacion: notificaciones y carpeta por defecto.
+
+\bigskip
+En el diagrama también podemos ver la clase \textit{Connection}. Esta clase representa las conexiones con el servidor y es por ella que se describen en el apartado correspondiente.
+
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/main_activity.png}
+  \caption{Diagrama de clases de la actividad principal}
+  \label{fig:diag_main_activity}
+  \end{center}
+\end{figure}
+
+
+\newpage
+\subsection{Diseño del cliente INDI}
+
+La aplicación se basa en integrar la biblioteca \textbf{``INDI for Java''} para poder crear un cliente que nos permita conectarnos a cualquier servidor. Las conexiones se hacen creando conexiones tcp/ip a través de la red. \textbf{Android} establece unas restricciones muy fuertes respecto a la apertura y cierre de \textit{sockets} de red. Dado que la aruitectura del sistema esta basada en una única hebra principal que gestiona la interfaz de usuario, si iniciamos algún proceso que pueda bloquear dicha hebra, bloquearíamos todo el sistema. Por ello cualquier proceso de comunicación debe ejecutarse en una hebra secundaría. Además solo se pueden ejecutar acciones sobre la interfaz en la hebra principal.
+
+\bigskip
+Con estas restricciones, el primer paso necesario es extraer todo el código relativo a las conexiones a una hebra por conexión. Para ello se ha diseñado la clase \textit{Connection}. El objetivo principal de esta clase es lanzar en una hebra la apertura de la conexión y el intercambio de información con el servidor. Pero para poder utilizar esa información y mostrarla en pantalla necesitamos ejecutar en la hebra principal dichas acciones. 
+
+\bigskip
+\textbf{Android} nos facilita una clase para resolver este problema, aparentemente sin solución. La clase \textit{AsyncTask} tiene la peculiaridad de permtir ejecutar código en una hebra a parte y a la vez enviar información a la hebra principal para gestionarla adecuadamente. Por ello la clase \textit{Connection} lanza una hebra pero almacena en sus atributos el resultado de la consexión al servidor, permitiendo a la actividad principal procesar esos datos y mostrarlos adecuadamente. La actividad principal tendrá tantos objetos \textit{Connection} como conexiones se hayan añadido en la interfaz de usuario. Cada objeto \textit{Connection} creará una cliente INDI que le enviará todos los dispositivos y atributos que tenga y le irá informando de cualquier cambio para que estos se reflejen en la interfaz de usuario. Todas estas hebras se lanzan en paralelo, de forma que no relenticen las acciones en la interfaz de usuario.
+
+\bigskip
+Por otra parte, para que todo funcione debemos diseñar una clase cliente \textbf{INDI} para crear la conexión, y escuchar cualquier cambio en propiedades, dispositivos o en la propia conexión. Por ello esta clase implementa las tres interfaces de \textbf{INDI}
+
+\bigskip
+Para facilitar el diseño, también se ha creado una clase \textit{device}. Esta clase se útiliza para procesar las propiedades de un dispositivo \textbf{INDI}. Cada propiedad pertenece a un grupo pero a priori no puedes conocer que grupos hay. Además las propiedades no llegan según un orden por lo que hay que comprobar por cada una a que grupo pertenece, si el grupo existe ya o si hay que crearlo. De la misma forma, cuando se borra una propiedad hay que comprobar si era la última de su grupo, en cuyo caso habrá que borrarlo. La clase \textit{device} facilita estas operaciones, añadiendo una capa de abstracción más para poder obtener las propiedades organizadas y listas para ser mostradas en la interfaz de usuario.
+
+\bigskip
+Finalmente, necesitamos representar la lista de propiedades y dispositivos. Para ello usamos las \textit{listas explandilbes de Android}. Estas listas nos permiten tener dos niveles. En el primer nivel mostramos los grupos y en el segundo los elementos. Internamente tenemos una lista o \textit{adaptador} de propiedades que añadimos a la clase \textit{PropertyArrayAdapter}. Cada objeto de esta clase representa un dispositivo con todas sus propiedades. 
+
+\bigskip
+En este punto cabe destacar que podemos tener propiedades ocultas. Dichas propiedades no deben ser añadidas al adaptador, ya que todos los elementos de este son mostrados. para controlarlo, la clase \textit{Connection} es la encargada de construir los \textit{adaptadores} a partir de la información del objeto de la clase \textit{IndiClient}. Por ello en la clase \textit{Connetion} gestionamos las propiedades que estan ocultas para no agregarlas al \textit{adaptador} que le corresponda.
+
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/indi_diag_clases.png}
+  \caption{Diagrama de clases asociadas a INDI}
+  \label{fig:diag_indi_clases}
+  \end{center}
+\end{figure}
+
+
+\newpage
+\subsection{Diseño de las clases manejadoras de propiedades}
+
+Como se explicó en la introducción, \textbf{INDI} maneja 5 tipos de porpiedades:
+
+
+\begin{itemize}
+  \item \textbf{Text.}
+  \item \textbf{Number.}
+  \item \textbf{Switch.}
+  \item \textbf{Blob.}
+  \item \textbf{Light.}
+\end{itemize}
+
+\bigskip
+Para manejar cada una de estas propiedades se crea una clase que recibirá un objeto \textit{INDIProperty} (del que heredan todos los tipos) y según el tipo informarán de que pueden manejar dicha propiedad y construirán las interfaces de usuario para mostrarla y editarla.
+
+\bigskip
+Gracias a la creación de la interfaz de Java \textit{UIPropertyManager} podemos añadir más manejadores de propiedades. Para ilustrar su uso se han creado dos manejadores más:
+
+\begin{itemize}
+  \item \textbf{Connection.}
+  \item \textbf{Abort.}
+\end{itemize}
+
+\bigskip
+Estas dos propiedades son de tipo \textit{Switch} pero tienen la peculiaridad de que siempre tienen la misma estructura: mismo número de elementos, mismo nombre para cada elemento, etc. Por ello podemos analizar la propiedad recibida y ver si es de esos tipos, informando de que podemos manejarla, y construyendo vistas especificas para esas propiedades (como son de tipo \textit{Switch} su vista por defecto sería la de todas las propiedades de este tipo).
+
+\bigskip
+En la figura \ref{fig:diag_manager_ui} podemos ver el diagrama de clases que ilustra la creación de los manejadores, implementando las interfaces para manejar propiedades y , adicionalment, para manejar la pulsación sobre un objeto \textit{View} de Android.
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/manager_ui.png}
+  \caption{Diagrama de clases asociadas a los manejadores de propiedades}
+  \label{fig:diag_manager_ui}
+  \end{center}
+\end{figure}
+
+\newpage
+\subsection{Diseño de las clases manejadoras de dispositivos}
+
+Finalmente, necesitamos manejar y decidir como mostramos una propiedad y sus elementos. Para implementar esta funcionalidad se ha optado por utilizar los elementos visuales de Android \textit{tabs} que permiten mostrar vistas tabuladas. Con esto, vamos a crear una vista por defecto para cualquier dispositivo. Esta vista es la utilizada en las secciones anteriores: \textit{las listas expandibles de android}.
+
+\bigskip
+En la figura \ref{fig:diag_manager_ui_device} podemos ver que tenemos una clase \textit{DefaultDeviceView} que se mostrará por defecto para todas los dispositivos. Este es el comportamiento normal de la aplicación
+
+\bigskip
+Siguiente con el objetivo principal de facilitar la extensibilidad para añadir nuevas vistas de dispositivo, se ha diseñado una clase abstracta, \textit{DeviceView}, para facilitar la creación de nuevas vistas. Solo tenemos que crear una clase que herede de esta clase abstracta e implementar los métodos. Al ser una clase que hereda de \textit{Fragment}, dentro de ella tenemos libertad para mostrar las propiedades del dispositivo para personalizarlo. Cada nueva vista sería una tabulación más en la vista tabulada.
+
+
+\bigskip
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/device_ui.png}
+  \caption{Diagrama de clases asociadas a los manejadores de dispositivos}
+  \label{fig:diag_manager_ui_device}
+  \end{center}
+\end{figure}
+
+
+\bigskip
+\section{Diseño de las interfaces de usuario}
+
+Las interfaces de usuario deben ser objeto de un cuidadoso diseño dado que estamos construyendo una aplicación móvil, y el exito dependerá en gran medida de una buena interfaz de usuario que sea útil, clara y fácil de usar.
+
+\bigskip
+Para poder abordar mejor el diseño, se han separados las interfaces en los siguientes grupos:
+
+\begin{itemize}
+  \item \textbf{Interfaz principal de la aplicación.}
+  \item \textbf{Interfaz para listar las propiedades.}
+  \item \textbf{Interfaz de propiedad.}
+  \item \textbf{Interfaz de dialogos}
+  \item \textbf{Interfaz del log}
+  \item \textbf{Interfaz de los ajustes}
+\end{itemize}
+
+\bigskip
+\subsection{}
+
+
+\bigskip
+\section{Mecanismo de adición de vistas}
