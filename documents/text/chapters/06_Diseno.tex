@@ -1,4 +1,4 @@
-\chapter{Diseño}
+\chapter{Diseño e Implementación}
 
 El proyecto tiene dos partes claramente diferenciadas a la hora de plantear el diseño:
 
@@ -179,6 +179,58 @@ Siguiente con el objetivo principal de facilitar la extensibilidad para añadir 
 Las interfaces de usuario deben ser objeto de un cuidadoso diseño dado que estamos construyendo una aplicación móvil, y el exito dependerá en gran medida de una buena interfaz de usuario que sea útil, clara y fácil de usar.
 
 \bigskip
+A lo largo del diseño de las interfaces de usuario, se fueron mejorando sucesivamente las distintas vistas desde bocetos en papel (figuras \ref{fig:boceto} y \ref{fig:boceto_2}) hasta primeras versiones ya implementadas en la aplicación (figuras \ref{fig:capturas} y \ref{fig:capturas2}).
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/boceto.jpg}
+        \caption{}
+        \label{fig:boceto}
+    \end{subfigure}
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/boceto2.jpg}
+        \caption{}
+        \label{fig:boceto_2}
+    \end{subfigure}
+    \caption{Bocetos}\label{fig:bocetos}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura.png}
+        \caption{}
+        \label{fig:captura1}
+    \end{subfigure}
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura2.png}
+        \caption{}
+        \label{fig:captura2}
+    \end{subfigure}
+    \caption{Capturas}\label{fig:capturas}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura3.png}
+        \caption{}
+        \label{fig:captura3}
+    \end{subfigure}
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura5.png}
+        \caption{}
+        \label{fig:captura4}
+    \end{subfigure}
+    \caption{Capturas}\label{fig:capturas2}
+\end{figure}
+
+\bigskip
+En cada una de las iteraciones del proceso \textbf{Scrum} se fueron rediseñando y mejorando las interfaces de usuario hasta llega a las vistas finales descritas en los siguientes apartados.
+
+\bigskip
 Para poder abordar mejor el diseño, se han separados las interfaces en los siguientes grupos:
 
 \begin{itemize}
@@ -191,8 +243,96 @@ Para poder abordar mejor el diseño, se han separados las interfaces en los sigu
 \end{itemize}
 
 \bigskip
-\subsection{}
+\subsection{Interfaz principal de la aplicación}
+
+La interfaz principal es la más importante de cara al usuario. Define como se va a organizar toda la información y la navegabilidad dentro de la aplicación. 
+
+\bigskip
+En cada iteración se han añadido nuevas funcionalidades a la aplicación lo cual probocaba tener que definir aspectos de la interfaz de usuario principal. 
+
+\bigskip
+Por otro lado, en un esfuerzo por seguir las directrices de \textbf{Android} y las tendencias actuales en las aplicaciones móviles, se han incorporado los elementos más actuales tales como la barra de navegación lateral con estilo \textit{material desing} o tener vistas tabuladas. En las figuras \ref{fig:capturas3} y \ref{fig:capturas4} podemos ver la interfaz principal de la aplicación.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura6.png}
+        \caption{}
+        \label{fig:captura4}
+    \end{subfigure}
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura7.png}
+        \caption{}
+        \label{fig:captura5}
+    \end{subfigure}
+    \caption{Capturas de la interfaz principal}\label{fig:capturas3}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura8.png}
+        \caption{}
+        \label{fig:captura6}
+    \end{subfigure}
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura9.png}
+        \caption{}
+        \label{fig:captura7}
+    \end{subfigure}
+    \caption{Capturas de la interfaz principal}\label{fig:capturas4}
+\end{figure}
+
+
+\bigskip
+\subsection{Interfaz para listar las propiedades}
+
+Una vez definido el aspecto general de la aplicación y los modos de navegación, el principal objetivo es poder listar las propiedades de los dispositivos. Desde las primeras reunión tuvimos claro que debíamos usar una lista estándar de \textbf{Android}, aunque debíamos abordar un tema importante: la posibilidad de agrupar las propiedades de un mismo grupo.
+Hasta la \textbf{cuarta iteración} no se decidió utilizar la que a la postre sería la solución definitiva, \textbf{las listas expandibles}.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura10.png}
+        \caption{}
+        \label{fig:captura8}
+    \end{subfigure}
+    \begin{subfigure}[]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{../images/captura11.png}
+        \caption{}
+        \label{fig:captura9}
+    \end{subfigure}
+    \caption{Lista de propiedades de un dispositivo}\label{fig:capturas5}
+\end{figure}
+
+En la figura \ref{fig:capturas5} podemos ver las listas con los grupos contraídos y extendidos. Además podemos ver como, en un nuevo esfuerzo por seguir las tendencias más actuales, se ha añadido un \textbf{botón flotante} para mostrar u ocultar las propiedades con visibilidad ``oculta''.
+
+
+\bigskip
+\subsection{Interfaz de propiedad}
+Una vez definida la lista de las propiedades, abordamos el problema de la interfaz para una propiedad. Para ello analizamos todos los elementos en común y todas las diferencias entre los distintos tipos de propiedades. En la figura \ref{fig:captura4} podemos ver la parte común a todas las propiedades:
+
+\begin{itemize}
+  \item \textbf{Nombre de la propiedad.}
+  \item \textbf{Estado de la propiedad.}
+  \item \textbf{Permisos de escritura y/o lectura.}
+  \item \textbf{Visibilidad.}
+\end{itemize}
+
+Todas las propiedades comparten estos cuatro elementos, siendo la parte central de la vista la que se adaptará según el tipo.
+
+\bigskip
+\subsubsection{Text y Number}
+
+De cara a los items de la lista, las propiedades \textit{text y number} son identicas salvo que el valor de los elementos del primero son texto y del segundo son números. Cada elemento se coloca debajo del anterior creando otra lista (una propiedad puede tener uno o más elementos).
+
+En la figura \ref{fig:captruas6} podemos ver ambas vistas en la interfaz de las propiedades. 
 
 
 \bigskip
 \section{Mecanismo de adición de vistas}
+
+\bigskip
+\section{Implementación}
+
+Tras las fases de analisis y diseño, 
