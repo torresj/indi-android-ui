@@ -9,4 +9,4 @@ The project has associated this [blog](http://indiandroidui.wordpress.com/) whic
 
 **This is a free software proyect with [GNU GPL v3 licence](http://www.gnu.org/copyleft/gpl.html)**
 
-![logo](https://raw.githubusercontent.com/torresj/indi-android-ui/master/images/logo/logo.png)
+![logo](https://raw.githubusercontent.com/torresj/indi-android-ui/master/images/cabecera.png)
