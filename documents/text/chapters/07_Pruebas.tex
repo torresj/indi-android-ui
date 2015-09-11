@@ -16,14 +16,14 @@ Podemos agrupar las pruebas de la aplicación en:
 \bigskip
 \section{Pruebas Unitarias}
 
-Las pruebas unitarias son test realizados por el equipo de desarrollo y que que se deben llevar a cabo subdividiendo las aplicaciones al nivel de clases o módulos faciles de probar e independientes unos de otros. Estos test requieren cambiar el código para ser realizados, comprobando que cada modulo realiza la función esperada, que maneja los rangos de datos de entrada, su comportamiento al forzar los errores, etc.
+Las pruebas unitarias son test realizados por el equipo de desarrollo y que que se deben llevar a cabo subdividiendo las aplicaciones al nivel de clases o módulos fáciles de probar e independientes unos de otros. Estos test requieren cambiar el código para ser realizados, comprobando que cada modulo realiza la función esperada, que maneja los rangos de datos de entrada, su comportamiento al forzar los errores, etc.
 
 Para las pruebas unitarias se ha dividido la aplicación en los siguientes módulos:
 
 \begin{itemize}
   \item \textbf{Conexión INDI.}
   \item \textbf{Lista de propiedades}
-  \item \textbf{Manejadores de pròpiedades}
+  \item \textbf{Manejadores de propiedades}
   \item \textbf{Creación de ficheros de configuración}
 \end{itemize}
 
@@ -33,19 +33,19 @@ Para las pruebas unitarias se ha dividido la aplicación en los siguientes módu
 La conexión con un servidor INDI es vital para el desarrollo del resto de la aplicación. Por ello, en la primera iteración del proceso \textbf{Scrum} se marcó como requisito realizar una clase para implementar un cliente INDI. El objetivo era testear que podíamos conectarnos y obtener dispositivos y propiedades.
 
 \bigskip
-Para la consecución de la prueba se ha montado un servidor en una \textit{raspberry Pi} con varios simuladores INDI.
+Para la consecución de la prueba se ha montado un servidor en una \textit{Raspberry Pi} con varios simuladores INDI.
 
 \subsubsection{Objetivo de la prueba}
 
-El objetivo de la prueba es comprobar la correcta conexión a un servidor \textbf{INDI} desde una aplicación \textbf{Android} utilizando las bilbiotecas de \textbf{INDI for Java}.
+El objetivo de la prueba es comprobar la correcta conexión a un servidor \textbf{INDI} desde una aplicación \textbf{Android} utilizando las bibliotecas de \textbf{INDI for Java}.
 
 \subsubsection{Descripción de la prueba}
 
 Se van a comprobar todos los posibles caminos de ejecución para asegurar que el módulo funciona correctamente:
 
 \begin{itemize}
-  \item \textbf{Conexión a un servidor:} Nos conectamos a un servidor para comprobar el exito del proceso.
-  \item \textbf{Desconexión de un servidor:} No desconectamos de un servidor para comprobar el éxito del proceso.
+  \item \textbf{Conexión a un servidor:} Nos conectamos a un servidor para comprobar el éxito del proceso.
+  \item \textbf{Desconexión de un servidor:} Nos desconectamos de un servidor para comprobar el éxito del proceso.
   \item \textbf{Nos conectamos y apagamos el servidor:} Probamos la gestión de errores al caerse el servidor.
   \item \textbf{Conexión a un servidor con datos erróneos:} Comprobamos la conexión cuando los datos son erróneos o el servidor está desconectado o inaccesible.
 \end{itemize}
@@ -68,11 +68,11 @@ El objetivo de la prueba es comprobar que maneja correctamente un conjunto de da
 La prueba consiste en crear una lista de entrada con propiedades y comprobar que la salida es una lista de dos niveles con las propiedades agrupadas según su grupo. Para ellos e han realizado las siguientes comprobaciones:
 
 \begin{itemize}
-  \item \textbf{Lista con distintos tipos de propiedades:} Creamos una lista de propiedades de distintos grupos y comprobamos la construcción de la lsita de dos niveles.
+  \item \textbf{Lista con distintos tipos de propiedades:} Creamos una lista de propiedades de distintos grupos y comprobamos la construcción de la lista de dos niveles.
   \item \textbf{Añadir una propiedad de un grupo nuevo:} Se añade una propiedad nueva perteneciente a un grupo aún sin crear.
   \item \textbf{Añadir una propiedad nueva con grupo ya existente:} Se añade una propiedad con un grupo que ya tiene más elementos.
   \item \textbf{Borramos una propiedad perteneciente a un grupo con más elementos:} Borramos una propiedad y comprobamos que se borra del grupo concreto.
-  \item \textbf{Borramos una propiedad perteneciente a un grupo cuyo único elemento es la propia propiedad:} Borramos una propiedad de un grupo que quedará vacío al borrarla, por loq ue debe desaparecer.   
+  \item \textbf{Borramos una propiedad perteneciente a un grupo cuyo único elemento es la propia propiedad:} Borramos una propiedad de un grupo que quedará vacío al borrarla, por lo que debe desaparecer.   
 \end{itemize}
 
 \subsubsection{Criterio de completitud}
@@ -83,11 +83,11 @@ Las pruebas serán satisfactorias si el módulo gestiona correctamente todos los
 \bigskip
 \subsection{Manejadores de propiedades}
 
-Los manejadores de propiedades deben, además de crear interfaces de usuario, gestionar la edición de cada una de las propiedades, manejando los errores deribados de entradas de datos erróneos.
+Los manejadores de propiedades deben, además de crear interfaces de usuario, gestionar la edición de cada una de las propiedades, manejando los errores derivados de entradas de datos erróneos.
 
 \subsubsection{Objetivo de la prueba}
 
-El objetivo de la prueba es comprobar que las clases de cada una de las propiedades, son capaces de procesar los datos de entrada y gestionar los errores deribados de ellos.
+El objetivo de la prueba es comprobar que las clases de cada una de las propiedades, son capaces de procesar los datos de entrada y gestionar los errores derivados de ellos.
 
 \subsubsection{Descripción de la prueba}
 
@@ -101,7 +101,7 @@ La prueba consiste en realizar una batería de test de entrada para cada una de 
 
 \subsubsection{Criterio de completitud}
 
-Las pruebas serán satisfactorias si el módulo gestiona correctamente todos los casos definidos anteriormente, informando de las distintos errores y gestionandolos correctamente.
+Las pruebas serán satisfactorias si el módulo gestiona correctamente todos los casos definidos anteriormente, informando de las distintos errores y gestionándolos correctamente.
 
 \bigskip
 \subsection{Creación de ficheros de configuración}
@@ -126,7 +126,7 @@ Las pruebas serán satisfactorias si el módulo gestiona correctamente todos los
 \newpage
 \section{Pruebas de integración}
 
-Las pruebas de integración nos permiten comprobar que las combinaciones entre modulos funcionan correctamente. Es habitual comprobar en este tipo de pruebas que los módulos de más bajo nivel se comunican correctamente con las interfaces de usuario verificando que las especificaciones de diseño sean alcanzadas.
+Las pruebas de integración nos permiten comprobar que las combinaciones entre módulos funcionan correctamente. Es habitual comprobar en este tipo de pruebas que los módulos de más bajo nivel se comunican correctamente con las interfaces de usuario verificando que las especificaciones de diseño sean alcanzadas.
 
 Para este proyecto se han realizado las siguientes pruebas:
 
@@ -157,10 +157,10 @@ Para poder comprobar que la interacción entre el módulo que gestiona la conexi
   \item \textbf{Conexión y desconexión con equipos reales.}
 \end{itemize}
 
-Montamos un servidor de pruebas con varios dispositivos simulados y realizamos conexiones y desconexiones comprobando que el servidor está encendido y apagado. Además, teniendo una conxión abierta, apagamos el servidor y/o desconectamos algún dispositivo para ver como el sistema gestiona la situación.
+Montamos un servidor de pruebas con varios dispositivos simulados y realizamos conexiones y desconexiones comprobando que el servidor está encendido y apagado. Además, teniendo una conexión abierta, apagamos el servidor y/o desconectamos algún dispositivo para ver como el sistema gestiona la situación.
 
 \bigskip
-Por último realizamos las mismas comprobaciones pero utilizando un telescopio y una camará.
+Por último realizamos las mismas comprobaciones pero utilizando un telescopio y una cámara.
 
 \subsubsection{Criterio de completitud}
 
@@ -169,7 +169,7 @@ Las pruebas serán satisfactorias siempre y cuando el sistema nunca falle, gesti
 
 \subsection{Interacción con las propiedades}
 
-Una de las pruebas unitarias consistía en comprobar las clases que gestionan las propiedades. El siguiente paso es comproba su integración con las distintas vistas para editaras, su correcta comunicación y la gestión de los datos de entrada.
+Una de las pruebas unitarias consistía en comprobar las clases que gestionan las propiedades. El siguiente paso es comprobar su integración con las distintas vistas para editaras, su correcta comunicación y la gestión de los datos de entrada.
 
 
 \subsubsection{Objetivo de la prueba}
@@ -178,13 +178,14 @@ El objetivo es comprobar que podemos cambiar las propiedades a partir de unos da
 
 \subsubsection{Descripción de la prueba}
 
-Para cada propiedad, selecionaremos la vista de edición, y cambiaremos los paremtros utilizando: datos correctos, dato mal construidos y datos fuera de rango. El sistema debe gestionar los errores para cada una de las propiedades:
+Para cada propiedad, seleccionaremos la vista de edición, y cambiaremos los parámetros utilizando: datos correctos, dato mal construidos y datos fuera de rango. El sistema debe gestionar los errores para cada una de las propiedades:
 
 
 \begin{itemize}
-  \item \textbf{Text.:} Editaremos una propeidad text y comprobaremos que se realiza el cambio correctamente.
+  \item \textbf{Text.:} Editaremos una propiedad text y comprobaremos que se realiza el cambio correctamente.
   \item \textbf{Number:} Editaremos los elementos de una propiedad \textit{number} con valores correctos, con formato erróneo y fuera de rango.
   \item \textbf{Switch:} Editaremos los elementos de una propiedad \textit{switch} con valores correctos y forzando situaciones que contravengan las reglas de la propiedad, como tener varias opciones activadas cuando solo se permite una, o desactivar todas las opciones cuando tiene que haber al menos una activa.
+  \item \textbf{Blobs:} En los blobs necesitamos comprobar la recepción de archivos, que podemos guardarlo y mostrarlo.
 \end{itemize}
 
 
@@ -203,7 +204,7 @@ El objetivo es comprobar que podemos crear,borrar y editar conexiones, y que est
 
 \subsubsection{Descripción de la prueba}
 
-Para poder comprobar la gestión de las conexiónes, primero realizamos las siguientes comprobaciones básicas:
+Para poder comprobar la gestión de las conexiones, primero realizamos las siguientes comprobaciones básicas:
 
 
 \begin{itemize}
@@ -238,13 +239,13 @@ Las opciones de configuración de las notificaciones son:
 
 \begin{itemize}
   \item \textbf{Notificaciones del sistema:} Activa la recepción de avisos cuando la aplicación está en segundo plano.
-  \item \textbf{Notificaciones mediante dialogos emergentes:} Activa las notificaciones mediante un dialogo informando del acontecimiento ocurrido.
+  \item \textbf{Notificaciones mediante diálogos emergentes:} Activa las notificaciones mediante un dialogo informando del acontecimiento ocurrido.
   \item \textbf{Notificaciones por sonido:} Activa la reproducción de un sonido al recibir una notificación.
   \item \textbf{Notificaciones por vibración:} Activa la vibración del dispositivo móvil al recibir una notificación.
 \end{itemize}
 
 \bigskip
-La prueba consiste en activar cada una de ellas y conectarnos a un servidor de pruebas. Cada vez que se pierde la conexión con un servidor se envía una notificación por lo que aprovechamos esta situación para probar cada una de las distintas notificaciones. Ademas estas pruebas las realizamos utilizando dispositivos emulados y dispositivos reales.
+La prueba consiste en activar cada una de ellas y conectarnos a un servidor de pruebas. Cada vez que se pierde la conexión con un servidor se envía una notificación por lo que aprovechamos esta situación para probar cada una de las distintas notificaciones. Además estas pruebas las realizamos utilizando dispositivos emulados y dispositivos reales.
 
 \bigskip
 Por último, comprobamos que el estado de las opciones es permanente aunque cerremos la aplicación, es decir, cada vez que modificamos cualquier opción, esta queda guardada en la configuración.
@@ -256,3 +257,25 @@ Las pruebas serán satisfactorias siempre y cuando el sistema nunca falle al rec
 
 \newpage
 \section{Pruebas de sistema}
+
+Las pruebas de sistema son una serie de test que deben hacer un equipo ajeno al proyecto. En este caso las pruebas han sido llevadas a cabo por el \tutor, como director del proyecto y como cliente.
+
+\bigskip
+El objetivo de estas pruebas es comprobar los casos de uso, requerimientos y objetivos establecidos en la fase de diseño. Entre las pruebas que se han realizado destacamos las siguientes:
+
+
+\begin{itemize}
+  \item \textbf{Funcionalidad.}
+  \item \textbf{Usabilidad.}
+  \item \textbf{Recuperación a errores.}
+\end{itemize}
+
+\bigskip
+Las pruebas de sistema se han llevado a cabo al finalizar cada una de las iteraciones del proceso iterativo de desarrollo del software para comprobar la satisfacción de los objetivos y la necesidad de plantear una nueva lista de requerimientos y una nueva iteración.
+
+\section{Pruebas de aceptación}
+
+Una vez que la aplicación a pasado todas las pruebas anteriores, consideramos superado un primer corte y vemos razonable designar a un grupo de usuarios ajenos al proyecto para realizar un uso normal del software y poder extraer conclusiones sobre su aceptación en un grupo reducido de personas.
+
+\bigskip
+Los usuarios potenciales de este tipo de aplicación son los aficionados a la astronomía, por lo que se decidió utilizar la página oficial de \textbf{INDI} para ofrecer la versión \textit{Beta} de la aplicación. Los usuarios pueden probar el software y utilizar el foro para expresar sus opiniones y comentarios, ayudando al equipo de desarrollo a conocer el grado de aceptación y la necesidad de realizar cualquier tipo de cambio previo a su publicación final. A este tipo de usuarios se les conoce como \textit{betatester}. En estos momentos hay varios usuarios probando la aplicación y mandando informes de errores.
