@@ -1,5 +1,7 @@
 \chapter{Análisis}
 
+En este capítulo vamos a desgranar el proceso de análisis del proyecto, describiendo cada una de las partes que se han realizado.
+
 \section{Análisis de requisitos}
 
 El primer paso en el análisis de un desarrollo software es identificar los requisitos funcionales y no funcionales. Estos requisitos son los que deberá garantizar el producto final y son generados a partir de las entrevistas con el cliente y los objetivos marcados para el software.
@@ -55,10 +57,10 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
   \item \textbf{Ac-1.} Usuario.
   \begin{itemize}
    \item Descripción: Persona que utilizará la aplicación.
-   \item Características: Es el usuario estándar de una aplicación.
+   \item Características: Es el usuario estándar de la aplicación.
    \item Relaciones: Ninguna.
    \item Atributos: Ninguno.
-   \item Comentarios: El usuario no tiene ningún conocimiento previo.
+   \item Comentarios: El usuario no tiene ningún conocimiento previo sobre la aplicación aunque probablemente pueda estar familiarizado con INDI y la astronomía
   \end{itemize}
 \end{itemize}
 
@@ -67,15 +69,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
 \begin{itemize}
   \item \textbf{CU-1.} Añadir una conexión.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición:
-    \item Postcondición: La nueva conexión será añadida a la lista y guardada.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Añadir una nueva conexión.
-    \item Resumen: El usuario rellenará una serie de campos y marcará unas opciones para añadir una nueva conexión a la lista.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:}
+    \item \textbf{Postcondición:} La nueva conexión será añadida a la lista y guardada.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Añadir una nueva conexión.
+    \item \textbf{Resumen:} El usuario rellenará una serie de campos y marcará unas opciones para añadir una nueva conexión a la lista.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -124,15 +126,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-2.} Editar una conexión.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: La conexión debe existir y estar en estado ``desconectada''.
-    \item Postcondición: La conexión sera editada y guardada.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar una conexión existente.
-    \item Resumen: El usuario rellenará una serie de campos y marcará unas opciones para editar la conexión.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} La conexión debe existir y estar en estado ``desconectada''.
+    \item \textbf{Postcondición:} La conexión sera editada y guardada.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar una conexión existente.
+    \item \textbf{Resumen:} El usuario rellenará una serie de campos y marcará unas opciones para editar la conexión.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -197,15 +199,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
      \item \textbf{CU-3.} Borrar conexiones.
   \begin{itemize}
-    \item Actores: Usuario.
+    \item \textbf{Actores:} Usuario.
     \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: Las conexiones deben existir.
-    \item Postcondición: Las conexiones serán borradas.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Borrar conexiones.
-    \item Resumen: El usuario seleccionará de entre las conexiones disponibles, una selección para que sean borradas.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} Las conexiones deben existir.
+    \item \textbf{Postcondición:} Las conexiones serán borradas.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Borrar conexiones.
+    \item \textbf{Resumen:} El usuario seleccionará de entre las conexiones disponibles, una selección para que sean borradas.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -268,15 +270,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-4.} Editar los ajustes.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Opcional, esencial.
-    \item Referencias:
-    \item Precondición:
-    \item Postcondición: Los ajustes serán guardados.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar los ajustes.
-    \item Resumen: El usuario establecerá las distintas configuraciones.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Opcional, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:}
+    \item \textbf{Postcondición:} Los ajustes serán guardados.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar los ajustes.
+    \item \textbf{Resumen:} El usuario establecerá las distintas configuraciones.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -339,15 +341,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-5.} Conectarse a un servidor.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: La conexión debe haber sido añadida previamente. La conexión debe estar desconectada.
-    \item Postcondición: Se añaden los dispositivos de la conexión a la lista (si los hubiese).
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Conectarse a un servidor.
-    \item Resumen: El usuario se conectará a un servidor.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} La conexión debe haber sido añadida previamente. La conexión debe estar desconectada.
+    \item \textbf{Postcondición:} Se añaden los dispositivos de la conexión a la lista (si los hubiese).
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Conectarse a un servidor.
+    \item \textbf{Resumen:} El usuario se conectará a un servidor.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -419,15 +421,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-6.} Desconectarse de un servidor.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: La conexión debe haber sido añadida previamente. La conexión debe estar conectada.
-    \item Postcondición: Se borran de la lista los dispositivos (si los hubiera).
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Desconectarse de un servidor.
-    \item Resumen: El usuario se desconecta de un servidor.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} La conexión debe haber sido añadida previamente. La conexión debe estar conectada.
+    \item \textbf{Postcondición:} Se borran de la lista los dispositivos (si los hubiera).
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Desconectarse de un servidor.
+    \item \textbf{Resumen:} El usuario se desconecta de un servidor.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -477,15 +479,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-7.} Salir de la aplicación.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Secundario, esencial.
-    \item Referencias:
-    \item Precondición: La aplicación debe estar iniciada.
-    \item Postcondición: Se cierran todas las conexiones, hebras y procesos liberando todos los recursos de la aplicación.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Salir de la aplicación.
-    \item Resumen: El usuario cierra la aplicación explícitamente.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Secundario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} La aplicación debe estar iniciada.
+    \item \textbf{Postcondición:} Se cierran todas las conexiones, hebras y procesos liberando todos los recursos de la aplicación.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Salir de la aplicación.
+    \item \textbf{Resumen:} El usuario cierra la aplicación explícitamente.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -534,15 +536,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-8.} Mostrar dispositivo.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: La conexión debe haber sido añadida previamente. La conexión debe estar conectada.
-    \item Postcondición: Se listan todas las propiedades del dispositivo. Cualquier cambio en las propiedades será mostrado en la lista en tiempo real.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Mostrar las propiedades de un dispositivo.
-    \item Resumen: El usuario selecciona un dispositivo para mostrar la lista de sus propiedades.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} La conexión debe haber sido añadida previamente. La conexión debe estar conectada.
+    \item \textbf{Postcondición:} Se listan todas las propiedades del dispositivo. Cualquier cambio en las propiedades será mostrado en la lista en tiempo real.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Mostrar las propiedades de un dispositivo.
+    \item \textbf{Resumen:} El usuario selecciona un dispositivo para mostrar la lista de sus propiedades.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -597,15 +599,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-9.} Cambiar vista de dispositivo.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición:
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Cambiar entre las vistas de un dispositivo.
-    \item Resumen: El usuario cambia de vista de un dispositivo entre las disponibles.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:}
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Cambiar entre las vistas de un dispositivo.
+    \item \textbf{Resumen:} El usuario cambia de vista de un dispositivo entre las disponibles.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -639,15 +641,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-10.} Editar propiedad \textit{text}.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: La propiedad es editada y enviada al servidor.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar una propiedad \textit{text}.
-    \item Resumen: El usuario pulsará sobre una propiedad \textit{text} para editarla.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} La propiedad es editada y enviada al servidor.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar una propiedad \textit{text}.
+    \item \textbf{Resumen:} El usuario pulsará sobre una propiedad \textit{text} para editarla.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -716,15 +718,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-11.} Editar propiedad \textit{number}.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: La propiedad es editada y enviada al servidor.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar una propiedad \textit{number}.
-    \item Resumen: El usuario pulsará sobre una propiedad \textit{number} para editarla.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} La propiedad es editada y enviada al servidor.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar una propiedad \textit{number}.
+    \item \textbf{Resumen:} El usuario pulsará sobre una propiedad \textit{number} para editarla.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -799,15 +801,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-12.} Editar propiedad \textit{switch}.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: La propiedad es editada y enviada al servidor.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar una propiedad \textit{switch}.
-    \item Resumen: El usuario pulsará sobre una propiedad \textit{switch} para editarla.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} La propiedad es editada y enviada al servidor.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar una propiedad \textit{switch}.
+    \item \textbf{Resumen:} El usuario pulsará sobre una propiedad \textit{switch} para editarla.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -876,15 +878,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-13.} Editar propiedad \textit{blob}.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: La propiedad es editada y enviada al servidor.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar una propiedad \textit{blob}.
-    \item Resumen: El usuario pulsará sobre una propiedad \textit{blob} para editarla.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} La propiedad es editada y enviada al servidor.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar una propiedad \textit{blob}.
+    \item \textbf{Resumen:} El usuario pulsará sobre una propiedad \textit{blob} para editarla.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -953,15 +955,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-14.} Editar propiedad \textit{connection}.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: La propiedad es editada y enviada al servidor.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar una propiedad \textit{connection}.
-    \item Resumen: El usuario pulsará sobre una propiedad \textit{connection} para editarla.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} La propiedad es editada y enviada al servidor.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar una propiedad \textit{connection}.
+    \item \textbf{Resumen:} El usuario pulsará sobre una propiedad \textit{connection} para editarla.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1014,15 +1016,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-15.} Editar propiedad \textit{abort}.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: La propiedad es editada y enviada al servidor.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Editar una propiedad \textit{abort}.
-    \item Resumen: El usuario pulsará sobre una propiedad \textit{abort} para editarla.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} La propiedad es editada y enviada al servidor.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Editar una propiedad \textit{abort}.
+    \item \textbf{Resumen:} El usuario pulsará sobre una propiedad \textit{abort} para editarla.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1072,15 +1074,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
      \newpage
     \item \textbf{CU-16.} Guardar blob.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8). El dispositivo debe tener una propiedad de tipo \textit{blob}.
-    \item Postcondición: Se guardará en la carpeta de la aplicación un archivo con el \textit{blob}.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Guardar un \textit{blob}.
-    \item Resumen: El usuario guardará un blob que haya recibido.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8). El dispositivo debe tener una propiedad de tipo \textit{blob}.
+    \item \textbf{Postcondición:} Se guardará en la carpeta de la aplicación un archivo con el \textit{blob}.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Guardar un \textit{blob}.
+    \item \textbf{Resumen:} El usuario guardará un blob que haya recibido.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1135,15 +1137,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-17.} Mostrar un blob.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Primario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8). El dispositivo debe tener una propiedad de tipo \textit{blob}.
-    \item Postcondición: Se pasará al sistema operativo \textbf{Android} el archivo para que muestre una lista de posibles aplicaciones instaladas que puedan manejarlo.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Mostrar un \textit{blob}.
-    \item Resumen: El usuario guardará un blob que haya recibido.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Primario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8). El dispositivo debe tener una propiedad de tipo \textit{blob}.
+    \item \textbf{Postcondición:} Se pasará al sistema operativo \textbf{Android} el archivo para que muestre una lista de posibles aplicaciones instaladas que puedan manejarlo.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Mostrar un \textit{blob}.
+    \item \textbf{Resumen:} El usuario guardará un blob que haya recibido.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1199,15 +1201,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
      \item \textbf{CU-18.} Ver el log.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Opcional, esencial.
-    \item Referencias:
-    \item Precondición:
-    \item Postcondición:
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Ver el log.
-    \item Resumen: El usuario podrá ver el log de cada una de las conexiones guardadas.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Opcional, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:}
+    \item \textbf{Postcondición:}
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Ver el log.
+    \item \textbf{Resumen:} El usuario podrá ver el log de cada una de las conexiones guardadas.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1256,15 +1258,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-19.} Ocultar una propiedad.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Secundario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8). La propiedad debe estar visible.
-    \item Postcondición: La propiedad se maraca como oculta.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Ocultar una propiedad.
-    \item Resumen: El usuario ocultará una propiedad visible.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Secundario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8). La propiedad debe estar visible.
+    \item \textbf{Postcondición:} La propiedad se maraca como oculta.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Ocultar una propiedad.
+    \item \textbf{Resumen:} El usuario ocultará una propiedad visible.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1322,15 +1324,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-20.} Mostrar una propiedad.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Secundario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8). La propiedad debe estar ``no visible''. Debe estar activada la opción de ``ver todas las propiedades'' para que las que estén marcadas como ocultas se añadan también a la vista
-    \item Postcondición: La propiedad se maraca como visible.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Mostrar una propiedad.
-    \item Resumen: El usuario marcará una propiedad como visible.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Secundario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8). La propiedad debe estar ``no visible''. Debe estar activada la opción de ``ver todas las propiedades'' para que las que estén marcadas como ocultas se añadan también a la vista
+    \item \textbf{Postcondición:} La propiedad se maraca como visible.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Mostrar una propiedad.
+    \item \textbf{Resumen:} El usuario marcará una propiedad como visible.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1367,15 +1369,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-21.} Activar la visibilidad de todas las propiedades ocultas.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Secundario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: Se muestran todas las propiedades sea cual sea su visibilidad.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Activar la visibilidad de todas las propiedades ocultas.
-    \item Resumen: El usuario activa la visibilidad de todas las propiedades, estén marcadas como ocultas o no.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Secundario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} Se muestran todas las propiedades sea cual sea su visibilidad.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Activar la visibilidad de todas las propiedades ocultas.
+    \item \textbf{Resumen:} El usuario activa la visibilidad de todas las propiedades, estén marcadas como ocultas o no.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1411,15 +1413,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-22.} Desactivar la visibilidad de todas las propiedades ocultas.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Secundario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8).
-    \item Postcondición: Se ocultan todas las propiedades cuyo estado esa ``no visible''.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Desactivar la visibilidad de todas las propiedades ocultas.
-    \item Resumen: El usuario desactiva la visibilidad de todas las propiedades con el estado ``no visible''.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Secundario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8).
+    \item \textbf{Postcondición:} Se ocultan todas las propiedades cuyo estado esa ``no visible''.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Desactivar la visibilidad de todas las propiedades ocultas.
+    \item \textbf{Resumen:} El usuario desactiva la visibilidad de todas las propiedades con el estado ``no visible''.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1456,15 +1458,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-23.} Expandir un grupo.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Secundario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8). El grupo debe estar contraído.
-    \item Postcondición: se expande el grupo seleccionado.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Expandir un grupo.
-    \item Resumen: El usuario Expande uno de los grupos de la lista que esté contraído.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Secundario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8). El grupo debe estar contraído.
+    \item \textbf{Postcondición:} se expande el grupo seleccionado.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Expandir un grupo.
+    \item \textbf{Resumen:} El usuario Expande uno de los grupos de la lista que esté contraído.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1500,15 +1502,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-24.} Contraer un grupo.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: Secundario, esencial.
-    \item Referencias:
-    \item Precondición: El usuario debe haber seleccionado un dispositivo (CU-8). El grupo debe estar expandido.
-    \item Postcondición: se contrae el grupo seleccionado.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Contraer un grupo.
-    \item Resumen: El usuario contrae uno de los grupos de la lista que esté expandido.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} Secundario, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:} El usuario debe haber seleccionado un dispositivo (CU-8). El grupo debe estar expandido.
+    \item \textbf{Postcondición:} se contrae el grupo seleccionado.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Contraer un grupo.
+    \item \textbf{Resumen:} El usuario contrae uno de los grupos de la lista que esté expandido.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1543,15 +1545,15 @@ Un caso de uso es una descripción de los pasos o las actividades que deberán r
     \newpage
     \item \textbf{CU-25.} Abrir la aplicación.
   \begin{itemize}
-    \item Actores: Usuario.
-    \item Tipo: primaria, esencial.
-    \item Referencias:
-    \item Precondición:
-    \item Postcondición: La aplicación queda iniciada. Si alguna conexión tiene activada la opción de ``autoconectar'', se realizará la conexión con el servidor.
-    \item Autor: \autor.
-    \item Versión: 1.0.
-    \item Propósito: Iniciar la aplicación.
-    \item Resumen: El usuario inicia la aplicación.
+    \item \textbf{Actores:} Usuario.
+    \item \textbf{Tipo:} primaria, esencial.
+    \item \textbf{Referencias:}
+    \item \textbf{Precondición:}
+    \item \textbf{Postcondición:} La aplicación queda iniciada. Si alguna conexión tiene activada la opción de ``autoconectar'', se realizará la conexión con el servidor.
+    \item \textbf{Autor:} \autor.
+    \item \textbf{Versión:} 1.0.
+    \item \textbf{Propósito:} Iniciar la aplicación.
+    \item \textbf{Resumen:} El usuario inicia la aplicación.
     \end{itemize}
     \begin{table}[!ht]
       \begin{center}
@@ -1598,5 +1600,18 @@ Los diagramas de casos de uso sirven para representar los relaciones que existen
   \includegraphics[width=1\textwidth]{../images/diagrama_casos_de_uso.png}
   \caption{Diagrama de casos de uso.}
   \label{fig:diag_scrum}
+  \end{center}
+\end{figure}
+
+\newpage
+\section{Storyboard}
+
+A continuación, en la figura \ref{fig:storyboard} se muestra el storyboard de la aplicación, donde se pueden ver las distintas pantallas por las que puede pasar la aplicación.
+
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=1\textwidth]{../images/storyboard.png}
+  \caption{Storyboard de la aplicación.}
+  \label{fig:storyboard}
   \end{center}
 \end{figure}

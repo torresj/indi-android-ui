@@ -435,7 +435,7 @@ public class UIAbortPropertyManager implements UIPropertyManager,View.OnClickLis
 \end{lstlisting}
 
 \bigskip
-Una vez que tenemos la clase creada debemos diseñar la interfaz de usuario en un archivo \textit{XML} como el del archivo del fragmento de código \ref{lst:xml_item_view} que representa la vista de elemento de lista de la propiedad \textit{Connection}. Además de este, debemos crear otra vista para mostrar en el diálogo de edición de propiedades (fragmento de código \ref{}). No hay ningún tipo de restricción para estas vistas. El desarrollador es libre de poner lo que necesite en ambas interfaces de usuario.
+Una vez que tenemos la clase creada debemos diseñar la interfaz de usuario en un archivo \textit{XML} como el del archivo del fragmento de código \ref{lst:xml_item_view} que representa la vista de elemento de lista de la propiedad \textit{Connection}. Además de este, debemos crear otra vista para mostrar en el diálogo de edición de propiedades (fragmento de código \ref{lst:xml_edit_view}). No hay ningún tipo de restricción para estas vistas. El desarrollador es libre de poner lo que necesite en ambas interfaces de usuario.
 
 \begin{lstlisting}[language=XML,caption={Vista item XML de una propiedad},label={lst:xml_item_view}]
 <?xml version="1.0" encoding="utf-8"?>
@@ -527,7 +527,7 @@ Una vez que tenemos la clase creada debemos diseñar la interfaz de usuario en u
 
 \end{lstlisting}
 
-\begin{lstlisting}[language=XML,caption={Vista de edición  XML de una propiedad},label={lst:lst:xml_edit_view}]
+\begin{lstlisting}[language=XML,caption={Vista de edición  XML de una propiedad},label={lst:xml_edit_view}]
 
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -707,7 +707,7 @@ En la figura \ref{fig:connect_abort} podemos ver la vista de las propiedades \te
 
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[width=0.3\textwidth]{../images/conncetion_property.png}
+  \includegraphics[width=0.3\textwidth]{../images/connection_property.png}
   \caption{Vista de edición para la propiedad Connection}
   \label{fig:connect_edit_view}
   \end{center}
@@ -717,7 +717,7 @@ En la figura \ref{fig:connect_abort} podemos ver la vista de las propiedades \te
   \begin{center}
   \includegraphics[width=0.3\textwidth]{../images/abort_property.png}
   \caption{Vista de edición para la propiedad Abort}
-  \label{fig:connect_abort}
+  \label{fig:abort_edit_view}
   \end{center}
 \end{figure}
 
@@ -774,14 +774,14 @@ Como podemos ver en el fragmento de código \ref{lst:device_view}, tenemos dos a
   Esta función debe devolver el nombre que se desea que aparezca en la parte superior de la vista (vista tabulada).
 
   \item \texttt{onCreateView}:
-  La clase abstracta hereda de \texttt{Fragment} y por ello esta función debe ser implementada, ya que se llamará cuando se llame a la clase para pintar la interfaz de usuario\cite{ALCA}. En ella deberemos crear la vista y realizar todas las inicializaciones que queramos.
+  La clase abstracta hereda de \texttt{Fragment} y por ello esta función debe ser implementada, ya que se llamará cuando se llame a la clase para pintar la interfaz de usuario \cite{ALCA}. En ella deberemos crear la vista y realizar todas las inicializaciones que queramos.
 
 \end{itemize}
 
 \bigskip
-En el fragmento de código \ref{} podemos ver una clase para mostrar una vista alternativa de una estación meteorológica concreta. Es una vista simple que muestra una imagen de fondo, pero es ilustrativa del proceso que debemos seguir para crear nuevas clases para manejar dispositivos.
+En el fragmento de código \ref{lst:device_meteo_view} podemos ver una clase para mostrar una vista alternativa de una estación meteorológica concreta. Es una vista simple que muestra una imagen de fondo, pero es ilustrativa del proceso que debemos seguir para crear nuevas clases para manejar dispositivos.
 
-\begin{lstlisting}[language=Java,caption={Clase abstracta DeviceView},label={lst:device_view}]
+\begin{lstlisting}[language=Java,caption={Clase DeviceMeteoView},label={lst:device_meteo_view}]
 public class DeviceMeteoView extends DeviceView {
     @Override
     public boolean handlesDevice(Device dev) {
