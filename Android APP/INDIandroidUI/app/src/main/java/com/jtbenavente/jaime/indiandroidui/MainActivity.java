@@ -1,6 +1,8 @@
 package com.jtbenavente.jaime.indiandroidui;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
@@ -32,9 +34,12 @@ import java.util.ArrayList;
 
 
 
-public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener {
+public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener, Demo_dialog.Demo_dialogListener {
 
     private DrawerLayout drawerLayout;
+
+
+
     private NavigationView navigationView;
     private ArrayList<Connection> connections;
     private ViewPagerAdapter adapter;
@@ -80,6 +85,13 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
         readConnections();
 
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        boolean show_demo_dialog = sharedPref.getBoolean("show_demo_dialog",true);
+
+        if(show_demo_dialog){
+            new Demo_dialog().show(getFragmentManager(),"Demo dialog");
+            Connection conn = new Connection("Demo",getResources().getString(R.string.demo_host),7624,true,true,getApplicationContext());
+        }
     }
 
     @Override
@@ -410,5 +422,15 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
             if(!log.exists())
                 log.mkdir();
         }
+    }
+
+    @Override
+    public void onOkButtonClick() {
+
+    }
+
+    @Override
+    public void onCancelButtonClick() {
+
     }
 }

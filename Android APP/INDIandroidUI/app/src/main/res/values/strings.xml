@@ -64,5 +64,8 @@
     <string name="remove_log_text">Do you want to clear log?</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
-    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="demo_host">10.50.0.13</string>
+    <string name="demo_server">Demo Server</string>
+    <string name="demo_text">Do you want to connect to a demo server to test the application?</string>
+    <string name="show_demo_dialog_text">Show at startup</string>
 </resources>
