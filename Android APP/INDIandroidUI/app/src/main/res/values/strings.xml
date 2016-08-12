@@ -64,8 +64,12 @@
     <string name="remove_log_text">Do you want to clear log?</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
-    <string name="demo_host">10.50.0.13</string>
     <string name="demo_server">Demo Server</string>
     <string name="demo_text">Do you want to connect to a demo server to test the application?</string>
     <string name="show_demo_dialog_text">Show at startup</string>
+    <string name="action_demo">Demo</string>
+    <string name="alert_demo_added">The demo server is already on your list</string>
+    <string name="alert_demo">Demo added to server list</string>
+    <string name="alert_demo_edit">Demo server can not be edited</string>
+    <string name="alert_demo_name">Name can not be \"Demo\"</string>
 </resources>

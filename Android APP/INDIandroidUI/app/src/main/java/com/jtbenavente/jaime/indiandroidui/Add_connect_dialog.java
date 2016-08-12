@@ -54,8 +54,13 @@ public class Add_connect_dialog extends DialogFragment {
                         int port=Integer.parseInt(port_edit.getText().toString());
                         boolean autoconnect = autoconnect_switch.isChecked();
                         boolean blobs_enable = blobs_enable_switch.isChecked();
-                        listener.onConnectButtonClick(name,host,port,autoconnect,blobs_enable);
-                        dismiss();
+                        if(name.equals("Demo")){
+                            Alert_dialog alert = Alert_dialog.newInstance(getResources().getString(R.string.alert_demo_name));
+                            alert.show(Add_connect_dialog.this.getFragmentManager(), "AlertDialog");
+                        }else{
+                            listener.onConnectButtonClick(name,host,port,autoconnect,blobs_enable);
+                            dismiss();
+                        }
                     }
                 }
         );

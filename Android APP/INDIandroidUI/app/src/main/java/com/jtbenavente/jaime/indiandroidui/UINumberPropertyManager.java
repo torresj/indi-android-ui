@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UnknownFormatConversionException;
 
 import org.indilib.i4j.Constants;
 import org.indilib.i4j.client.INDIElement;
@@ -160,7 +161,11 @@ public class UINumberPropertyManager implements UIPropertyManager,View.OnClickLi
         String text="";
         for(int i=0;i<list.size();i++){
             INDINumberElement elem=(INDINumberElement)list.get(i);
-            text=text+"<b>"+elem.getLabel()+": </b>"+elem.getValueAsString()+"<br />";
+            try {
+                text = text + "<b>" + elem.getLabel() + ": </b>" + elem.getValueAsString() + "<br />";
+            }catch(UnknownFormatConversionException e){
+                text = text + "<b>" + elem.getLabel() + ": </b>"+ elem.getValue() +"<br />";
+            }
         }
         element.setText(Html.fromHtml(text));
 

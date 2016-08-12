@@ -62,7 +62,11 @@ public class Demo_dialog extends DialogFragment {
                 .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.onCancelButtonClick();
+                        show_demo_dialog = checkbox.isChecked();
+
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("show_demo_dialog",show_demo_dialog);
+                        editor.commit();
                         dismiss();
                     }
                 });
@@ -87,6 +91,5 @@ public class Demo_dialog extends DialogFragment {
 
     public interface Demo_dialogListener {
         void onOkButtonClick();
-        void onCancelButtonClick();
     }
 }

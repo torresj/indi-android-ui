@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
     private NavigationView navigationView;
     private ArrayList<Connection> connections;
+    private Connection demo_conn;
     private ViewPagerAdapter adapter;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
         setupDrawerContent(navigationView);
 
         connections = new ArrayList<>();
+        demo_conn = null;
 
         setToolbar();
 
@@ -83,15 +85,14 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
         createFolder();
 
-        readConnections();
-
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         boolean show_demo_dialog = sharedPref.getBoolean("show_demo_dialog",true);
 
         if(show_demo_dialog){
             new Demo_dialog().show(getFragmentManager(),"Demo dialog");
-            Connection conn = new Connection("Demo",getResources().getString(R.string.demo_host),7624,true,true,getApplicationContext());
         }
+
+        readConnections();
     }
 
     @Override
@@ -170,6 +171,9 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                 tabLayout.setupWithViewPager(viewPager);
                 setTitle(getResources().getString(R.string.app_name));
                 return true;
+            case R.id.action_demo:
+                new Demo_dialog().show(getFragmentManager(),"Demo dialog");
+                return true;
             case R.id.action_log:
                 adapter = new ViewPagerAdapter(getSupportFragmentManager());
                 for(Connection conn:connections){
@@ -230,7 +234,8 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
     @Override
     public void onConnectButtonClick(String name,String host, int port,boolean autoconnect, boolean blobs_enable) {
         Connection conn=new Connection(name,host,port,autoconnect,blobs_enable,this);
-        //conn.connect();
+        if(name.equals("Demo"))
+            demo_conn = conn;
         connections.add(conn);
         saveConnections();
     }
@@ -278,8 +283,13 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                             drawerLayout.closeDrawers();
                             setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
                         } else {
-                            Edit_connect_dialg dialog = Edit_connect_dialg.newInstance(connections.get(menuItem.getGroupId()), menuItem.getGroupId());
-                            dialog.show(getSupportFragmentManager(), "Edit connections");
+                            if(conn != demo_conn) {
+                                Edit_connect_dialg dialog = Edit_connect_dialg.newInstance(connections.get(menuItem.getGroupId()), menuItem.getGroupId());
+                                dialog.show(getSupportFragmentManager(), "Edit connections");
+                            }else{
+                                Alert_dialog alert = Alert_dialog.newInstance(getResources().getString(R.string.alert_demo_edit));
+                                alert.show(getSupportFragmentManager(), "AlertDialog");
+                            }
                         }
                         return true;
                     }
@@ -294,13 +304,17 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
             int index=itemsSeleccionados.get(i);
             boolean end=false;
             for(int j=connections.size()-1;j>=0 && !end;j--){
-                if(index==j){
-                    end=true;
-                    File f=new File(settings.getFolderPath()+"/properties/"+connections.get(j).getHost()+".txt");
-                    if(f.exists()){
+                if(index==j) {
+                    end = true;
+                    File f = new File(settings.getFolderPath() + "/properties/" + connections.get(j).getHost() + ".txt");
+                    if (f.exists()) {
                         f.delete();
                     }
-                    connections.remove(j);
+                    Connection conn = connections.remove(j);
+                    if (conn != null && demo_conn != null) {
+                        if (conn.getName().equals(demo_conn.getName()))
+                            demo_conn = null;
+                    }
                 }
             }
         }
@@ -316,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                                 new InputStreamReader(
                                         new FileInputStream(f)));
                 String text=fin.readLine();
+
                 while(text!=null){
                     String[] data=text.split(",");
                     String name=data[0];
@@ -338,6 +353,8 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                     }
 
                     Connection conn=new Connection(name,host,port,autoconnect,blobs_enable,this);
+                    if(conn.getName().equals("Demo"))
+                        demo_conn = conn;
                     connections.add(conn);
                     text=fin.readLine();
                 }
@@ -426,11 +443,13 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
 
     @Override
     public void onOkButtonClick() {
-
-    }
-
-    @Override
-    public void onCancelButtonClick() {
-
+        if(demo_conn == null) {
+            onConnectButtonClick("Demo", "217.216.18.195", 7624, false, true);
+            Alert_dialog alert = Alert_dialog.newInstance(getResources().getString(R.string.alert_demo));
+            alert.show(getSupportFragmentManager(), "AlertDialog");
+        }else{
+            Alert_dialog alert = Alert_dialog.newInstance(getResources().getString(R.string.alert_demo_added));
+            alert.show(getSupportFragmentManager(), "AlertDialog");
+        }
     }
 }
