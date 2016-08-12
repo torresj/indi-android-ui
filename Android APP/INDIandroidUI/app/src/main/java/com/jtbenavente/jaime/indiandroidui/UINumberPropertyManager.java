@@ -83,8 +83,13 @@ public class UINumberPropertyManager implements UIPropertyManager,View.OnClickLi
 
             INDINumberElement elem = (INDINumberElement)list.get(i);
 
-            label.setText(elem.getLabel()+"\n["+elem.getMinAsString()+","+elem.getMaxAsString()+"]");
-            edit.setText(elem.getValueAsString());
+            try {
+                label.setText(elem.getLabel() + "\n[" + elem.getMinAsString() + "," + elem.getMaxAsString() + "]");
+                edit.setText(elem.getValueAsString());
+            }catch(UnknownFormatConversionException e){
+                label.setText(elem.getLabel() + "\n[" + elem.getMin() + "," + elem.getMax() + "]");
+                edit.setText(elem.getValue().toString());
+            }
 
             table.addView(row);
         }
@@ -164,7 +169,7 @@ public class UINumberPropertyManager implements UIPropertyManager,View.OnClickLi
             try {
                 text = text + "<b>" + elem.getLabel() + ": </b>" + elem.getValueAsString() + "<br />";
             }catch(UnknownFormatConversionException e){
-                text = text + "<b>" + elem.getLabel() + ": </b>"+ elem.getValue() +"<br />";
+                text = text + "<b>" + elem.getLabel() + ": </b>" + elem.getValue()+ "<br />";
             }
         }
         element.setText(Html.fromHtml(text));

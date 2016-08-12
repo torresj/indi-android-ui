@@ -34,12 +34,9 @@ import java.util.ArrayList;
 
 
 
-public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener, Demo_dialog.Demo_dialogListener {
+public class MainActivity extends AppCompatActivity implements Add_connect_dialog.Add_connec_dialogListener, Remove_connect_dialog.Remove_connec_dialogListener,Edit_connect_dialg.Edit_connect_dialogListener,Demo_dialog.Demo_dialogListener {
 
     private DrawerLayout drawerLayout;
-
-
-
     private NavigationView navigationView;
     private ArrayList<Connection> connections;
     private Connection demo_conn;
@@ -93,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
         }
 
         readConnections();
+
     }
 
     @Override
@@ -283,14 +281,14 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                             drawerLayout.closeDrawers();
                             setTitle(conn.getClient().getDevicesNames().get(menuItem.getOrder()));
                         } else {
-                            if(conn != demo_conn) {
-                                Edit_connect_dialg dialog = Edit_connect_dialg.newInstance(connections.get(menuItem.getGroupId()), menuItem.getGroupId());
-                                dialog.show(getSupportFragmentManager(), "Edit connections");
-                            }else{
-                                Alert_dialog alert = Alert_dialog.newInstance(getResources().getString(R.string.alert_demo_edit));
-                                alert.show(getSupportFragmentManager(), "AlertDialog");
-                            }
+                        if(conn != demo_conn) {
+                            Edit_connect_dialg dialog = Edit_connect_dialg.newInstance(connections.get(menuItem.getGroupId()), menuItem.getGroupId());
+                            dialog.show(getSupportFragmentManager(), "Edit connections");
+                        }else{
+                            Alert_dialog alert = Alert_dialog.newInstance(getResources().getString(R.string.alert_demo_edit));
+                            alert.show(getSupportFragmentManager(), "AlertDialog");
                         }
+                    }
                         return true;
                     }
                 }
@@ -304,10 +302,10 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
             int index=itemsSeleccionados.get(i);
             boolean end=false;
             for(int j=connections.size()-1;j>=0 && !end;j--){
-                if(index==j) {
-                    end = true;
-                    File f = new File(settings.getFolderPath() + "/properties/" + connections.get(j).getHost() + ".txt");
-                    if (f.exists()) {
+                if(index==j){
+                    end=true;
+                    File f=new File(settings.getFolderPath()+"/properties/"+connections.get(j).getHost()+".txt");
+                    if(f.exists()){
                         f.delete();
                     }
                     Connection conn = connections.remove(j);
@@ -330,7 +328,6 @@ public class MainActivity extends AppCompatActivity implements Add_connect_dialo
                                 new InputStreamReader(
                                         new FileInputStream(f)));
                 String text=fin.readLine();
-
                 while(text!=null){
                     String[] data=text.split(",");
                     String name=data[0];

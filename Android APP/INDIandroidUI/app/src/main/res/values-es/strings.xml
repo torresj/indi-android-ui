@@ -67,7 +67,7 @@
     <string name="remove_log">Borrar Log</string>
     <string name="remove_log_text">¿Desea borrar el log?</string>
     <string name="yes">si</string>
-    <string name="no">no</string>
+    <string name="no">no</string>>
     <string name="demo_server">Servidor de Demo</string>
     <string name="demo_text">¿Desea conectarse a un servidor de demostración para probar la aplicación?</string>
     <string name="show_demo_dialog_text">Mostrar al iniciar</string>
@@ -76,6 +76,4 @@
     <string name="alert_demo">Servidor Demo añadido a la lista</string>
     <string name="alert_demo_edit">El servidor Demo no puede ser editado</string>
     <string name="alert_demo_name">El nombre no puede ser \"Demo\"</string>
-
-
 </resources>

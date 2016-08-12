@@ -38,7 +38,7 @@ Las actividades en android son el cuerpo principal de las aplicaciones. Son ejec
 
 \subsubsection{Front activity}
 
-Esta actividad inicia la aplicación, mostrando una pantalla de inicio con la información como portada. Una vez lanzada la aplicación esta actividad no volverá a ejecutarse a no ser que el sistema cierre la aplicación o que lo haga el usuario explícitamente. Como podemos ver en el diagrama de la figura \ref{fig:diag_front}, la actividad solo tiene una clase que hereda de \texttt{AppCompatActivity}. Esta clase pertenece a la biblioteca de compatibilidad de \textbf{android}. Además, esta actividad tiene un objeto de la clase \texttt{UpdateProgress}. Esta clase sirve para ejecutar código en una hebra separada en la que controlar el progreso.
+Esta actividad inicia la aplicación, mostrando una pantalla de inicio con la información como portada. Una vez lanzada la aplicación esta actividad no volverá a ejecutarse a no ser que el sistema cierre la aplicación o que lo haga el usuario explícitamente. Como podemos ver en el diagrama de la figura \ref{fig:diag_front}, la actividad solo tiene una clase que hereda de \textit{AppCompatActivity}. Esta clase pertenece a la biblioteca de compatibilidad de \textbf{android}. Además, esta actividad tiene un objeto de la clase \textit{UpdateProgress}. Esta clase sirve para ejecutar código en una hebra separada en la que controlar el progreso.
 
 \bigskip
 \begin{figure}[!ht]
@@ -55,16 +55,16 @@ Esta actividad inicia la aplicación, mostrando una pantalla de inicio con la in
 La actividad principal es el núcleo de la aplicación. Esta clase es la más importante ya que su ciclo de vida condiciona el ciclo de vida de la aplicación. Es por ello que esta clase es la más compleja. En la figura \ref{fig:diag_main_activity} podemos ver el diagrama de clases. Las clases que no contienen ninguna especificación pertenecen a \textbf{Android} y simplemente se añaden para indicar las relaciones que las clases implementadas.
 
 \bigskip
-Dado que esta clase es la responsable de la visualización de los distintos menús, necesitamos declarar objetos de las clases que representan cada uno de los elementos visuales principales, tales como \texttt{NavigationView}\cite{HTMMDND} o \texttt{TabLayout}\cite{ATLWSV}.
+Dado que esta clase es la responsable de la visualización de los distintos menús, necesitamos declarar objetos de las clases que representan cada uno de los elementos visuales principales, tales como \textit{NavigationView}\cite{HTMMDND} o \textit{TabLayout}\cite{ATLWSV}.
 
 \bigskip
 Por otro lado, la actividad implementa una serie de escuchadores que le permiten capturar los eventos disparados por los distintos botones de la interfaz de usuario para realizar las acciones oportunas.
 
 \bigskip
-Además de estas clases, se ha diseñado la clase \texttt{Settings} que representa las configuraciones generales de la aplicación: notificaciones y carpeta por defecto.
+Además de estas clases, se ha diseñado la clase \textit{Settings} que representa las configuraciones generales de la aplicación: notificaciones y carpeta por defecto.
 
 \bigskip
-En el diagrama también podemos ver la clase \texttt{Connection}. Esta clase representa las conexiones con el servidor y es por ella que se describen en el apartado correspondiente.
+En el diagrama también podemos ver la clase \textit{Connection}. Esta clase representa las conexiones con el servidor y es por ella que se describen en el apartado correspondiente.
 
 
 \bigskip
@@ -80,25 +80,25 @@ En el diagrama también podemos ver la clase \texttt{Connection}. Esta clase rep
 \newpage
 \subsection{Diseño del cliente INDI}
 
-La aplicación se basa en integrar la biblioteca \textbf{``INDI for Java''} para poder crear un cliente que nos permita conectarnos a cualquier servidor. Las conexiones se hacen creando conexiones TCP/IP a través de la red. \textbf{Android} establece unas restricciones muy fuertes respecto a la apertura y cierre de \texttt{sockets} de red. Dado que la arquitectura del sistema esta basada en una única hebra principal que gestiona la interfaz de usuario, si iniciamos algún proceso que pueda bloquear dicha hebra, bloquearíamos todo el sistema. Por ello cualquier proceso de comunicación debe ejecutarse en una hebra secundaría. Además solo se pueden ejecutar acciones sobre la interfaz en la hebra principal.
+La aplicación se basa en integrar la biblioteca \textbf{``INDI for Java''} para poder crear un cliente que nos permita conectarnos a cualquier servidor. Las conexiones se hacen creando conexiones TCP/IP a través de la red. \textbf{Android} establece unas restricciones muy fuertes respecto a la apertura y cierre de \textit{sockets} de red. Dado que la arquitectura del sistema esta basada en una única hebra principal que gestiona la interfaz de usuario, si iniciamos algún proceso que pueda bloquear dicha hebra, bloquearíamos todo el sistema. Por ello cualquier proceso de comunicación debe ejecutarse en una hebra secundaría. Además solo se pueden ejecutar acciones sobre la interfaz en la hebra principal.
 
 \bigskip
-Con estas restricciones, el primer paso necesario es extraer todo el código relativo a las conexiones a una hebra por conexión. Para ello se ha diseñado la clase \texttt{Connection}. El objetivo principal de esta clase es lanzar en una hebra la apertura de la conexión y el intercambio de información con el servidor. Pero para poder utilizar esa información y mostrarla en pantalla necesitamos ejecutar en la hebra principal dichas acciones. 
+Con estas restricciones, el primer paso necesario es extraer todo el código relativo a las conexiones a una hebra por conexión. Para ello se ha diseñado la clase \textit{Connection}. El objetivo principal de esta clase es lanzar en una hebra la apertura de la conexión y el intercambio de información con el servidor. Pero para poder utilizar esa información y mostrarla en pantalla necesitamos ejecutar en la hebra principal dichas acciones. 
 
 \bigskip
-\textbf{Android} nos facilita una clase para resolver este problema, aparentemente sin solución. La clase \texttt{AsyncTask} tiene la peculiaridad de permitir ejecutar código en una hebra a parte y a la vez enviar información a la hebra principal para gestionarla adecuadamente. Por ello la clase \texttt{Connection} lanza una hebra pero almacena en sus atributos el resultado de la conexión al servidor, permitiendo a la actividad principal procesar esos datos y mostrarlos adecuadamente. La actividad principal tendrá tantos objetos \texttt{Connection} como conexiones se hayan añadido en la interfaz de usuario. Cada objeto \texttt{Connection} creará una cliente INDI que le enviará todos los dispositivos y atributos que tenga y le irá informando de cualquier cambio para que estos se reflejen en la interfaz de usuario. Todas estas hebras se lanzan en paralelo, de forma que no ralenticen las acciones en la interfaz de usuario.
+\textbf{Android} nos facilita una clase para resolver este problema, aparentemente sin solución. La clase \textit{AsyncTask} tiene la peculiaridad de permitir ejecutar código en una hebra a parte y a la vez enviar información a la hebra principal para gestionarla adecuadamente. Por ello la clase \textit{Connection} lanza una hebra pero almacena en sus atributos el resultado de la conexión al servidor, permitiendo a la actividad principal procesar esos datos y mostrarlos adecuadamente. La actividad principal tendrá tantos objetos \textit{Connection} como conexiones se hayan añadido en la interfaz de usuario. Cada objeto \textit{Connection} creará una cliente INDI que le enviará todos los dispositivos y atributos que tenga y le irá informando de cualquier cambio para que estos se reflejen en la interfaz de usuario. Todas estas hebras se lanzan en paralelo, de forma que no ralenticen las acciones en la interfaz de usuario.
 
 \bigskip
 Por otra parte, para que todo funcione debemos diseñar una clase cliente \textbf{INDI} para crear la conexión, y escuchar cualquier cambio en propiedades, dispositivos o en la propia conexión. Por ello esta clase implementa las tres interfaces de \textbf{INDI}
 
 \bigskip
-Para facilitar el diseño, también se ha creado una clase \texttt{device}. Esta clase se utiliza para procesar las propiedades de un dispositivo \textbf{INDI}. Cada propiedad pertenece a un grupo pero a priori no puedes conocer que grupos hay. Además las propiedades no llegan según un orden por lo que hay que comprobar por cada una a que grupo pertenece, si el grupo existe ya o si hay que crearlo. De la misma forma, cuando se borra una propiedad hay que comprobar si era la última de su grupo, en cuyo caso habrá que borrarlo. La clase \texttt{device} facilita estas operaciones, añadiendo una capa de abstracción más para poder obtener las propiedades organizadas y listas para ser mostradas en la interfaz de usuario.
+Para facilitar el diseño, también se ha creado una clase \textit{device}. Esta clase se utiliza para procesar las propiedades de un dispositivo \textbf{INDI}. Cada propiedad pertenece a un grupo pero a priori no puedes conocer que grupos hay. Además las propiedades no llegan según un orden por lo que hay que comprobar por cada una a que grupo pertenece, si el grupo existe ya o si hay que crearlo. De la misma forma, cuando se borra una propiedad hay que comprobar si era la última de su grupo, en cuyo caso habrá que borrarlo. La clase \textit{device} facilita estas operaciones, añadiendo una capa de abstracción más para poder obtener las propiedades organizadas y listas para ser mostradas en la interfaz de usuario.
 
 \bigskip
-Finalmente, necesitamos representar la lista de propiedades y dispositivos. Para ello usamos las \textit{listas expandibles de Android}\cite{AELVT}. Estas listas nos permiten tener dos niveles. En el primer nivel mostramos los grupos y en el segundo los elementos. Internamente tenemos una lista o \textit{adaptador} de propiedades que añadimos a la clase \texttt{PropertyArrayAdapter}. Cada objeto de esta clase representa un dispositivo con todas sus propiedades. 
+Finalmente, necesitamos representar la lista de propiedades y dispositivos. Para ello usamos las \textit{listas expandibles de Android}\cite{AELVT}. Estas listas nos permiten tener dos niveles. En el primer nivel mostramos los grupos y en el segundo los elementos. Internamente tenemos una lista o \textit{adaptador} de propiedades que añadimos a la clase \textit{PropertyArrayAdapter}. Cada objeto de esta clase representa un dispositivo con todas sus propiedades. 
 
 \bigskip
-En este punto cabe destacar que podemos tener propiedades ocultas. Dichas propiedades no deben ser añadidas al adaptador, ya que todos los elementos de este son mostrados. para controlarlo, la clase \texttt{Connection} es la encargada de construir los \textit{adaptadores} a partir de la información del objeto de la clase \texttt{IndiClient}. Por ello en la clase \texttt{Connection} gestionamos las propiedades que están ocultas para no agregarlas al \textit{adaptador} que le corresponda.
+En este punto cabe destacar que podemos tener propiedades ocultas. Dichas propiedades no deben ser añadidas al adaptador, ya que todos los elementos de este son mostrados. para controlarlo, la clase \textit{Connection} es la encargada de construir los \textit{adaptadores} a partir de la información del objeto de la clase \textit{IndiClient}. Por ello en la clase \textit{Connetion} gestionamos las propiedades que están ocultas para no agregarlas al \textit{adaptador} que le corresponda.
 
 
 \bigskip
@@ -126,10 +126,10 @@ Como se explicó en la introducción, \textbf{INDI} maneja 5 tipos de propiedade
 \end{itemize}
 
 \bigskip
-Para manejar cada una de estas propiedades se crea una clase que recibirá un objeto \texttt{INDIProperty} (del que heredan todos los tipos) y según el tipo informarán de que pueden manejar dicha propiedad y construirán las interfaces de usuario para mostrarla y editarla.
+Para manejar cada una de estas propiedades se crea una clase que recibirá un objeto \textit{INDIProperty} (del que heredan todos los tipos) y según el tipo informarán de que pueden manejar dicha propiedad y construirán las interfaces de usuario para mostrarla y editarla.
 
 \bigskip
-Gracias a la creación de la interfaz de Java \texttt{UIPropertyManager} podemos añadir más manejadores de propiedades. Para ilustrar su uso se han creado dos manejadores más:
+Gracias a la creación de la interfaz de Java \textit{UIPropertyManager} podemos añadir más manejadores de propiedades. Para ilustrar su uso se han creado dos manejadores más:
 
 \begin{itemize}
   \item \textbf{Connection.}
@@ -137,10 +137,10 @@ Gracias a la creación de la interfaz de Java \texttt{UIPropertyManager} podemos
 \end{itemize}
 
 \bigskip
-Estas dos propiedades son de tipo \texttt{Switch} pero tienen la peculiaridad de que siempre tienen la misma estructura para cualquier dispositivo que las use: mismo número de elementos, mismo nombre para cada elemento, etc. Por ello podemos analizar la propiedad recibida y ver si es de esos tipos, informando de que podemos manejarla, y construyendo vistas especificas para esas propiedades (como son de tipo \texttt{Switch} su vista por defecto sería la de todas las propiedades de este tipo).
+Estas dos propiedades son de tipo \textit{Switch} pero tienen la peculiaridad de que siempre tienen la misma estructura: mismo número de elementos, mismo nombre para cada elemento, etc. Por ello podemos analizar la propiedad recibida y ver si es de esos tipos, informando de que podemos manejarla, y construyendo vistas especificas para esas propiedades (como son de tipo \textit{Switch} su vista por defecto sería la de todas las propiedades de este tipo).
 
 \bigskip
-En la figura \ref{fig:diag_manager_ui} podemos ver el diagrama de clases que ilustra la creación de los manejadores, implementando las interfaces para manejar propiedades y , adicionalmente, para manejar la pulsación sobre un objeto \texttt{View} de Android.
+En la figura \ref{fig:diag_manager_ui} podemos ver el diagrama de clases que ilustra la creación de los manejadores, implementando las interfaces para manejar propiedades y , adicionalmente, para manejar la pulsación sobre un objeto \textit{View} de Android.
 
 \bigskip
 \begin{figure}[!ht]
@@ -154,13 +154,13 @@ En la figura \ref{fig:diag_manager_ui} podemos ver el diagrama de clases que ilu
 \newpage
 \subsection{Diseño de las clases manejadoras de dispositivos}
 
-Finalmente, necesitamos manejar y decidir como mostramos una propiedad y sus elementos. Para implementar esta funcionalidad se ha optado por utilizar los elementos visuales de Android \texttt{tabs} que permiten mostrar vistas tabuladas. Con esto, vamos a crear una vista por defecto para cualquier dispositivo. Esta vista es la utilizada en las secciones anteriores: \textit{las listas expandibles de android}.
+Finalmente, necesitamos manejar y decidir como mostramos una propiedad y sus elementos. Para implementar esta funcionalidad se ha optado por utilizar los elementos visuales de Android \textit{tabs} que permiten mostrar vistas tabuladas. Con esto, vamos a crear una vista por defecto para cualquier dispositivo. Esta vista es la utilizada en las secciones anteriores: \textit{las listas expandibles de android}.
 
 \bigskip
-En la figura \ref{fig:diag_manager_ui_device} podemos ver que tenemos una clase \texttt{DefaultDeviceView} que se mostrará por defecto para todas los dispositivos. Este es el comportamiento normal de la aplicación
+En la figura \ref{fig:diag_manager_ui_device} podemos ver que tenemos una clase \textit{DefaultDeviceView} que se mostrará por defecto para todas los dispositivos. Este es el comportamiento normal de la aplicación
 
 \bigskip
-Siguiente con el objetivo principal de facilitar la extensibilidad para añadir nuevas vistas de dispositivo, se ha diseñado una clase abstracta, \texttt{DeviceView}, para facilitar la creación de nuevas vistas. Solo tenemos que crear una clase que herede de esta clase abstracta e implementar los métodos. Al ser una clase que hereda de \texttt{Fragment}, dentro de ella tenemos libertad para mostrar las propiedades del dispositivo para personalizarlo. Cada nueva vista sería una tabulación más en la vista tabulada.
+Siguiente con el objetivo principal de facilitar la extensibilidad para añadir nuevas vistas de dispositivo, se ha diseñado una clase abstracta, \textit{DeviceView}, para facilitar la creación de nuevas vistas. Solo tenemos que crear una clase que herede de esta clase abstracta e implementar los métodos. Al ser una clase que hereda de \textit{Fragment}, dentro de ella tenemos libertad para mostrar las propiedades del dispositivo para personalizarlo. Cada nueva vista sería una tabulación más en la vista tabulada.
 
 
 \bigskip
@@ -184,32 +184,32 @@ A lo largo del diseño de las interfaces de usuario, se fueron mejorando sucesiv
 
 \begin{figure}
     \centering
-    \begin{subfigure}[]{0.45\textwidth}
+    \begin{subfigure}[]{0.4\textwidth}
         \includegraphics[width=\textwidth]{../images/boceto.jpg}
         \caption{}
         \label{fig:boceto}
     \end{subfigure}
-    \begin{subfigure}[]{0.45\textwidth}
+    \begin{subfigure}[]{0.4\textwidth}
         \includegraphics[width=\textwidth]{../images/boceto2.jpg}
         \caption{}
         \label{fig:boceto_2}
     \end{subfigure}
-    \caption{Bocetos de interfaces}\label{fig:bocetos}
+    \caption{Bocetos}\label{fig:bocetos}
 \end{figure}
 
 \begin{figure}
     \centering
-    \begin{subfigure}[]{0.45\textwidth}
+    \begin{subfigure}[]{0.4\textwidth}
         \includegraphics[width=\textwidth]{../images/captura.png}
         \caption{}
         \label{fig:captura1}
     \end{subfigure}
-    \begin{subfigure}[]{0.45\textwidth}
+    \begin{subfigure}[]{0.4\textwidth}
         \includegraphics[width=\textwidth]{../images/captura2.png}
         \caption{}
         \label{fig:captura2}
     \end{subfigure}
-    \caption{Capturas de interfaces}\label{fig:capturas}
+    \caption{Capturas}\label{fig:capturas}
 \end{figure}
 
 \begin{figure}
@@ -224,7 +224,7 @@ A lo largo del diseño de las interfaces de usuario, se fueron mejorando sucesiv
         \caption{}
         \label{fig:captura4}
     \end{subfigure}
-    \caption{Capturas de interfaces}\label{fig:capturas2}
+    \caption{Capturas}\label{fig:capturas2}
 \end{figure}
 
 \bigskip
@@ -344,12 +344,12 @@ En la figura \ref{fig:capturas6} podemos ver ambas vistas en la interfaz de las 
     \caption{Propiedades text, number y switch}\label{fig:capturas6}
 \end{figure}
 
-Los \texttt{Switch} tienen una vista similar a las dos propiedades anteriores, salvo que el valor que está en estado ``on'' en negro y los que están en estado ``off'' en gris (figura \ref{fig:capturas6}).
+Los \textit{Switch} tienen una vista similar a las dos propiedades anteriores, salvo que el valor que está en estado ``on'' en negro y los que están en estado ``off'' en gris (figura \ref{fig:capturas6}).
 
 
 \bigskip
 \subsubsection{Blobs}
-Los \texttt{Switch} son ficheros enviados por el servidor por lo que es más interesante mostrar el tipo de archivo que recibimos y su tamaño. Como se puede ver en la figura \ref{fig:blob}, además de estos dos datos tenemos los botones para poder guardarlo o enviarlo a \textbf{Android} para poder abrirlo con la aplicación adecuada.
+Los \textit{Switch} son ficheros enviados por el servidor por lo que es más interesante mostrar el tipo de archivo que recibimos y su tamaño. Como se puede ver en la figura \ref{fig:blob}, además de estos dos datos tenemos los botones para poder guardarlo o enviarlo a \textbf{Android} para poder abrirlo con la aplicación adecuada.
 
 \bigskip
 \begin{figure}[!ht]
@@ -372,14 +372,14 @@ Los diálogos son una herramienta visual esencial que permiten superponer una vi
 
 
 \bigskip
-\subsubsection{Diálogos para editar propiedades}
+\subsubsection{Diálagas para editar propiedades}
 
 Estos diálogos permiten editar los elementos de aquellas propiedades que lo permitan:
 
 \begin{itemize}
-  \item \textbf{Dialogo de edición de una propiedad Text:} Se muestra la lista de elementos con su \texttt{label} y su valor en un cuadro editable (\ref{fig:text_edit}).
-  \item \textbf{Dialogo de edición de una propiedad Number:} Se muestra la lista de elementos con su \texttt{label} y sus valores máximos y mínimos. Debajo se puede ver el campo editable con el valor (\ref{fig:number_edit}).
-  \item \textbf{Dialogo de edición de una propiedad Switch:} Se muestra cada elemento con su \texttt{label} seguido de un botón de estados para indicar si el elemento está activo \texttt{on} o no \texttt{off} (\ref{fig:number_edit}) .
+  \item \textbf{Dialogo de edición de una propiedad Text:} Se muestra la lista de elementos con su \textit{label} y su valor en un cuadro editable (\ref{fig:text_edit}).
+  \item \textbf{Dialogo de edición de una propiedad Number:} Se muestra la lista de elementos con su \textit{label} y sus valores máximos y mínimos. Debajo se puede ver el campo editable con el valor (\ref{fig:number_edit}).
+  \item \textbf{Dialogo de edición de una propiedad Switch:} Se muestra cada elemento con su \textit{label} seguido de un botón de estados para indicar si el elemento está activo (``on'') o no (``off'') (\ref{fig:number_edit}) .
 \end{itemize}
 
 
@@ -433,7 +433,7 @@ Estos diálogos permiten añadir, editar o borrar conexiones. Como cada conexió
 \end{figure}
 
 \bigskip
-La vista para borrar conexiones es una simple lista con todas las conexiones que haya y un \texttt{checkbox} para marcar las que deseamos borrar (figura \ref{fig:remove_connect}).
+La vista para borrar conexiones es una simple lista con todas las conexiones que haya y un \textit{checkbox} para marcar las que deseamos borrar (figura \ref{fig:remove_connect}).
 
 
 \begin{figure}[!ht]
@@ -475,7 +475,7 @@ Esta es una interfaz muy simple para poder ver los \textit{logs} de cada una de 
 \bigskip
 \subsection{Interfaz de los ajustes}
 
-Los ajustes tienen una vista especial para poder editar las diferentes notificaciones y para poder establecer una carpeta para almacenar los archivos de la aplicación. Como podemos ver en la figura \ref{fig:settings_view}, cada una de las notificaciones tienen un elemento \texttt{switch} de \textbf{Android} para marcar el estado. Al final de la vista encontramos un campo editable para poner la ruta que deseemos para la carpeta.
+Los ajustes tienen una vista especial para poder editar las diferentes notificaciones y para poder establecer una carpeta para almacenar los archivos de la aplicación. Como podemos ver en la figura \ref{fig:settings_view}, cada una de las notificaciones tienen un elemento \textit{switch} de \textbf{Android} para marcar el estado. Al final de la vista encontramos un campo editable para poner la ruta que deseemos para la carpeta.
 
 
 \begin{figure}[!ht]
@@ -498,13 +498,13 @@ Uno de los objetivos principales del proyecto es facilitar a desarrolladores ext
 Para poder añadir una nueva vista debemos seguir tres pasos:
 
 \begin{itemize}
-  \item Crear una clase que implemente la interfaz \texttt{UIPropertyManager}.
+  \item Crear una clase que implemente la interfaz \textbf{UIPropertyManager}.
   \item Crear una interfaz de usuario para android en XML tanto para la vista de elemento de lista como para la vista para editar una propiedad.
   \item Declarar un objeto de la clase creada y añadirlo al vector de manejadores.
 \end{itemize}
 
 
-\subsubsection{Interfaz \texttt{UIPropertyManager}}
+\subsubsection{Interfaz UIPropertyManager}
 
 En la sección de diseño de clases hemos podido ver la interfaz que permite crear los distintos tipos de manejadores de propiedades.
 
@@ -599,11 +599,11 @@ Como podemos ver en el fragmento de código \ref{lst:ui_prop_manager}, las funci
   Esta función debe devolver una valor numérico para establecer la prioridad que tendrá la vista respecto a otras vistas o a la vista por defecto de la propiedad. Cuanto mayor sea el valor, más prioridad tendrá
 
   \item \texttt{getUpdateButton}:
-  Esta función debe devolver un objeto ``Button'' si la vista tendrá el botón para actualizar, o \texttt{null} en caso de que no haya botón.
+  Esta función debe devolver un objeto ``Button'' si la vista tendrá el botón para actualizar, o \textit{null} en caso de que no haya botón.
 \end{itemize}
 
 \bigskip
-Una vez que tenemos la clase creada debemos diseñar la interfaz de usuario en un archivo \textit{XML} como el del archivo del fragmento de código \ref{lst:xml_view} que representa la vista de elemento de lista de la propiedad \texttt{Connection}. Además de este, debemos crear otra vista para mostrar en el diálogo de edición de propiedades. No hay ningún tipo de restricción para estas vistas. El desarrollador es libre de poner lo que necesite en ambas interfaces de usuario.
+Una vez que tenemos la clase creada debemos diseñar la interfaz de usuario en un archivo \textit{XML} como el del archivo del fragmento de código \ref{lst:xml_view} que representa la vista de elemento de lista de la propiedad \textit{Connection}. Además de este, debemos crear otra vista para mostrar en el diálogo de edición de propiedades. No hay ningún tipo de restricción para estas vistas. El desarrollador es libre de poner lo que necesite en ambas interfaces de usuario.
 
 \begin{lstlisting}[language=XML,caption={Vista XML en android},label={lst:xml_view}]
 <?xml version="1.0" encoding="utf-8"?>
@@ -717,7 +717,7 @@ private void setUiProperties() {
 \end{lstlisting}
 
 \bigskip
-Para ilustrar la posibilidad de añadir nuevas vistas, se han creado dos manejadores nuevos: \texttt{connection y abort} (figura \ref{fig:connect_abort}).
+Para ilustrar la posibilidad de añadir nuevas vistas, se han creado dos manejadores nuevos: \textit{connection y abort} (figura \ref{fig:connect_abort}).
 
 \begin{figure}[!ht]
   \begin{center}
@@ -806,7 +806,7 @@ Para un proyecto de desarrollo de software, las fases de análisis y diseño son
 El código de la aplicación esta publicado bajo una licencia de \textbf{Software Libre} y puede ser consultada en \url{https://github.com/torresj/indi-android-ui}.
 
 \bigskip
-Para la implementación de este software, se ha usado el entorno de desarrollo \textbf{Android Studio} \cite{AS} (Figura \ref{fig:android_studio}). Este entorno es el recomendado por \textb{Android} para realizar aplicaciones móviles.
+Para la implementación de este software, se ha usado el entorno de desarrollo \textbf{Android Studio} (Figura \ref{fig:android_studio}). Este entorno es el recomendado por \textb{Android} para realizar aplicaciones móviles.
 
 \begin{figure}[!ht]
   \begin{center}
@@ -817,7 +817,7 @@ Para la implementación de este software, se ha usado el entorno de desarrollo \
 \end{figure}
 
 \bigskip
-También se ha usado para el desarrollo el procesador de textos \textbf{Sublime text} \cite{ST2}.
+También se ha usado para el desarrollo el procesador de textos \textbf{Sublime text}.
 
 \bigskip
-Para el control de versiones y publicación del código se ha utilizado \textbf{github} y la herramienta en linea \texttt{git} para poder subir los cambios desde un terminal \cite{GH}.
+Para el control de versiones y publicación del código se ha utilizado \textbf{github} y la herramienta en linea \texttt{git} para poder subir los cambios desde un terminal.
